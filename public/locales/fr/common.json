@@ -1,0 +1,12 @@
+{
+    "register": {
+        "title": "Créer un compte",
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "email": "Email",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "submit": "S'inscrire",
+        "loginPrompt": "Vous avez déjà un compte? Connexion"
+    }
+}
