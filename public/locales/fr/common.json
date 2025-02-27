@@ -2,11 +2,20 @@
     "register": {
         "title": "Créer un compte",
         "firstName": "Prénom",
+        "firstNamePlaceHolder": "Entrez votre prénom",
         "lastName": "Nom de famille",
+        "lastNamePlaceHolder": "Entrez votre nom de famille", 
         "email": "Email",
+        "emailPlaceHolder": "Entrez votre addresse email", 
         "password": "Mot de passe",
+        "passwordPlaceHolder": "Entrez un mot de passe",
         "confirmPassword": "Confirmer le mot de passe",
+        "confirmPasswordPlaceHolder": "Confirmez votre mot passe",
         "submit": "S'inscrire",
-        "loginPrompt": "Vous avez déjà un compte? Connexion"
+        "loginPrompt": "Vous avez déjà un compte?",
+        "login": "Connexion", 
+        "whoAreYou": "Qu'est-ce que tu es?",
+        "searchLang": "Rechercher", 
+        "remainingSMS": "Restants"
     }
 }

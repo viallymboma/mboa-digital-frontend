@@ -19,9 +19,10 @@ type PasswordInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     label?: string;
     validation?: RegisterOptions;
     className?: string;
+    placeHolder?: string;
 };
 
-const FormPasswordInput = ({ name, label, validation, className, ...props }: PasswordInputProps) => {
+const FormPasswordInput = ({ name, label, placeHolder, validation, className, ...props }: PasswordInputProps) => {
 
     const { register, formState: {errors} } = useForm();
     const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +37,7 @@ const FormPasswordInput = ({ name, label, validation, className, ...props }: Pas
                     {...register(name, validation)}
                     className={cn('w-full pr-10', className)}
                     {...props}
+                    placeholder={ placeHolder }
                 />
                 <Button
                     type="button"

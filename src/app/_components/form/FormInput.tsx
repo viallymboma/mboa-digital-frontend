@@ -12,18 +12,20 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   validation?: RegisterOptions;
   className?: string;
+  placeholder?: string; 
 };
 
-const FormInput = ({ name, label, validation, className, ...props }: InputProps) => {
+const FormInput = ({ name, label, validation, placeholder, className, ...props }: InputProps) => {
   const { register, formState: {errors} } = useForm();
 
   return (
-    <div className="space-y-2">
-      {label && <label htmlFor={name} className="block text-sm font-medium text-gray-700">{label}</label>}
+    <div className="space-y-2 w-full">
+      {label && <label htmlFor={name} className="block text-[18px] font-medium text-gray-700">{label}</label>}
       <Input
         id={name}
         {...register(name, validation)}
         className={cn('w-full', className)}
+        placeholder={ placeholder }
         {...props}
       />
       {errors[name] && (

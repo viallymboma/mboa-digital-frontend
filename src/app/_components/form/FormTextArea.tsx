@@ -12,9 +12,10 @@ type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
     label?: string;
     validation?: RegisterOptions;
     className?: string;
+    placeHolder?: string; 
 };
 
-export const FormTextArea = ({ name, label, validation, className, ...props }: TextAreaProps) => {
+export const FormTextArea = ({ name, label, placeHolder, validation, className, ...props }: TextAreaProps) => {
 
     const { register, formState: {errors} } = useForm();
 
@@ -25,6 +26,7 @@ export const FormTextArea = ({ name, label, validation, className, ...props }: T
                 id={name}
                 {...register(name, validation)}
                 className={cn('w-full', className)}
+                placeholder={placeHolder }
                 {...props}
             />
             {errors[name] && (

@@ -2,11 +2,20 @@
     "register": {
         "title": "Create an account",
         "firstName": "First name",
+        "firstNamePlaceHolder": "Enter your first name",
         "lastName": "Last name",
+        "lastNamePlaceHolder": "Enter your last name",
         "email": "Email",
+        "emailPlaceHolder": "Enter your email address",
         "password": "Password",
+        "passwordPlaceHolder": "Enter a password",
         "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceHolder": "Confirm your password",
         "submit": "Register",
-        "loginPrompt": "Already have an account? Login"
+        "loginPrompt": "Already have an account?",
+        "login": "Login", 
+        "whoAreYou": "What are you?", 
+        "searchLang": "Search", 
+        "remainingSMS": "Remaining"
     }
 }

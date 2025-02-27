@@ -1,1 +1,1 @@
-export const languages = ['en', 'fr']; // Add more languages if needed
+export const languages = ['en', 'fr', 'es']; // Add more languages if needed

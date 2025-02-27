@@ -11,7 +11,6 @@ export const FormButton = ({ children, className, ...props }: ButtonProps) => {
     return (
         <Button
             className={cn('w-full', className)}
-            
             {...props}
         >
             {children}

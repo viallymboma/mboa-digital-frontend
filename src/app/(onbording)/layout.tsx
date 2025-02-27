@@ -1,6 +1,3 @@
-"use client"
-import '../../i18n'; // Import before using `useTranslation`
-
 import React from 'react';
 
 import LanguageSwitcher from '../_components/LanguageSwitcher';
