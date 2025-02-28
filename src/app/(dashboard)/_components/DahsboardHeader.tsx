@@ -18,13 +18,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from '@/components/ui/dropdown-menu';
 import {
   SidebarTrigger,
   useSidebar,
@@ -64,41 +57,6 @@ const DahsboardHeader = () => {
                                 <ThemeSwitcher />
                             </PopoverContent>
                         </Popover>
-                        {/* <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                open
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                className="w-48 rounded-lg"
-                                side={isMobile ? "bottom" : "right"}
-                                align={isMobile ? "end" : "start"}
-                            >
-                                <DropdownMenuItem>
-                                    <Button className='bg-primaryAppearance flex flex-row gap-2 rounded-[20px] p-3'>
-                                        <MessagingSvgIcon />
-                                        <span>1.3K SMS</span>
-                                        {t('remainingSMS')}
-                                    </Button>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Button className='bg-transparent'>
-                                        <HomeSvgIcon />
-                                    </Button>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <Button className='bg-transparent'>
-                                        <NotificationSvgIcon />
-                                    </Button>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <LanguageSwitcher />
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <ThemeSwitcher />
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu> */}
                     </div>
                     :
                     <div className='flex flex-row items-center gap-2 pr-4'>
