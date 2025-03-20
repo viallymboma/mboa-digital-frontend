@@ -41,8 +41,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 
-// import ThemeSwitcher from '../dashboard/_components/ThemeSwitcher';
-import { NavUser } from './NavUser';
+import { NavProfile } from './NavProfile';
 import { SidebarNavItems } from './SidebarNavItems';
 import ThemeSwitcher from './ThemeSwitcher';
 
@@ -234,7 +233,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavProfile user={data.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

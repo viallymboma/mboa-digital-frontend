@@ -17,7 +17,7 @@ export function SmsStatsDashboard() {
   const { monthlyData } = useSmsStatsStore();
 
   return (
-    <div className="w-full border-[1px] rounded-3xl border-primaryAppearance">
+    <div className="w-full border-[1px] rounded-3xl h-[428px] border-primaryAppearance">
       <Card className="border-2 border-purple-100 rounded-3xl overflow-hidden">
         <CardHeader className="flex flex-row items-center gap-4 pb-2">
           <div className="p-2 border-[1px] border-greyColor rounded-lg">

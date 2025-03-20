@@ -17,7 +17,7 @@ interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
-  username: 'Imagichris',
+  username: 'Biteb',
   stats: [
     {
       id: 'sms-sent',

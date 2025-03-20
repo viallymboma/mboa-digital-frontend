@@ -40,7 +40,7 @@ export function DidYouKnow({
             {buttonText} <ChevronRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
-        
+
         {/* Decorative circles with avatars */}
         <div className="absolute bottom-0 right-0 left-0 flex justify-between">
           <div className="flex -space-x-4 overflow-hidden">

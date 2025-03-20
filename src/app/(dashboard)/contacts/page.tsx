@@ -1,8 +1,16 @@
 import React from 'react';
 
+import ContactModule from './_component/ContactModule';
+import ContactPageHeader from './_component/ContactPageHeader';
+
 const ContactPage = () => {
   return (
-    <div>ContactPage</div>
+    <div className=''>
+      <ContactPageHeader />
+      <div className='h-full flex flex-col items-center justify-center'>
+        <ContactModule />
+      </div>
+    </div>
   )
 }
 

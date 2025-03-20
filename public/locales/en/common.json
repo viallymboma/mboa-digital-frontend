@@ -17,5 +17,67 @@
         "whoAreYou": "What are you?", 
         "searchLang": "Search", 
         "remainingSMS": "Remaining"
+    }, 
+    "contact": {
+        "contactForm": {
+            "fullName": "Full Name", 
+            "phoneNumber": "Phone Number", 
+            "city": "City", 
+            "fullNamePlaceHolder": "Enter your Full Name", 
+            "phoneNumberPlaceHolder": "Enter your Phone Number", 
+            "cityPlaceHolder": "Enter your City",
+            "buttonLabel": "Add Contact"
+        }, 
+        "importContactForm": {
+            "modalTitle": "Import Manager", 
+            "downloadItem": "Download the contact file to fill", 
+            "downloaItemDescription": "Click here to download and fill the file according to the correct format", 
+            "uploadItem": "Upload your file here", 
+            "uploadItemDescription": "Once the file is filled, click here to upload your file"
+        }, 
+        "emptyUI": {
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "newContact": "New Contact", 
+            "importContact": "Import Manager"
+        }, 
+        "addNewContactForm": {
+            "title": "Add a Contact"
+        }, 
+        "importContactsBtn": "Import Contacts", 
+        "newMessageBtn": "New Message", 
+        "sendMessageFormBtn": "Send"
+    },
+    "group": {
+        "emptyUI": {
+            "mainTitle": "No contacts available at the moment", 
+            "secondTitle": "Try creating groups to display them here.", 
+            "newGroup": "New Group"
+        }
+    }, 
+    "histories": {
+        "emptyUI" : {
+            "mainTitle": "No history available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here"
+        }
+    }, 
+    "recharges": {
+        "emptyUI" : {
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "actionButtonLabel": "Make a Recharge"
+        }
+    }, 
+    "payments": {
+        "emptyUI" : {
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "actionButtonLabel": "Make a Payment"
+        }
+    }, 
+    "profile" : {
+        "pageTitle": "Profil", 
+        "editProfileButton": "Edit profile"
     }
+
 }

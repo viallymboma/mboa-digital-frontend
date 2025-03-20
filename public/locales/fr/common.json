@@ -17,5 +17,67 @@
         "whoAreYou": "Qu'est-ce que tu es?",
         "searchLang": "Rechercher", 
         "remainingSMS": "Restants"
+    }, 
+    "contact": {
+        "contactForm": {
+            "fullName": "Nom", 
+            "phoneNumber": "Numéro de Téléphone", 
+            "city": "Ville", 
+            "fullNamePlaceHolder": "Entrez votre Nom", 
+            "phoneNumberPlaceHolder": "Entrez votre Numéro de Téléphone", 
+            "cityPlaceHolder": "Entrez votre Ville",
+            "buttonLabel": "Ajouter le contact"
+        }, 
+        "importContactForm": {
+            "modalTitle": "Gestionnaire d’importation", 
+            "downloadItem": "Telecharger le fichier de contact a remplir", 
+            "downloaItemDescription": "Cliquez ici pour Télécharger et remplir le fichier suivant le format adéquat", 
+            "uploadItem": "Deposer votre fichier ici", 
+            "uploadItemDescription": "Une fois le fichier remplit, cliquez ici pour uploader votre fichier"
+        }, 
+        "emptyUI": {
+            "mainTitle": "Pas d’informations disponible pour le moment", 
+            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
+            "newContact": "Nouveau Contact", 
+            "importContact": "Gestionnaire d’importation"
+        }, 
+        "addNewContactForm": {
+            "title": "Ajouter un contact"
+        }, 
+        "importContactsBtn": "Importer des Contacts", 
+        "newMessageBtn": "Nouveau Message",
+        "sendMessageFormBtn": "Envoyer"
+    }, 
+    "group": {
+        "emptyUI": {
+            "mainTitle": "Pas de contacts disponible pour le moment", 
+            "secondTitle": "Essayer de créer des groupe pour les afficher ici.", 
+            "newGroup": "Nouveau groupe"
+        }
+    }, 
+    "histories": {
+        "emptyUI" : {
+            "mainTitle": "Pas d’Historique disponible pour le moment", 
+            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici"
+        }
+    }, 
+    "recharges": {
+        "emptyUI" : {
+            "mainTitle": "Pas d’informations disponible pour le moment", 
+            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
+            "actionButtonLabel": "Faire une Recharge"
+        }
+    }, 
+    "payments": {
+        "pageTitle": "Paiements", 
+        "emptyUI" : {
+            "mainTitle": "Pas d’informations disponible pour le moment", 
+            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
+            "actionButtonLabel": "Faire un payement"
+        }
+    }, 
+    "profile" : {
+        "pageTitle": "Profile", 
+        "editProfileButton": "Editer le profile"
     }
 }
