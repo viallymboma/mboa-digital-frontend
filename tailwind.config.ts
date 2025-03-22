@@ -12,12 +12,14 @@ const config: Config = {
   	extend: {
   		colors: {
   			primaryAppearance: '#7B18CC',
+			primaryAppearanceLight: '#B074E0',
   			primaryAppearanceDim: '#E5D1F5',
 			greyColor: '#868686', 
 			grayColor: '#E8E8E8', 
 			grayText: '#4B4B4B',
 			borderGreen: '#0E8345',
 			borderRed: '#DE1135',
+
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

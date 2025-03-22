@@ -32,7 +32,7 @@ const DahsboardHeader = () => {
         <div className={`border-b-[1px] border-b-slate-200 flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12`}>
             <div className='pl-4 flex flex-row items-center gap-4'>
                 <SidebarTrigger className="-ml-1" />
-                <SearchInput placeholder={t('searchLang')} leftIcon={<SearchSvgIcon />} />
+                <SearchInput placeholder={t('register.searchLang')} leftIcon={<SearchSvgIcon />} />
             </div>
             {
                 isMobile ? 
