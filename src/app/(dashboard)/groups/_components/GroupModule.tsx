@@ -8,6 +8,7 @@ import {
 
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import CreateContactForm from '../../contacts/_component/CreateContactForm';
+import GroupsGrid from './GroupsGrid';
 
 const GroupModule = () => {
     const buttons = [
@@ -21,12 +22,15 @@ const GroupModule = () => {
     ];
 
     return (
-        <EmptyStateUI
-            SvgIcon={GroupEmptyUISvgIcon}
-            mainTitle="group.emptyUI.mainTitle"
-            secondTitle="group.emptyUI.secondTitle"
-            buttons={buttons}
-        />
+        <>
+            <GroupsGrid />
+            <EmptyStateUI
+                SvgIcon={GroupEmptyUISvgIcon}
+                mainTitle="group.emptyUI.mainTitle"
+                secondTitle="group.emptyUI.secondTitle"
+                buttons={buttons}
+            />
+        </>
     );
 }
 

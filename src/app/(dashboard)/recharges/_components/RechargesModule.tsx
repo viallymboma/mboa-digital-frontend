@@ -8,7 +8,8 @@ import {
 } from '@/app/svg_components/SvgIcons';
 
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
-import CreateContactForm from '../../contacts/_component/CreateContactForm';
+import RechargeForm from './_forms/RechargeForm';
+import RechargesTableModule from './_tables/RechargesTableModule';
 
 const RechargesModule = () => {
     const buttons = [
@@ -17,17 +18,20 @@ const RechargesModule = () => {
             icon: RechargesEmptyUISvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-primaryAppearance", 
-            dialogContent: <CreateContactForm />,
+            dialogContent: <RechargeForm />,
         },
     ];
 
     return (
-        <EmptyStateUI
-            SvgIcon={RechargesEmptyUISvgIcon2}
-            mainTitle="recharges.emptyUI.mainTitle"
-            secondTitle="recharges.emptyUI.secondTitle"
-            buttons={buttons}
-        />
+        <>
+            <RechargesTableModule />
+            <EmptyStateUI
+                SvgIcon={RechargesEmptyUISvgIcon2}
+                mainTitle="recharges.emptyUI.mainTitle"
+                secondTitle="recharges.emptyUI.secondTitle"
+                buttons={buttons}
+            />
+        </>
     );
 }
 

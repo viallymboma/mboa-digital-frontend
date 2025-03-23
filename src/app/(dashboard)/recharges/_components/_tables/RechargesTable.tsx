@@ -2,22 +2,22 @@ import React from 'react';
 
 import GenericTable from '@/app/_components/tables/GenericTable';
 
-import { contactColumns } from './ContactTableElements';
-import { dummyDataReal } from './dummyData';
+import { dummyRechargesData } from './dummyData';
+import { rechargesColumns } from './RechargesTableElements';
 
-const ContactTable = () => {
+const RechargesTable = () => {
 
-  const [data, setData] = React.useState(dummyDataReal);
+  const [data, setData] = React.useState(dummyRechargesData);
 
-  const handleReorder = (reorderedData: typeof dummyDataReal) => {
+  const handleReorder = (reorderedData: typeof dummyRechargesData) => {
     setData(reorderedData); // Update the data state
   };
 
   return (
     <GenericTable
       data={data}
-      columns={contactColumns}
-      title="Listes des Contacts"
+      columns={rechargesColumns}
+      title="Listes des Recharges"
       description="Liste de toutes les catégories disponibles"
       defaultPageSize={7}
       onEdit={(row) => console.log('Edit:', row)}
@@ -27,4 +27,4 @@ const ContactTable = () => {
   );
 };
 
-export default ContactTable;
+export default RechargesTable;

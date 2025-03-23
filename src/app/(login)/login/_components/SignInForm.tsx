@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { FormButton } from '@/app/_components/form/FormButton';
-import FormInput from '@/app/_components/form/FormInput';
+import { FormInput } from '@/app/_components/form/FormInput';
+// import FormInput from '@/app/_components/form/FormInput';
 import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 

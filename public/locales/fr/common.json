@@ -53,7 +53,14 @@
             "mainTitle": "Pas de contacts disponible pour le moment", 
             "secondTitle": "Essayer de créer des groupe pour les afficher ici.", 
             "newGroup": "Nouveau groupe"
-        }
+        }, 
+        "addNewGroupForm": {
+            "title": "Ajouter un groupe"
+        },
+        "newGroupBtn": "Nouveau groupe",
+        "addNewGroupFormBtn": "Ajouter un contact",
+        "groupMessage": "Message de groupe"
+        
     }, 
     "histories": {
         "emptyUI" : {

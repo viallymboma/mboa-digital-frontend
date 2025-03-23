@@ -19,6 +19,7 @@ const config: Config = {
 			grayText: '#4B4B4B',
 			borderGreen: '#0E8345',
 			borderRed: '#DE1135',
+			pendingYelloW: '#F6BC2F',
 
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

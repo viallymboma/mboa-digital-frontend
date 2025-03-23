@@ -35,7 +35,9 @@ const StatsCard: React.FC<StatsCardProps> = ({
             <CardContent className='flex flex-row justify-between w-full items-center gap-4 py-[1.5rem]'>
                 <div className='flex flex-col'>
                     <div className="flex flex-row h-full items-center gap-2">
-                        <h3 className={`text-[30px] text-${ color } font-bold tracking-tight`}>{value}</h3>
+                        <h3 style={{
+                          color: color, 
+                        }} className={`text-[30px] text-${ color } font-bold tracking-tight`}>{value}</h3>
                         {trend && (
                         <div
                             className={cn(

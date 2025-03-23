@@ -39,33 +39,3 @@ const EmptyStateUI: React.FC<EmptyStateUIProps> = ({ SvgIcon, mainTitle, secondT
 };
 
 export default EmptyStateUI;
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { ElementType } from 'react';
-
-// type EmptyProps = {
-//   icon: ElementType;
-//   bigTitle?: boolean;
-//   smallTitle?: string;
-//   buttons?: React.ReactNode [];
-// }
-
-// const EmptyUI: React.FC <EmptyProps> = ({ bigTitle, smallTitle, buttons, icon }) => {
-//   return (
-//     <div>
-        
-//     </div>
-//   )
-// }
-
-// export default EmptyUI
