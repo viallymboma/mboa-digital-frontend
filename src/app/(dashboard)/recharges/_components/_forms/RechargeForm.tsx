@@ -95,9 +95,9 @@ const RechargeForm = () => {
               />
             )}
           />
-          {errors.phone && (
+          {/* {errors.phone && (
             <p className="text-red-500 text-sm">{errors.phone.message}</p>
-          )}
+          )} */}
 
           {/* SMS Count Input */}
           <Controller
@@ -116,9 +116,9 @@ const RechargeForm = () => {
               />
             )}
           />
-          {errors.smsCount && (
+          {/* {errors.smsCount && (
             <p className="text-red-500 text-sm">{errors.smsCount.message}</p>
-          )}
+          )} */}
 
           {/* Recharge Type Select */}
           <Controller
@@ -132,14 +132,14 @@ const RechargeForm = () => {
                 className='border-primaryAppearance'
                 options={options}
                 value={field.value}
-                onChange={field.onChange}
+                // onChange={field.onChange}
                 error={errors.rechargeType?.message} // Include error for country
               />
             )}
           />
-          {errors.rechargeType && (
+          {/* {errors.rechargeType && (
             <p className="text-red-500 text-sm">{errors.rechargeType.message}</p>
-          )}
+          )} */}
 
           {/* Next Button */}
           <Button type="submit" className="w-full bg-purple-700 text-white">

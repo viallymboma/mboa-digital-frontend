@@ -372,6 +372,24 @@ export const PaymentsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width})
     )
 }
 
+export const SchoolsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+    const { themes, theme } = useTheme(); 
+    console.log(themes, "here is the them", height, width)
+    return (
+        <div
+            style={{
+                color: color ? color : theme === "dark" ? "white" : "#7B18CC"
+            }}
+        >
+            <svg width={ width ? width : "25"} height={ height ? height : "24" } viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.5537 6H23.5537V8H22.5537V19H23.5537V21H1.55371V19H2.55371V8H1.55371V6H4.55371V4C4.55371 3.73478 4.65907 3.48043 4.8466 3.29289C5.03414 3.10536 5.28849 3 5.55371 3H19.5537C19.8189 3 20.0733 3.10536 20.2608 3.29289C20.4484 3.48043 20.5537 3.73478 20.5537 4V6ZM20.5537 8H4.55371V19H7.55371V12H9.55371V19H11.5537V12H13.5537V19H15.5537V12H17.5537V19H20.5537V8ZM6.55371 5V6H18.5537V5H6.55371Z" fill="currentColor"/>
+            </svg>
+        </div>
+
+    )
+}
+
+
 
 export const PlusMessaginSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
     const { themes, theme } = useTheme(); 

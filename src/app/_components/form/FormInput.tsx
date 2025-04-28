@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 
+import { X } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -195,7 +197,116 @@ const SimpleSelect: React.FC<SelectProps> = ({ label, options, value, onChange, 
   );
 };
 
-export { AmountInput, CountrySelect, FormInput, FormTextArea, SimpleSelect };
+
+type MultiSelectProps = {
+  label?: string;
+  className?: string;
+  value: string[];
+  onChange: (value: string[]) => void;
+  options: { value: string; label: string; flag?: string }[];
+  error?: string;
+};
+
+
+const MultiSelect: React.FC<MultiSelectProps> = ({
+  label,
+  className,
+  value,
+  onChange,
+  options,
+  error,
+}) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  // Filter options based on the search query
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Handle selection change
+  const handleSelectChange = (selectedValue: string) => {
+    if (!value?.includes(selectedValue)) {
+      onChange([...value, selectedValue]); // Add the selected value
+    }
+  };
+
+  // Handle removal of a selected item
+  const handleRemoveItem = (itemValue: string) => {
+    onChange(value?.filter((val) => val !== itemValue)); // Remove the item
+  };
+
+  return (
+    <div className="space-y-2 w-full">
+      {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+
+      {/* Select Dropdown */}
+      <Select onValueChange={handleSelectChange}>
+        <SelectTrigger className={cn('w-full h-[56px]', className)}>
+          <SelectValue placeholder="Select items" />
+        </SelectTrigger>
+        <SelectContent>
+          {/* Search Input */}
+          <div className="p-2 bg-white sticky top-0 z-10">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 border rounded-md"
+            />
+          </div>
+
+          {/* Scrollable Options */}
+          <div className="max-h-[200px] overflow-y-auto">
+            {filteredOptions?.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                <div className="flex items-center">
+                  {option.flag && <span className="mr-2">{option.flag}</span>}
+                  {option.label}
+                  {value.includes(option.value) && <span className="tick">✔</span>}
+                </div>
+              </SelectItem>
+            ))}
+          </div>
+        </SelectContent>
+      </Select>
+
+      {/* Display Selected Items */}
+      <div className="flex flex-wrap gap-2 mt-2">
+        {value?.map((selectedValue) => {
+          const selectedOption = options.find((option) => option.value === selectedValue);
+          return (
+            <div
+              key={selectedValue}
+              className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
+            >
+              <span>{selectedOption?.label}</span>
+              <button
+                type="button"
+                onClick={() => handleRemoveItem(selectedValue)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Error Message */}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
+};
+
+export {
+  AmountInput,
+  CountrySelect,
+  FormInput,
+  FormTextArea,
+  MultiSelect,
+  SimpleSelect,
+};
 
 // "use client";
 // import React from 'react';

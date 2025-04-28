@@ -1,66 +1,68 @@
+export enum MoneyTransferOperator {
+  ORANGE_MONEY = 'Orange Money',
+  MTN_MOBILE_MONEY = 'MTN Mobile Money',
+}
 
-
-// Define the data type
-export type HistoriesType = {
-  id?: string; // Add an id field
-  content: string;
-  receivers: string [];
-  date: string;
-  smsUsedCount: number;
-  cost: string;
+export type PaymentsType = {
+  id?: string;
+  receiverName: string;
+  receiverContact: string;
+  transactionID: string;
+  dateTime: string;
+  operatorMoneyTransfer: MoneyTransferOperator;
+  numberOfSms: number;
+  amount: number;
+  cost: number;
   status: string;
   actions: string;
 };
 
-
 // Utility function to generate random data
-
-const generateRandomData = (count: number): HistoriesType[] => {
-  const contents = [
-    'Welcome to our service!',
-    'Your account has been updated.',
-    'Reminder: Payment due soon.',
-    'New features are now available.',
-    'Thank you for your purchase!',
+const generatePaymentRandomData = (count: number): PaymentsType[] => {
+  const names = [
+    'John Doe',
+    'Jane Smith',
+    'Robert Johnson',
+    'Emily Davis',
+    'Michael Wilson',
   ];
   const phoneNumbers = [
-    '+1234567890',
-    '+2345678901',
-    '+3456789012',
-    '+4567890123',
-    '+5678901234',
+    '+237647394394',
+    '+237840924395',
+    '+237658384748',
+    '+237648898480',
+    '+237621482109',
   ];
-  const statuses = ['Sent', 'Failed', 'Pending', 'Delivered', 'Draft'];
+  const statuses = ['Completed', 'Failed', 'Pending', 'Processing'];
   const actions = ['☒', '✓', '✗', '⚠', '✎'];
 
   const randomDate = (start: Date, end: Date): string => {
     const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    // Format as "DD/MM/YYYY HH:MM"
     return date.toLocaleString('en-GB', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false, // Use 24-hour format
+      hour12: false,
     });
   };
 
-  const data: HistoriesType[] = [];
+  const data: PaymentsType[] = [];
 
   for (let i = 0; i < count; i++) {
-    // Generate a random list of phone numbers for receivers
-    const receivers = Array.from({ length: Math.floor(Math.random() * 5) + 1 }, () =>
-      phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)]
-    );
-
     data.push({
-      id: `row-${i}`, // Add a unique id
-      content: contents[Math.floor(Math.random() * contents.length)],
-      receivers, // Random list of phone numbers
-      date: randomDate(new Date(2020, 0, 1), new Date()), // Random date and time between 2020 and now
-      smsUsedCount: Math.floor(Math.random() * 100) + 1, // Random number between 1 and 100
-      cost: `$${(Math.random() * 50).toFixed(2)}`, // Random cost between $0.00 and $50.00
+      id: `recharge-${i}`,
+      receiverName: names[Math.floor(Math.random() * names.length)],
+      receiverContact: phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)],
+      transactionID: `TRX-${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}`,
+      dateTime: randomDate(new Date(2023, 0, 1), new Date()),
+      operatorMoneyTransfer: Math.random() > 0.5 
+        ? MoneyTransferOperator.ORANGE_MONEY 
+        : MoneyTransferOperator.MTN_MOBILE_MONEY,
+      numberOfSms: Math.floor(Math.random() * 100) + 1,
+      amount: Math.floor(Math.random() * 50000) + 1000,
+      cost: Math.floor(Math.random() * 1000) + 100,
       status: statuses[Math.floor(Math.random() * statuses.length)],
       actions: actions[Math.floor(Math.random() * actions.length)],
     });
@@ -69,5 +71,5 @@ const generateRandomData = (count: number): HistoriesType[] => {
   return data;
 };
 
-// Example usage
-export const dummyHistoriesData: HistoriesType[] = generateRandomData(20); // Generate 20 random rows
+// Generate and export the dummy data
+export const dummyPaymentsData = generatePaymentRandomData(50);

@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import {
-  CountrySelect,
   FormTextArea,
+  MultiSelect,
 } from '@/app/_components/form/FormInput';
 import { Separator } from '@/components/ui/separator';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 // Define schema validation using Zod
 const schema = z.object({
     message: z.string().min(1, { message: 'Message is required' }),
-    contactPhone: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    contactPhone: z.array(z.string()).min(1, { message: 'At least one item must be selected' }), // z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -34,6 +34,10 @@ const MessageComponent = () => {
         formState: { errors },
     } = useForm<FormData>({
         resolver: zodResolver(schema),
+        defaultValues: {
+            contactPhone: [], // Ensure this is initialized as an empty array
+            message: '',      // Initialize other fields as needed
+        },
     });
 
     const options = [
@@ -55,17 +59,24 @@ const MessageComponent = () => {
                     <Controller
                         name="contactPhone"
                         control={control}
-                        defaultValue=""
+                        // defaultValue=""
                         rules={{ required: 'Phone is required' }}
                         render={({ field }) => (
-                            <CountrySelect
-                                {...field}
-                                label=""
-                                className='border-primaryAppearance'
+                            // <CountrySelect
+                            //     {...field}
+                            //     label=""
+                            //     className='border-primaryAppearance'
+                            //     options={options}
+                            //     value={field.value}
+                            //     onChange={field.onChange}
+                            //     error={errors.contactPhone?.message} // Include error for country
+                            // />
+                            <MultiSelect
+                                label="Select Items"
                                 options={options}
-                                value={field.value}
+                                value={field?.value}
                                 onChange={field.onChange}
-                                error={errors.contactPhone?.message} // Include error for country
+                                error={errors.contactPhone?.message}
                             />
                         )}
                     />
