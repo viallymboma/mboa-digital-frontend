@@ -24,6 +24,7 @@ import {
   NotificationSvgIcon,
   PaymentsSvgIcon,
   RechargesSvgIcon,
+  SchoolsSvgIcon,
   SvgIconsLogo,
   SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
@@ -188,6 +189,11 @@ const data = {
       name: "Payments",
       url: "/payments",
       icon: PaymentsSvgIcon,
+    },
+    {
+      name: "Etablissements",
+      url: "/etablissements",
+      icon: SchoolsSvgIcon,
     },
   ],
 }
