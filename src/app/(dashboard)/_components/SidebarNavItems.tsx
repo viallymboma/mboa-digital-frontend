@@ -61,7 +61,7 @@ export function SidebarNavItems({
                     ` : 'text-muted-foreground hover:text-primary'}
                   `}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon color={` ${ isActive ? "#7B18CC" : "black" }`} className="w-5 h-5" />
                   <span className='w-full ml-3'>{item.name}</span>
                 </Link>
               </SidebarMenuButton>

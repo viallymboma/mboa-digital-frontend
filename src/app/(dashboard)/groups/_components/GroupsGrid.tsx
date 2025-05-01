@@ -26,7 +26,7 @@ const GroupsGrid = () => {
   );
 
   return (
-    <div className="p-4 w-full ">
+    <div className="py-4 w-full ">
       {/* Controls */}
       <div className="flex flex-wrap justify-between gap-4 mb-4">
         {/* Search */}

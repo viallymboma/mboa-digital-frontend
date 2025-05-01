@@ -5,7 +5,7 @@ import ContactPageHeader from './_component/ContactPageHeader';
 
 const ContactPage = () => {
   return (
-    <div className=''>
+    <div className='flex flex-col'>
       <ContactPageHeader />
       <div className='h-full flex flex-col items-center justify-center'>
         <ContactModule />

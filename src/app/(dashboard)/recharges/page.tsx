@@ -5,7 +5,7 @@ import RechargesPageHeader from './_components/RechargesPageHeader';
 
 const RechargesPage = () => {
   return (
-    <div className=''>
+    <div className='flex flex-col'>
       <RechargesPageHeader />
       <div className='h-full flex flex-col items-center justify-center'>
         <RechargesModule />
