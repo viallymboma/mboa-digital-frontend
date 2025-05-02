@@ -12,11 +12,22 @@
         "confirmPassword": "Confirm Password",
         "confirmPasswordPlaceHolder": "Confirm your password",
         "submit": "Register",
-        "loginPrompt": "Already have an account?",
+        "loginPrompt": "Already have an account?", 
+        "signupPrompt": "You don't have an account yet?", 
         "login": "Login", 
+        "signup": "Sign up", 
         "whoAreYou": "What are you?", 
         "searchLang": "Search", 
-        "remainingSMS": "Remaining"
+        "remainingSMS": "Remaining", 
+        "passwordValidation": {
+            "minLength": "At least 8 characters",
+            "hasUppercase": "One uppercase letter",
+            "hasLowercase": "One lowercase letter",
+            "hasNumber": "One number",
+            "hasSpecial": "One special character"
+        }, 
+        "passwordMismatch": "Passwords do not match", 
+        "passwordMatch": "Passwords match"
     }, 
     "contact": {
         "contactForm": {

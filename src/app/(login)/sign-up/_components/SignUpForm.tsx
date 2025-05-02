@@ -1,7 +1,10 @@
 import React from 'react';
 
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import {
+  Controller,
+  useForm,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
@@ -14,8 +17,13 @@ const schema = z.object({
     firstName: z.string().min(1, { message: 'First name is required' }),
     lastName: z.string().min(1, { message: 'Last name is required' }),
     email: z.string().email({ message: 'Invalid email address' }),
-    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
-    confirmPassword: z.string().min(6, { message: 'Confirm password must be at least 6 characters' }),
+    password: z.string()
+        .min(8, { message: 'Password must be at least 8 characters' })
+        .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+        .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+        .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+        .regex(/[^A-Za-z0-9]/, { message: 'Password must contain at least one special character' }),
+    confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
@@ -27,9 +35,37 @@ const SignUpForm = () => {
 
     const { t } = useTranslation();
 
-    const { handleSubmit } = useForm<FormData>({
+    const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
+
+    const {
+        handleSubmit,
+        control,
+        watch,
+        formState: { errors },
+    } = useForm<FormData>({
         resolver: zodResolver(schema),
     });
+
+    // Watch password fields for real-time validation
+    const password = watch('password');
+    const confirmPassword = watch('confirmPassword');
+
+    // Password validation checks
+    const passwordChecks = {
+        minLength: password?.length >= 8,
+        hasUppercase: /[A-Z]/.test(password || ''),
+        hasLowercase: /[a-z]/.test(password || ''),
+        hasNumber: /[0-9]/.test(password || ''),
+        hasSpecial: /[^A-Za-z0-9]/.test(password || ''),
+        matches: password === confirmPassword && password !== undefined,
+    };
+
+    // Add this before the return statement
+    const ValidationIndicator = ({ isValid }: { isValid: boolean }) => (
+        <span className={`inline-block w-4 h-4 rounded-full ${isValid ? 'bg-green-500' : 'bg-red-500'}`}>
+            {isValid ? '✓' : ''}
+        </span>
+    );
 
     const onSubmit = (data: FormData) => {
         console.log(data);
@@ -37,14 +73,131 @@ const SignUpForm = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
                 <div className='flex justify-around flex-row gap-3 w-full '>
-                    <FormInput className='h-[56px] flex-1 w-full' name="firstName" placeholder={t('register.firstNamePlaceHolder')} label={t('register.firstName')} />
-                    <FormInput className='h-[56px] flex-1' name="lastName" placeholder={t('register.lastNamePlaceHolder')} label={t('register.lastName')} />
+                    <div className='flex flex-col gap-2 w-full'>
+                        <Controller
+                            name="firstName"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                    label={t('register.firstName')}
+                                    placeholder={t('register.firstNamePlaceHolder')}
+                                    error={errors.firstName?.message}
+                                />
+                            )}
+                        />
+                    </div>
+                    <div className='flex flex-col gap-2 w-full'>
+                        <Controller
+                            name="lastName"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                    label={t('register.lastName')}
+                                    placeholder={t('register.lastNamePlaceHolder')}
+                                    error={errors.lastName?.message}
+                                />
+                            )}
+                        />
+                    </div>
                 </div>
-                <FormInput className='h-[56px]' name="email" placeholder={t('register.emailPlaceHolder')} label="Email" type={t('register.email')} />
-                <FormPasswordInput className='h-[56px]' name="password" placeholder={t('register.passwordPlaceHolder')} label={t('register.password')} />
-                <FormPasswordInput className='h-[56px]' name="confirmPassword" placeholder={t('register.confirmPasswordPlaceHolder')} label={t('register.confirmPassword')} />
+                <div className='flex flex-col gap-2 w-full'>
+                    <Controller
+                        name="email"
+                        control={control}
+                        render={({ field }) => (
+                            <FormInput 
+                                {...field}
+                                className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                label="Email" type={t('register.email')}
+                                placeholder={t('register.emailPlaceHolder')} 
+                                error={errors.email?.message}
+                            />
+                        )}
+                    />
+                </div>
+                <div className='flex flex-col gap-2 w-full'>
+                    <Controller
+                        name="password"
+                        control={control}
+                        render={({ field }) => (
+                            <div className="relative">
+                                <FormPasswordInput 
+                                    {...field}
+                                    className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                    label={t('register.password')}
+                                    placeholder={t('register.passwordPlaceHolder')} 
+                                    error={errors.password?.message}
+                                    onFocus={() => setIsPasswordFocused(true)}
+                                    onBlur={() => setIsPasswordFocused(false)}
+                                />
+                                <div className={`
+                                    absolute left-[100%] top-full w-72 ml-2 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-10
+                                    transition-all duration-200 
+                                    ${isPasswordFocused && field.value 
+                                        ? 'opacity-100 translate-y-[-40%] pointer-events-auto' 
+                                        : 'opacity-0 -translate-y-2 pointer-events-none'}
+                                `}>
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.minLength} />
+                                        <span>{t('register.passwordValidation.minLength')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.hasUppercase} />
+                                        <span>{t('register.passwordValidation.hasUppercase')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.hasLowercase} />
+                                        <span>{t('register.passwordValidation.hasLowercase')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.hasNumber} />
+                                        <span>{t('register.passwordValidation.hasNumber')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.hasSpecial} />
+                                        <span>{t('register.passwordValidation.hasSpecial')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    />
+                </div>
+
+                <div className='flex flex-col gap-2 w-full'>
+                    <Controller
+                        name="confirmPassword"
+                        control={control}
+                        render={({ field }) => (
+                            <>
+                                <FormPasswordInput 
+                                    {...field}
+                                    className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                    label={t('register.confirmPassword')}
+                                    placeholder={t('register.confirmPasswordPlaceHolder')}
+                                    error={errors.confirmPassword?.message}
+                                />
+                                <div className="text-sm mt-2">
+                                    <div className="flex items-center gap-2">
+                                        <ValidationIndicator isValid={passwordChecks.matches} />
+                                        <div>
+                                            {passwordChecks.matches ? <span className='text-green-500'>
+                                                {t('register.passwordMatch')}
+                                            </span> : <span className='text-red-500'>
+                                                {t('register.passwordMismatch')}
+                                            </span>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    />
+                </div>
                 <div className='flex flex-col gap-4'>
                     <FormButton className='bg-primaryAppearance h-[56px]' type="submit">Submit</FormButton>
                     <div className='flex items-center justify-center'>

@@ -20,16 +20,17 @@ type PasswordInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     validation?: RegisterOptions;
     className?: string;
     placeHolder?: string;
+    error?: string
 };
 
-const FormPasswordInput = ({ name, label, placeHolder, validation, className, ...props }: PasswordInputProps) => {
+const FormPasswordInput = ({ name, label, placeHolder, validation, className, error, ...props }: PasswordInputProps) => {
 
     const { register, formState: {errors} } = useForm();
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div className="space-y-2">
-            {label && <label htmlFor={name} className="block text-sm font-medium text-gray-700">{label}</label>}
+            {label && <label htmlFor={name} className="block text-[18px] font-medium text-gray-700">{label}</label>}
             <div className="relative">
                 <Input
                     id={name}
@@ -49,6 +50,12 @@ const FormPasswordInput = ({ name, label, placeHolder, validation, className, ..
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </Button>
             </div>
+            {
+                // Display error message if validation fails
+                error && (
+                    <p className="text-red-500 text-sm mt-1">{error as string}</p>
+                )
+            }
             {errors[name] && (
                 <p className="text-red-500 text-sm mt-1">{errors[name]?.message as string}</p>
             )}

@@ -13,10 +13,21 @@
         "confirmPasswordPlaceHolder": "Confirmez votre mot passe",
         "submit": "S'inscrire",
         "loginPrompt": "Vous avez déjà un compte?",
+        "signupPrompt": "Vous n'avez pas encore de compte?", 
         "login": "Connexion", 
+        "signup": "S'inscrire", 
         "whoAreYou": "Qu'est-ce que tu es?",
         "searchLang": "Rechercher", 
-        "remainingSMS": "Restants"
+        "remainingSMS": "Restants", 
+        "passwordValidation": {
+            "minLength": "Au moins 8 caractères",
+            "hasUppercase": "Une lettre majuscule",
+            "hasLowercase": "Une lettre minuscule",
+            "hasNumber": "Un chiffre",
+            "hasSpecial": "Un caractère spécial"
+        }, 
+        "passwordMismatch": "Les mots de passe ne correspondent pas", 
+        "passwordMatch": "Les mots de passe correspondent"
     }, 
     "contact": {
         "contactForm": {
