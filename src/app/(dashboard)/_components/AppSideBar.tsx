@@ -223,7 +223,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Button className='bg-primaryAppearance flex flex-row gap-2 rounded-[20px] p-3'>
                   <MessagingSvgIcon />
                   <span>1.3K SMS</span>
-                  {t('remainingSMS')}
+                  {t('register.remainingSMS')}
               </Button>
               <Button className='bg-transparent'>
                   <HomeSvgIcon />

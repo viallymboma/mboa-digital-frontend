@@ -6,6 +6,8 @@ import {
   LogOut,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 import {
   Avatar,
@@ -27,6 +29,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { notify } from '@/components/utilities/helper';
+import { useLogout } from '@/hooks/useLogout';
 
 export function NavProfile({
   user,
@@ -38,6 +42,22 @@ export function NavProfile({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { logout } = useLogout();
+  const router = useRouter();
+  const { t } = useTranslation();
+
+  const handleLogout = async () => {
+    notify.loading(t('loading.logout.ongoing'));
+    try {
+      await logout();
+      notify.dismiss();
+      notify.success(t('loading.logout.success'));
+      router.push('/login');
+    } catch (error) {
+      notify.success(t('loading.logout.error'));
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -85,7 +105,7 @@ export function NavProfile({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

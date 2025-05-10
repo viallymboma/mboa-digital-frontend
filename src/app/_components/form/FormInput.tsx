@@ -33,7 +33,7 @@ const FormInput: React.FC<FormInputProps & React.InputHTMLAttributes<HTMLInputEl
 }) => {
   return (
     <div className="space-y-2 w-full">
-      {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+      {label && <label className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
       <Input
         type={type}
         placeholder={placeholder}

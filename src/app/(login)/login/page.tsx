@@ -11,7 +11,7 @@ const LoginPage = () => {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100">
-      <section className='flex-1 w-full h-screen items-center flex flex-col p-[3rem] gap-[2rem]'>
+      <section className='flex-1 w-full h-screen dark:bg-slate-900 items-center flex flex-col p-[3rem] gap-[2rem]'>
           <div className='mt-[3rem] w-[75%]'>
               <SvgIconsLogo />
           </div>

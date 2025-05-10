@@ -1,17 +1,21 @@
 "use client";
 import React from 'react';
 
-// import { ProtectedRoute } from '@/wrapper/ProtectedRoute';
+import { useTokenExpiration } from '@/hooks/useTokenExpiration';
+import { ProtectedRoute } from '@/wrapper/ProtectedRoute';
+
 import DashboardLayout from './dashboard/DashboardLayout';
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
+    // Add the hook here
+    useTokenExpiration ();
     return (
-        // <ProtectedRoute >
-        // </ProtectedRoute>
+        <ProtectedRoute >
             <DashboardLayout>
                 { children }
             </DashboardLayout>
+        </ProtectedRoute>
     )
 }
 
-export default layout
+export default Layout

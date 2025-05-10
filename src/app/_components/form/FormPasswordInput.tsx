@@ -30,7 +30,7 @@ const FormPasswordInput = ({ name, label, placeHolder, validation, className, er
 
     return (
         <div className="space-y-2">
-            {label && <label htmlFor={name} className="block text-[18px] font-medium text-gray-700">{label}</label>}
+            {label && <label htmlFor={name} className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
             <div className="relative">
                 <Input
                     id={name}

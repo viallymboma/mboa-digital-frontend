@@ -4,6 +4,8 @@ import useSWRMutation from 'swr/mutation';
 
 import { ApiService } from '@/services/data.service';
 
+import useGetLocalStorage from './useGetLocalStorage';
+
 export interface SignUpRequest {
     firstName: string;
     lastName: string;
@@ -99,6 +101,9 @@ export function useLogin() {
                     lastname: data.lastname,
                     role: data.role
                 }));
+                // Store expiration time
+                const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
+                localStorage.setItem('tokenExpiration', expirationTime.toString());
                 // router.push('/dashboard');
             },
         }
@@ -121,8 +126,10 @@ export function useLogin() {
 }
 
 export function useUser() {
+    const { getLocalStorage } = useGetLocalStorage();
+    console.log('useUser localStorage:', getLocalStorage("user"));
     const { data, error, isLoading } = useSWR<AuthResponse>(
-        localStorage.getItem('token') ? '/auth/me' : null, // Only fetch if token exists
+        localStorage.getItem('token') ? `/api/v1/auth/${ getLocalStorage("user").email }` : null, // Only fetch if token exists
         url => {
             const apiService = ApiService.getInstance();
             return apiService.get<AuthResponse>(url);
@@ -132,7 +139,10 @@ export function useUser() {
             shouldRetryOnError: false,
             onError: (error) => {
                 if (error.response?.status === 401 || error.response?.status === 403) {
-                    localStorage.clear();
+                    // localStorage.clear();
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('refreshToken');
                     window.location.href = '/login';
                 }
             }
@@ -141,11 +151,37 @@ export function useUser() {
 
     return {
         user: data?.user,
+        userNow: getLocalStorage("user"),
         isLoading,
         error,
         isAuthenticated: !!data?.user
     };
 }
+
+// export function useAuth() {
+//     const router = useRouter();
+
+//     useEffect(() => {
+//         const checkTokenExpiration = () => {
+//             const expiration = localStorage.getItem('tokenExpiration');
+//             if (expiration && new Date().getTime() > parseInt(expiration)) {
+//                 // Token is expired, trigger refresh
+//                 const apiService = ApiService.getInstance();
+//                 apiService.handleTokenRefresh().catch(() => {
+//                     router.push('/login');
+//                 });
+//             }
+//         };
+
+//         // Check on mount and periodically
+//         checkTokenExpiration();
+//         const interval = setInterval(checkTokenExpiration, 5 * 60 * 1000); // Check every 5 minutes
+
+//         return () => clearInterval(interval);
+//     }, [router]);
+
+//     return null;
+// }
 
 
 export function useLogout() {

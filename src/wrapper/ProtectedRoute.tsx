@@ -10,19 +10,21 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
     const router = useRouter();
-    const { user, isLoading, error } = useUser();
+    const { userNow, isLoading, error } = useUser();
+
+    console.log('ProtectedRoute user:', userNow);
 
     useEffect(() => {
-        if (!isLoading && !user) {
+        if (!isLoading && !userNow) {
             router.push('/login');
         }
-    }, [isLoading, user, router]);
+    }, [isLoading, userNow, router]);
 
     if (isLoading) {
         return <div>Loading...</div>; // Or your loading component
     }
 
-    if (error || !user) {
+    if (error || !userNow) {
         return null;
     }
 

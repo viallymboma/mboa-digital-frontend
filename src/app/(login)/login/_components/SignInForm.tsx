@@ -2,6 +2,7 @@
 import React from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Controller,
   useForm,
@@ -13,6 +14,7 @@ import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
 // import FormInput from '@/app/_components/form/FormInput';
 import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
+import { notify } from '@/components/utilities/helper';
 import { useLogin } from '@/hooks/useAuth.hook';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -26,6 +28,8 @@ type FormData = z.infer<typeof schema>;
 const SignInForm = () => {
     const { t } = useTranslation();
 
+    const router = useRouter();
+
     const { login, isLoading, error } = useLogin();
 
     const {
@@ -37,12 +41,19 @@ const SignInForm = () => {
     });
 
     const onSubmit = async (data: FormData) => {
+        notify.loading(t('loading.login.ongoing'));
         try {
             console.log('Form data:', data);
             await login(data);
+            notify.dismiss();
+            notify.success(t('loading.login.success'));
+            // Optionally, you can redirect the user or perform other actions here
             // Handle successful login, e.g., redirect to dashboard
+            router.push('/dashboard');
+
 
         } catch (error) {
+            notify.success(t('loading.login.error'));
             console.error('Login failed:', error);
         }
     };
@@ -79,7 +90,7 @@ const SignInForm = () => {
                     />
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <FormButton className='bg-primaryAppearance h-[56px]' type="submit">{ isLoading ? "Loading..." : "Submit" }</FormButton>
+                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isLoading ? "Loading..." : "Submit" }</FormButton>
                     <div className='flex items-center justify-center'>
                         <p className='text-center w-full'>
                             { t('register.signupPrompt')} <Link href={"/sign-up"} className='text-primaryAppearance'>{t('register.signup')}</Link> 

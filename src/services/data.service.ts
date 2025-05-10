@@ -8,6 +8,9 @@ import { LoginResponse } from '@/hooks/useAuth.hook';
 export class ApiService {
     private static instance: ApiService;
     private axiosInstance: AxiosInstance; 
+    // Add these new properties
+    private isRefreshing = false;
+    private refreshSubscribers: ((token: string) => void)[] = [];
 
     // List of public routes that don't need authentication
     private publicRoutes = [
@@ -15,7 +18,7 @@ export class ApiService {
         '/api/v1/auth/register',
     ];
 
-    private async handleTokenRefresh() {
+    public async handleTokenRefresh() {
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) {
             this.handleUnauthorized();
@@ -70,18 +73,33 @@ export class ApiService {
                 const originalRequest = error.config;
 
                 if (error.response?.status === 401 && !originalRequest._retry) {
+                    if (this.isRefreshing) {
+                        // Queue the request if refresh is in progress
+                        return new Promise(resolve => {
+                            this.refreshSubscribers.push((token: string) => {
+                                originalRequest.headers.Authorization = `Bearer ${token}`;
+                                resolve(this.axiosInstance(originalRequest));
+                            });
+                        });
+                    }
+
+                    this.isRefreshing = true;
                     originalRequest._retry = true;
+
                     try {
                         const newToken = await this.handleTokenRefresh();
+                        // Notify subscribers with new token
+                        if (newToken) {
+                            this.refreshSubscribers.forEach(callback => callback(newToken));
+                        }
+                        this.refreshSubscribers = [];
                         originalRequest.headers.Authorization = `Bearer ${newToken}`;
                         return this.axiosInstance(originalRequest);
                     } catch (refreshError) {
                         return Promise.reject(refreshError);
+                    } finally {
+                        this.isRefreshing = false;
                     }
-                }
-
-                if (error.response?.status === 403) {
-                    this.handleUnauthorized();
                 }
 
                 return Promise.reject(error);

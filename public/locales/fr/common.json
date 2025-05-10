@@ -1,4 +1,16 @@
 {
+    "loading": {
+        "logout": {
+            "ongoing": "Déconnexion en cours...",
+            "success": "Déconnexion réussie",
+            "error": "Échec de la déconnexion"
+        },
+        "login": {
+            "ongoing": "Connexion en cours...",
+            "success": "Connexion réussie",
+            "error": "Échec de la connexion"
+        }
+    },
     "register": {
         "title": "Créer un compte",
         "firstName": "Prénom",
