@@ -202,7 +202,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, isMobile } = useSidebar(); 
   const { t } = useTranslation();
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar className='dark:bg-gray-800' collapsible="icon" {...props}>
       <SidebarHeader className='flex justify-center items-center'>
         {/* <TeamSwitcher teams={data.teams} /> */}
         {

@@ -1,0 +1,32 @@
+import {
+  CountryType,
+  PaginatedCountryResponseType,
+} from '@/types/country';
+
+import { ApiService } from './data.service';
+
+export class CountryService {
+    private static instance: CountryService;
+    private apiService: ApiService;
+
+    private constructor() {
+        this.apiService = ApiService.getInstance();
+    }
+
+    public static getInstance(): CountryService {
+        if (!CountryService.instance) {
+            CountryService.instance = new CountryService();
+        }
+        return CountryService.instance;
+    }
+
+    async getCountries(pageNumber: number = 0, pageSize: number = 10): Promise<PaginatedCountryResponseType> {
+        return this.apiService.get<PaginatedCountryResponseType>(
+            `/api/v1/pays?page=${pageNumber}&size=${pageSize}`
+        );
+    }
+
+    async getCountryByCode(code: string): Promise<CountryType> {
+        return this.apiService.get<CountryType>(`/api/v1/pays/${code}`);
+    }
+}

@@ -8,15 +8,33 @@ import {
   ImporterContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
 
+// import { useContactStore } from '@/stores/contacts.store';
+// import { useContacts } from '@/hooks/useContacts';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import ContactTableModule from './ContactTableModule';
 import CreateContactForm from './CreateContactForm';
 import ImportModule from './ImportModule';
 
+// import { notify } from '@/components/utilities/helper';
+// import { ContactService } from '@/services/contact.serivce';
+
 // import EmptyStateUI from './EmptyStateUI';
 
 const ContactModule = () => {
-//   const { t } = useTranslation();
+
+    // const { contacts, isLoading, error } = useContacts();
+    // const { selectedContacts, clearSelectedContacts } = useContactStore();
+    // const contactService = ContactService.getInstance();  
+
+    // const handleSendMessage = async (message: string) => {
+    //     try {
+    //       await contactService.sendMessage(selectedContacts, message);
+    //       notify.success('Message sent successfully');
+    //       clearSelectedContacts();
+    //     } catch (error) {
+    //       notify.error(error as string);
+    //     }
+    // };
 
     const buttons = [
         {
@@ -38,6 +56,31 @@ const ContactModule = () => {
             ),
         },
     ];
+
+    // if (isLoading) {
+    //     return (<div className='flex items-center flex-col justify-center w-full h-screen bg-white'>
+    //         <div className="w-[10rem] h-[10rem] animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
+    //         </div>
+    //         <SvgLogoIcon height='98' width='100' />
+    //     </div>)
+    // }
+
+    // if (error) {
+    //     return (<div className='flex items-center justify-center w-full h-screen bg-white'>
+    //             <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
+                    
+    //             </div>
+    //         </div>)
+    // }
+
+    // if (Array.isArray(contacts) && contacts.length === 0) {
+    //     return (<EmptyStateUI
+    //         SvgIcon={ContactEmptyUISvgIcon}
+    //         mainTitle="contact.emptyUI.mainTitle"
+    //         secondTitle="contact.emptyUI.secondTitle"
+    //         buttons={buttons}
+    //     />)
+    // }
 
     return (
         <>

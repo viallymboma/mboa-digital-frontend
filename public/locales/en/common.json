@@ -1,4 +1,8 @@
 {
+    "message": {
+        "characterCount": "Nombre de caractères: {{count}}",
+        "specialCharacters": "Nombre de caractères speciaux: {{count}} (counts as {{weight}})"
+    }, 
     "loading": {
         "logout": {
             "ongoing": "Logging out...",

@@ -1,4 +1,8 @@
 {
+    "message": {
+        "characterCount": "Total characters: {{count}}",
+        "specialCharacters": "Special characters: {{count}} (counts as {{weight}})"
+    }, 
     "loading": {
         "logout": {
             "ongoing": "Déconnexion en cours...",
