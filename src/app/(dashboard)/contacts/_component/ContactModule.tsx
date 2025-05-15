@@ -6,10 +6,11 @@ import {
   AddNewContactSvgIcon,
   ContactEmptyUISvgIcon,
   ImporterContactSvgIcon,
+  SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
-
 // import { useContactStore } from '@/stores/contacts.store';
-// import { useContacts } from '@/hooks/useContacts';
+import { useContacts } from '@/hooks/useContacts';
+
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import ContactTableModule from './ContactTableModule';
 import CreateContactForm from './CreateContactForm';
@@ -22,7 +23,8 @@ import ImportModule from './ImportModule';
 
 const ContactModule = () => {
 
-    // const { contacts, isLoading, error } = useContacts();
+    const { contacts, isLoading, error } = useContacts();
+    console.log(contacts, "contacts+++++++++++__________");
     // const { selectedContacts, clearSelectedContacts } = useContactStore();
     // const contactService = ContactService.getInstance();  
 
@@ -57,40 +59,34 @@ const ContactModule = () => {
         },
     ];
 
-    // if (isLoading) {
-    //     return (<div className='flex items-center flex-col justify-center w-full h-screen bg-white'>
-    //         <div className="w-[10rem] h-[10rem] animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
-    //         </div>
-    //         <SvgLogoIcon height='98' width='100' />
-    //     </div>)
-    // }
+    if (isLoading) {
+        return (<div className='flex items-center flex-col justify-center w-full h-screen bg-white'>
+            <div className="w-[10rem] h-[10rem] animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
+            </div>
+            <SvgLogoIcon height='98' width='100' />
+        </div>)
+    }
 
-    // if (error) {
-    //     return (<div className='flex items-center justify-center w-full h-screen bg-white'>
-    //             <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
-                    
-    //             </div>
-    //         </div>)
-    // }
+    if (error) {
+        return (<div className='flex items-center justify-center w-full h-screen bg-white'>
+                <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
+                    error
+                </div>
+            </div>)
+    }
 
-    // if (Array.isArray(contacts) && contacts.length === 0) {
-    //     return (<EmptyStateUI
-    //         SvgIcon={ContactEmptyUISvgIcon}
-    //         mainTitle="contact.emptyUI.mainTitle"
-    //         secondTitle="contact.emptyUI.secondTitle"
-    //         buttons={buttons}
-    //     />)
-    // }
+    if (Array.isArray(contacts) && contacts.length === 0) {
+        return (<EmptyStateUI
+            SvgIcon={ContactEmptyUISvgIcon}
+            mainTitle="contact.emptyUI.mainTitle"
+            secondTitle="contact.emptyUI.secondTitle"
+            buttons={buttons}
+        />)
+    }
 
     return (
         <>
             <ContactTableModule />
-            <EmptyStateUI
-                SvgIcon={ContactEmptyUISvgIcon}
-                mainTitle="contact.emptyUI.mainTitle"
-                secondTitle="contact.emptyUI.secondTitle"
-                buttons={buttons}
-            />
         </>
     );
 };

@@ -1,6 +1,7 @@
 import {
   EnterpriseContactDTO,
   EnterpriseContactResponseType,
+  PaginatedEnterpriseContactsResponseType,
 } from '@/types/contact';
 
 import { ApiService } from './data.service';
@@ -20,8 +21,12 @@ export class ContactService {
         return ContactService.instance;
     }
 
-    async getContacts(): Promise<EnterpriseContactResponseType[]> {
-        return this.apiService.get<EnterpriseContactResponseType[]>('/api/v1/contact');
+    async getContacts(id: string): Promise<EnterpriseContactResponseType[]> {
+        return this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/${id}`);
+    }
+
+    async getContactsByCompanyPaginated(id: string): Promise<PaginatedEnterpriseContactsResponseType> {
+        return this.apiService.get<PaginatedEnterpriseContactsResponseType>(`/api/v1/contact/all/${id}`);
     }
 
     async createContact(contact: EnterpriseContactDTO): Promise<EnterpriseContactResponseType> {
@@ -29,7 +34,7 @@ export class ContactService {
     }
 
     async deleteContacts(contactIds: string[]): Promise<void> {
-        return this.apiService.post('/api/v1/contacts/delete', { contactIds });
+        return this.apiService.delete(`/api/v1/contacts/${contactIds}`);
     }
 
     async sendMessage(contactIds: string[], message: string): Promise<void> {

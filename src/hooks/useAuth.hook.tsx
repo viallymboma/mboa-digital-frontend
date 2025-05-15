@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { ApiService } from '@/services/data.service';
+import { LoginResponse } from '@/types/auth';
 
 import useGetLocalStorage from './useGetLocalStorage';
 
@@ -28,27 +29,27 @@ export interface LoginRequest {
     password: string;
 }
 
-export interface LoginResponse {
-    statusCode: 200,
-    error: null,
-    message: string,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    version: number,
-    token: string,
-    refreshToken: string,
-    expirationTime: string,
-    firstname: string,
-    lastname: string,
-    email: string,
-    phoneNumber: string,
-    country: string,
-    city: string,
-    gender: string,
-    role: string,
-    archived: boolean
-}
+// export interface LoginResponse {
+//     statusCode: 200,
+//     error: null,
+//     message: string,
+//     id: string,
+//     createdAt: string,
+//     updatedAt: string,
+//     version: number,
+//     token: string,
+//     refreshToken: string,
+//     expirationTime: string,
+//     firstname: string,
+//     lastname: string,
+//     email: string,
+//     phoneNumber: string,
+//     country: string,
+//     city: string,
+//     gender: string,
+//     role: string,
+//     archived: boolean
+// }
 
 async function signupFetcher(url: string, { arg }: { arg: SignUpRequest }) {
     const apiService = ApiService.getInstance();
@@ -99,7 +100,8 @@ export function useLogin() {
                     email: data.email,
                     firstname: data.firstname,
                     lastname: data.lastname,
-                    role: data.role
+                    role: data.role, 
+                    enterprise: data.userEnterprise
                 }));
                 // Store expiration time
                 const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 hours
