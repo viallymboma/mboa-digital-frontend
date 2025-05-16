@@ -1,7 +1,6 @@
 import {
   EnterpriseContactDTO,
   EnterpriseContactResponseType,
-  PaginatedEnterpriseContactsResponseType,
 } from '@/types/contact';
 
 import { ApiService } from './data.service';
@@ -25,8 +24,8 @@ export class ContactService {
         return this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/${id}`);
     }
 
-    async getContactsByCompanyPaginated(id: string): Promise<PaginatedEnterpriseContactsResponseType> {
-        return this.apiService.get<PaginatedEnterpriseContactsResponseType>(`/api/v1/contact/all/${id}`);
+    async getContactsByCompanyPaginated(id: string): Promise<EnterpriseContactResponseType[]> {
+        return this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/all/${id}`);
     }
 
     async createContact(contact: EnterpriseContactDTO): Promise<EnterpriseContactResponseType> {

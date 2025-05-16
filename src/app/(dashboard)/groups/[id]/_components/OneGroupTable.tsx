@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-  contactColumns,
-} from '@/app/(dashboard)/contacts/_component/ContactTableElements';
+  contactColumnsDummy,
+} from '@/app/(dashboard)/contacts/_component/ContactTableElementsDummy';
 import { dummyDataReal } from '@/app/(dashboard)/contacts/_component/dummyData';
 import GenericTable from '@/app/_components/tables/GenericTable';
 
@@ -17,7 +17,7 @@ const OneGroupTable = () => {
   return (
     <GenericTable
       data={data}
-      columns={contactColumns}
+      columns={contactColumnsDummy}
       title="Listes des Contacts"
       description="Liste de toutes les catégories disponibles"
       defaultPageSize={7}

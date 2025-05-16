@@ -5,11 +5,16 @@ import {
   UnavailableContactSvgIcon,
   WorkingContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { EnterpriseContactResponseType } from '@/types/contact';
 
 import ContactTable from './ContactTable';
 import StatsCard from './StatsCard';
 
-const ContactTableModule = () => {
+export type ContactTableModuleProps = {
+  contacts?: EnterpriseContactResponseType[]; // Adjust the type as per your data structure
+};
+
+const ContactTableModule: React.FC <ContactTableModuleProps> = ({ contacts }) => {
   return (
     <div className=' w-[100%]'>
 
@@ -38,7 +43,7 @@ const ContactTableModule = () => {
         />
       </div>
 
-      <ContactTable />
+      <ContactTable contacts={ contacts } />
 
     </div>
   )

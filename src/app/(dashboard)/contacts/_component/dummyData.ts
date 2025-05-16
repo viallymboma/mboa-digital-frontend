@@ -1,4 +1,9 @@
-
+import {
+  EnterpriseType,
+  Gender,
+  GroupType,
+  UserType,
+} from '@/types/contact';
 
 // Define the data type
 export type ContactType = {
@@ -10,6 +15,23 @@ export type ContactType = {
   phone: string;
   status: string;
   actions: string;
+
+  statusCode?: number;
+  error?: string;
+  message?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  version?: number;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  phoneNumber?: string;
+  country?: string;
+  gender?: Gender;
+  user?: UserType;
+  enterprise?: EnterpriseType;
+  group?: GroupType;
+  archived?: boolean;
 };
 
 // Sample data

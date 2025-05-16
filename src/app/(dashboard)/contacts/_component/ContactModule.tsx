@@ -16,6 +16,8 @@ import ContactTableModule from './ContactTableModule';
 import CreateContactForm from './CreateContactForm';
 import ImportModule from './ImportModule';
 
+// import { PaginatedEnterpriseContactsResponseType } from '@/types/contact';
+
 // import { notify } from '@/components/utilities/helper';
 // import { ContactService } from '@/services/contact.serivce';
 
@@ -24,8 +26,8 @@ import ImportModule from './ImportModule';
 const ContactModule = () => {
 
     const { contacts, isLoading, error } = useContacts();
+    // const { contacts } = useContactStore();
     console.log(contacts, "contacts+++++++++++__________");
-    // const { selectedContacts, clearSelectedContacts } = useContactStore();
     // const contactService = ContactService.getInstance();  
 
     // const handleSendMessage = async (message: string) => {
@@ -60,10 +62,12 @@ const ContactModule = () => {
     ];
 
     if (isLoading) {
-        return (<div className='flex items-center flex-col justify-center w-full h-screen bg-white'>
-            <div className="w-[10rem] h-[10rem] animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
+        return (<div className='relative flex items-center justify-center w-full h-screen'>
+            <div className="absolute  m-auto w-[10rem] h-[10rem] animate-spin p-4 rounded-full  border-t-[10px]  border-t-purple-600 border-primaryAppearanceLight">
             </div>
-            <SvgLogoIcon height='98' width='100' />
+            <div className='flex items-center justify-center w-[10rem] h-[10rem] rounded-full'>
+                <SvgLogoIcon height='98' width='100' />
+            </div>
         </div>)
     }
 
@@ -86,7 +90,7 @@ const ContactModule = () => {
 
     return (
         <>
-            <ContactTableModule />
+            <ContactTableModule contacts={ contacts } />
         </>
     );
 };

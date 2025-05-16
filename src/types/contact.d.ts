@@ -164,9 +164,9 @@ export type EnterpriseContactResponseType = {
     country: string;
     city: string;
     gender: Gender;
-    user: User;
+    user: UserType;
     enterprise: EnterpriseType;
-    group: Group;
+    group: GroupType;
     archived: boolean;
 }
 export type EnterpriseContactDTO = {
@@ -213,3 +213,18 @@ export type PaginatedEnterpriseContactsResponseType = {
     content: EnterpriseContactResponseType [];
     empty: boolean;
 }
+
+export type CreateContactRequestType = {
+    firstname: string,
+    lastname: string,
+    email: string,
+    phoneNumber: string,
+    country: string,
+    city: string,
+    gender?: Gender,
+    enterpriseId: string,
+    group?: string
+}
+
+
+

@@ -3,7 +3,9 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 
-import { LoginResponse } from '@/hooks/useAuth.hook';
+import { LoginResponse } from '@/types/auth';
+
+// import { LoginResponse } from '@/hooks/useAuth.hook';
 
 export class ApiService {
     private static instance: ApiService;

@@ -50,13 +50,12 @@ const SignInForm = () => {
             // Optionally, you can redirect the user or perform other actions here
             // Handle successful login, e.g., redirect to dashboard
             router.push('/dashboard');
-
-
         } catch (error) {
             notify.success(t('loading.login.error'));
             console.error('Login failed:', error);
         }
     };
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">

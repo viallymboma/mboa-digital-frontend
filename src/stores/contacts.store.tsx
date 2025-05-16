@@ -8,6 +8,7 @@ interface ContactState {
     isLoading: boolean;
     error: Error | null;
     setContacts: (contacts: EnterpriseContactResponseType[]) => void;
+    addContact: (contact: EnterpriseContactResponseType) => void;
     toggleContact: (contactId: string) => void;
     clearSelectedContacts: () => void;
 }
@@ -15,9 +16,12 @@ interface ContactState {
 export const useContactStore = create<ContactState>((set) => ({
     contacts: [],
     selectedContacts: [],
-    isLoading: false,
-    error: null,
+    isLoading: false, 
+    error: null, 
     setContacts: (contacts) => set({ contacts }),
+    addContact: (contact) => set((state) => ({
+        contacts: [contact, ...state.contacts]
+    })),
     toggleContact: (contactId) =>
         set((state) => ({
             selectedContacts: state.selectedContacts.includes(contactId)

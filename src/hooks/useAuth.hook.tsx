@@ -1,9 +1,15 @@
+"use client";
+import React from 'react';
+
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { ApiService } from '@/services/data.service';
-import { LoginResponse } from '@/types/auth';
+import {
+  LoginResponse,
+  UserType,
+} from '@/types/auth';
 
 import useGetLocalStorage from './useGetLocalStorage';
 
@@ -154,6 +160,49 @@ export function useUser() {
     return {
         user: data?.user,
         userNow: getLocalStorage("user"),
+        isLoading,
+        error,
+        isAuthenticated: !!data?.user
+    };
+}
+
+
+export function useUserV2() {
+    const { getLocalStorage } = useGetLocalStorage();
+    const [token, setToken] = React.useState<string | null>(null);
+    const [user, setUser] = React.useState<UserType>();
+
+    // Move localStorage access to useEffect
+    React.useEffect(() => {
+        setToken(typeof window !== 'undefined' ? localStorage.getItem('token') : null);
+        setUser(getLocalStorage("user"));
+    }, []);
+
+    const { data, error, isLoading } = useSWR<AuthResponse>(
+        token && user?.email ? `/api/v1/auth/${user.email}` : null,
+        url => {
+            const apiService = ApiService.getInstance();
+            return apiService.get<AuthResponse>(url);
+        },
+        {
+            revalidateOnFocus: false,
+            shouldRetryOnError: false,
+            onError: (error) => {
+                if (error.response?.status === 401 || error.response?.status === 403) {
+                    if (typeof window !== 'undefined') {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('refreshToken');
+                        window.location.href = '/login';
+                    }
+                }
+            }
+        }
+    );
+
+    return {
+        user: data?.user,
+        userNow: user,
         isLoading,
         error,
         isAuthenticated: !!data?.user
