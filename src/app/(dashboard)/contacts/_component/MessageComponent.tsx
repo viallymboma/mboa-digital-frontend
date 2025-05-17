@@ -14,9 +14,7 @@ import {
 } from '@/app/_components/form/FormInput';
 import { Separator } from '@/components/ui/separator';
 import { countCharacters } from '@/lib/utils';
-// import { useCountries } from '@/hooks/useCountry';
-// import { useCountryStore } from '@/stores/countries.store';
-// import { CountryType } from '@/types/country';
+import { useContactStore } from '@/stores/contacts.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // Define schema validation using Zod
@@ -29,11 +27,10 @@ type FormData = z.infer<typeof schema>;
 
 const MessageComponent = () => {
 
+    const { selectedContactsData } = useContactStore();
+    console.log(selectedContactsData, "selectedContactsData in MessageComponent");
+
     const [charCount, setCharCount] = React.useState({ total: 0, special: 0, specialCount: 0 });
-
-    // const { countries, isLoading } = useCountries();
-    // const { selectedCountry, setSelectedCountry } = useCountryStore();
-
 
     const { t } = useTranslation();
 
@@ -64,12 +61,6 @@ const MessageComponent = () => {
         { value: 'dbwg62t4r892483714y0r9284903', label: '694950434' },
     ];
 
-    // const options = countries.map((country: CountryType) => ({
-    //     value: country.code,
-    //     label: `${country.nom} (${country.code})`,
-    //     imageUrl: country.imageUrl
-    // }));
-
     const onSubmit = (data: FormData) => {
         console.log('New Contact:', data);
     };
@@ -87,27 +78,11 @@ const MessageComponent = () => {
                         // defaultValue=""
                         rules={{ required: 'Phone is required' }}
                         render={({ field }) => (
-                            // <CountrySelect
-                            //     {...field}
-                            //     label=""
-                            //     className='border-primaryAppearance'
-                            //     options={options}
-                            //     value={field.value}
-                            //     onChange={field.onChange}
-                            //     error={errors.contactPhone?.message} // Include error for country
-                            // />
                             <MultiSelect
                                 label="Select Items"
                                 options={options}
                                 value={field?.value}
                                 onChange={field.onChange}
-                                // onChange={(value) => {
-                                //     const country = countries.filter(c => value.includes(c.code));
-                                //     if (country) {
-                                //         setSelectedCountry(country[0]);
-                                //         field.onChange(value);
-                                //     }
-                                // }}
                                 error={errors.contactPhone?.message}
                             />
                         )}
@@ -140,7 +115,6 @@ const MessageComponent = () => {
 
                 <div className='flex flex-col gap-4'>
                     <button type="submit" className='flex flex-row rounded-lg justify-center gap-3 bg-primaryAppearance p-[1.5rem]'>
-                        {/* <AddNewContactSvgIcon color="white" /> */}
                         <span className='text-[18px] text-white'>{t('contact.sendMessageFormBtn')}</span>
                     </button>
                 </div>

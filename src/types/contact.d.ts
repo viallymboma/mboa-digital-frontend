@@ -150,23 +150,23 @@ export type UserType = {
 
 // Main Enterprise Contact Response interface
 export type EnterpriseContactResponseType = {
-    statusCode: number;
-    error: string;
-    message: string;
+    statusCode?: number;
+    error?: string;
+    message?: string;
     id: string;
     createdAt: string;
-    updatedAt: string;
-    version: number;
+    updatedAt?: string;
+    version?: number;
     firstname: string;
     lastname: string;
     email: string;
     phoneNumber: string;
     country: string;
     city: string;
-    gender: Gender;
-    user: UserType;
+    gender?: Gender;
+    user?: UserType;
     enterprise: EnterpriseType;
-    group: GroupType;
+    group?: GroupType;
     archived: boolean;
 }
 export type EnterpriseContactDTO = {

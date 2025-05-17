@@ -1,6 +1,9 @@
+import { EnterpriseType } from '@/types/contact';
 import { ColumnDef } from '@tanstack/react-table';
 
 import ContactActionUI from './ContactActionUI';
+import SelectAllCheckbox from './table-sub-ui/SelectAllCheckbox';
+import SelectedTableRow from './table-sub-ui/SelectedTableRow';
 
 export type TransformedContactType = {
   id: string;
@@ -10,7 +13,7 @@ export type TransformedContactType = {
   phoneNumber: string;
   country: string;
   city: string;
-  enterprise: string;
+  enterprise: EnterpriseType;
   createdAt: string;
   status: string;
   archived: boolean;
@@ -25,20 +28,10 @@ export const contactColumns: ColumnDef<TransformedContactType>[] = [
     {
         id: 'select',
         header: ({ table }) => (
-            <input
-                type="checkbox"
-                checked={table.getIsAllRowsSelected()}
-                onChange={table.getToggleAllRowsSelectedHandler()}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
+            <SelectAllCheckbox table={table} />
         ),
         cell: ({ row }) => (
-            <input
-                type="checkbox"
-                checked={row.getIsSelected()}
-                onChange={row.getToggleSelectedHandler()}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
+            <SelectedTableRow row={row} />
         ),
         enableSorting: false,
         enableHiding: false,
