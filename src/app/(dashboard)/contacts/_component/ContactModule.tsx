@@ -16,29 +16,11 @@ import ContactTableModule from './ContactTableModule';
 import CreateContactForm from './CreateContactForm';
 import ImportModule from './ImportModule';
 
-// import { PaginatedEnterpriseContactsResponseType } from '@/types/contact';
-
-// import { notify } from '@/components/utilities/helper';
-// import { ContactService } from '@/services/contact.serivce';
-
-// import EmptyStateUI from './EmptyStateUI';
-
 const ContactModule = () => {
 
     const { contacts, isLoading, error } = useContacts();
     // const { contacts } = useContactStore();
     console.log(contacts, "contacts+++++++++++__________");
-    // const contactService = ContactService.getInstance();  
-
-    // const handleSendMessage = async (message: string) => {
-    //     try {
-    //       await contactService.sendMessage(selectedContacts, message);
-    //       notify.success('Message sent successfully');
-    //       clearSelectedContacts();
-    //     } catch (error) {
-    //       notify.error(error as string);
-    //     }
-    // };
 
     const buttons = [
         {
@@ -46,7 +28,7 @@ const ContactModule = () => {
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-primaryAppearance", 
-            dialogContent: <CreateContactForm />,
+            dialogContent: <CreateContactForm onClose={() => (document.querySelector("button[aria-label='Close']") as HTMLButtonElement)?.click()} />,
         },
         {
             label: 'contact.importContactsBtn',

@@ -2,6 +2,7 @@
 import React from 'react';
 
 import GenericTable from '@/app/_components/tables/GenericTable';
+import { useContacts } from '@/hooks/useContacts';
 
 import {
   contactColumns,
@@ -13,6 +14,8 @@ import { ContactTableModuleProps } from './ContactTableModule';
 // import { dummyDataReal } from './dummyData';
 
 const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
+
+  const { editContact, deleteContact } = useContacts();
 
   // const [data, setData] = React.useState(dummyDataReal);
 
@@ -56,8 +59,8 @@ const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
       title="Listes des Contacts"
       description="Liste de tout les contacts disponibles"
       defaultPageSize={7}
-      onEdit={(row) => console.log('Edit:', row)}
-      onDelete={(row) => console.log('Delete:', row)}
+      onEdit={ (row) => editContact (row) }
+      onDelete={ (row) => deleteContact (row.id) }
       onReorder={handleReorder} // Pass the reorder handler
     />
   );

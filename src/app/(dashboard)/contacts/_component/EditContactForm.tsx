@@ -13,14 +13,28 @@ import {
   CountrySelect,
   FormInput,
 } from '@/app/_components/form/FormInput';
-// import { AddNewContactSvgIcon } from '@/app/svg_components/SvgIcons';
 import { notify } from '@/components/utilities/helper';
 import { useContacts } from '@/hooks/useContacts';
 import { useCountries } from '@/hooks/useCountry';
-import useGetLocalStorage from '@/hooks/useGetLocalStorage';
+import { UpdateContactRequestType } from '@/types/contact';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// Add this helper function at the top of your file
+// Schema for edit form validation
+const editSchema = z.object({
+    firstname: z.string().min(1, { message: 'First name is required' }),
+    lastname: z.string().min(1, { message: 'Last name is required' }),
+    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    country: z.string().min(1, { message: 'Country is required' }),
+    city: z.string().min(1, { message: 'City is required' }), 
+});
+
+type EditFormData = z.infer<typeof editSchema>;
+
+interface EditContactFormProps {
+    contact: UpdateContactRequestType;
+    onClose?: () => void;
+}
+
 const getCountryFlag = (countryCode: string): string => {
     const codePoints = countryCode
         .toUpperCase()
@@ -29,31 +43,11 @@ const getCountryFlag = (countryCode: string): string => {
     return String.fromCodePoint(...codePoints);
 };
 
-// Define schema validation using Zod
-const schema = z.object({
-    firstname: z.string().min(1, { message: 'First name is required' }),
-    lastname: z.string().min(1, { message: 'Last name is required' }),
-    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
-    country: z.string().min(1, { message: 'Country is required' }),
-    city: z.string().min(1, { message: 'City is required' }), 
-});
-
-type FormData = z.infer<typeof schema>;
-
-interface CreateContactFormProps {
-    onClose?: () => void;
-}
-
-const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
+const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) => {
     const { t } = useTranslation();
+    const { countries } = useCountries();
+    const { editContact, isUpdating, refetchEnterpriseContactsInStore } = useContacts();
 
-    const { getLocalStorage } = useGetLocalStorage();
-
-    const {countries } = useCountries (); 
-    const { createContact, isMutating, refetchEnterpriseContactsInStore } = useContacts();
-    console.log('Countries:', countries);
-
-    // Transform the countries data to include flags
     const formattedCountries = React.useMemo(() => {
         return countries?.map(country => ({
             value: country.code.toLowerCase(),
@@ -62,33 +56,37 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
         })) || [];
     }, [countries]);
 
-    // Initialize react-hook-form with resolver
     const {
         handleSubmit,
         control,
         formState: { errors },
-    } = useForm<FormData>({
-        resolver: zodResolver(schema),
+    } = useForm<EditFormData>({
+        resolver: zodResolver(editSchema),
+        defaultValues: {
+            firstname: contact.firstname,
+            lastname: contact.lastname,
+            phoneNumber: contact.phoneNumber,
+            country: contact.country,
+            city: contact.city,
+        }
     });
 
-    const onSubmit = async (data: FormData) => {
-        notify.loading("Loading...");
-        const data_new = {
-            ...data,
-            email: getLocalStorage("user").email, 
-            enterpriseId: getLocalStorage("user")?.enterprise?.id,
-        }
+    const onSubmit = async (data: EditFormData) => {
+        notify.loading("Updating contact...");
         try {
-            console.log('New Contact:', data);
-            await createContact(data_new);
-            notify.success("Contact created successfully");
-            refetchEnterpriseContactsInStore ()
+            await editContact({
+                ...data,
+                id: contact.id,
+                email: contact.email,
+                enterpriseId: contact.enterpriseId,
+                createdAt: contact.createdAt,
+            });
+            notify.success("Contact updated successfully");
+            refetchEnterpriseContactsInStore();
             onClose?.();
-        } catch (error: unknown) {
-            console.error('Error creating contact:', error);
-            notify.dismiss();
-            notify.error("Error creating contact");
-            return;
+        } catch (error) {
+            console.error('Error updating contact:', error);
+            notify.error("Error updating contact");
         } finally {
             notify.dismiss();
         }
@@ -104,7 +102,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            // label={t('contact.contactForm.fullName')}
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
                             error={errors.firstname?.message}
@@ -119,7 +116,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            // label={t('contact.contactForm.fullName')}
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
                             error={errors.lastname?.message}
@@ -135,7 +131,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             className='border-primaryAppearance' 
                             type="number"
-                            // label={t('contact.contactForm.phoneNumber')}
                             label=""
                             placeholder={t('contact.contactForm.phoneNumberPlaceHolder')}
                             error={errors.phoneNumber?.message}
@@ -146,16 +141,13 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                 <Controller
                     name="country"
                     control={control}
-                    defaultValue=""
-                    rules={{ required: 'Country is required' }}
                     render={({ field }) => (
                         <CountrySelect
                             {...field}
-                            // label="Country"
                             options={formattedCountries}
                             value={field.value}
                             onChange={field.onChange}
-                            error={errors.country?.message} // Include error for country
+                            error={errors.country?.message}
                         />
                     )}
                 />
@@ -167,7 +159,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance' 
-                            // label={t('contact.contactForm.city')}
                             label=""
                             placeholder={t('contact.contactForm.cityPlaceHolder')}
                             error={errors.city?.message}
@@ -176,19 +167,17 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                 />
 
                 <div className='flex flex-col gap-4'>
-                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isMutating ? "Loading..." : "Submit" }</FormButton>
-                    {/* <button type="submit" className='flex flex-row rounded-lg justify-center gap-3 bg-primaryAppearance p-[1.5rem]'>
-                        <AddNewContactSvgIcon color="white" />
-                        <span className='text-[18px] text-white'>{t('contact.contactForm.buttonLabel')}</span>
-                    </button> */}
+                    <FormButton 
+                        className='bg-primaryAppearance h-[56px] text-white' 
+                        type="submit"
+                        disabled={isUpdating}
+                    >
+                        {isUpdating ? "Updating..." : "Update Contact"}
+                    </FormButton>
                 </div>
             </form>
         </div>
     );
 };
 
-export default CreateContactForm;
-
-
-
-
+export default EditContactForm;

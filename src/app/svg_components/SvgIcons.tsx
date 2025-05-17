@@ -796,9 +796,9 @@ export const EditTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
             }}
         >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7.3335 1.33337H6.00016C2.66683 1.33337 1.3335 2.66671 1.3335 6.00004V10C1.3335 13.3334 2.66683 14.6667 6.00016 14.6667H10.0002C13.3335 14.6667 14.6668 13.3334 14.6668 10V8.66671" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M10.6933 2.01338L5.43992 7.26671C5.23992 7.46671 5.03992 7.86005 4.99992 8.14671L4.71325 10.1534C4.60659 10.88 5.11992 11.3867 5.84659 11.2867L7.85325 11C8.13325 10.96 8.52659 10.76 8.73325 10.56L13.9866 5.30671C14.8933 4.40005 15.3199 3.34671 13.9866 2.01338C12.6533 0.680046 11.5999 1.10671 10.6933 2.01338Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M9.93994 2.76672C10.3866 4.36006 11.6333 5.60672 13.2333 6.06006" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7.3335 1.33337H6.00016C2.66683 1.33337 1.3335 2.66671 1.3335 6.00004V10C1.3335 13.3334 2.66683 14.6667 6.00016 14.6667H10.0002C13.3335 14.6667 14.6668 13.3334 14.6668 10V8.66671" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10.6933 2.01338L5.43992 7.26671C5.23992 7.46671 5.03992 7.86005 4.99992 8.14671L4.71325 10.1534C4.60659 10.88 5.11992 11.3867 5.84659 11.2867L7.85325 11C8.13325 10.96 8.52659 10.76 8.73325 10.56L13.9866 5.30671C14.8933 4.40005 15.3199 3.34671 13.9866 2.01338C12.6533 0.680046 11.5999 1.10671 10.6933 2.01338Z" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9.93994 2.76672C10.3866 4.36006 11.6333 5.60672 13.2333 6.06006" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
 
         </div>
@@ -816,11 +816,11 @@ export const DeleteTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, w
             }}
         >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 3.98665C11.78 3.76665 9.54667 3.65332 7.32 3.65332C6 3.65332 4.68 3.71999 3.36 3.85332L2 3.98665" stroke="#DE1135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M5.6665 3.31337L5.81317 2.44004C5.91984 1.80671 5.99984 1.33337 7.1265 1.33337H8.87317C9.99984 1.33337 10.0865 1.83337 10.1865 2.44671L10.3332 3.31337" stroke="#DE1135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12.5664 6.09338L12.1331 12.8067C12.0598 13.8534 11.9998 14.6667 10.1398 14.6667H5.85977C3.99977 14.6667 3.93977 13.8534 3.86644 12.8067L3.43311 6.09338" stroke="#DE1135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6.88672 11H9.10672" stroke="#DE1135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6.3335 8.33337H9.66683" stroke="#DE1135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 3.98665C11.78 3.76665 9.54667 3.65332 7.32 3.65332C6 3.65332 4.68 3.71999 3.36 3.85332L2 3.98665" stroke="#DE1135" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M5.6665 3.31337L5.81317 2.44004C5.91984 1.80671 5.99984 1.33337 7.1265 1.33337H8.87317C9.99984 1.33337 10.0865 1.83337 10.1865 2.44671L10.3332 3.31337" stroke="#DE1135" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12.5664 6.09338L12.1331 12.8067C12.0598 13.8534 11.9998 14.6667 10.1398 14.6667H5.85977C3.99977 14.6667 3.93977 13.8534 3.86644 12.8067L3.43311 6.09338" stroke="#DE1135" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6.88672 11H9.10672" stroke="#DE1135" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6.3335 8.33337H9.66683" stroke="#DE1135" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
 
         </div>

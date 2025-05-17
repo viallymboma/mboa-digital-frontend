@@ -20,7 +20,8 @@ const ContactTableModule: React.FC <ContactTableModuleProps> = ({ contacts }) =>
 
       <div className='flex items-center gap-4 py-4'>
         <StatsCard
-          value="25k"
+          // value="25k"
+          value={ contacts?.length || "0" } // Assuming contacts are available
           label="Total de contacts"
           icon={<ContactStatisticsSvgIcon />}
           color="black"
@@ -28,14 +29,16 @@ const ContactTableModule: React.FC <ContactTableModuleProps> = ({ contacts }) =>
           trend={{ value: '+ 5.5%', isPositive: true }}
         />
         <StatsCard
-          value="2200"
+          value={ contacts?.filter((contact) => !contact.archived).length || "0" } // Assuming archived contacts are unavailable
+          // "2200"
           label="Total de contacts"
           icon={<WorkingContactSvgIcon />}
-          color="#0E8345"
+          color={"#0E8345"}
           borderColor="border-borderGreen"
         />
         <StatsCard
-          value="300"
+          value={ contacts?.filter((contact) => contact.archived).length || "0" } // Assuming archived contacts are unavailable
+          // value="300"
           label="Total de contacts"
           icon={<UnavailableContactSvgIcon />}
           color="#DE1135"

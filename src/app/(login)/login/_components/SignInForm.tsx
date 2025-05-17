@@ -40,6 +40,8 @@ const SignInForm = () => {
         resolver: zodResolver(schema),
     });
 
+    console.log('Login error: +++++++++++++++++++++++++++++++++++++++');
+
     const onSubmit = async (data: FormData) => {
         notify.loading(t('loading.login.ongoing'));
         try {

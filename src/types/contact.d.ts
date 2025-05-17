@@ -226,5 +226,21 @@ export type CreateContactRequestType = {
     group?: string
 }
 
+export type UpdateContactRequestType = {
+    id: string,
+    createdAt: string,
+    // updatedAt: string,
+    // version: number,
+    firstname: string,
+    lastname: string,
+    email: string,
+    phoneNumber: string,
+    country: string,
+    city: string,
+    gender?: Gender,
+    enterpriseId?: string,
+    group?: string
+}
+
 
 

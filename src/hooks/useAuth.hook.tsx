@@ -133,49 +133,18 @@ export function useLogin() {
     };
 }
 
+
 export function useUser() {
-    const { getLocalStorage } = useGetLocalStorage();
-    console.log('useUser localStorage:', getLocalStorage("user"));
-    const { data, error, isLoading } = useSWR<AuthResponse>(
-        localStorage.getItem('token') ? `/api/v1/auth/${ getLocalStorage("user").email }` : null, // Only fetch if token exists
-        url => {
-            const apiService = ApiService.getInstance();
-            return apiService.get<AuthResponse>(url);
-        },
-        {
-            revalidateOnFocus: false,
-            shouldRetryOnError: false,
-            onError: (error) => {
-                if (error.response?.status === 401 || error.response?.status === 403) {
-                    // localStorage.clear();
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('refreshToken');
-                    window.location.href = '/login';
-                }
-            }
-        }
-    );
-
-    return {
-        user: data?.user,
-        userNow: getLocalStorage("user"),
-        isLoading,
-        error,
-        isAuthenticated: !!data?.user
-    };
-}
-
-
-export function useUserV2() {
     const { getLocalStorage } = useGetLocalStorage();
     const [token, setToken] = React.useState<string | null>(null);
     const [user, setUser] = React.useState<UserType>();
 
     // Move localStorage access to useEffect
     React.useEffect(() => {
-        setToken(typeof window !== 'undefined' ? localStorage.getItem('token') : null);
-        setUser(getLocalStorage("user"));
+        if (typeof window !== 'undefined') {
+            setToken(localStorage.getItem('token'));
+            setUser(getLocalStorage("user"));
+        }
     }, []);
 
     const { data, error, isLoading } = useSWR<AuthResponse>(
@@ -193,7 +162,7 @@ export function useUserV2() {
                         localStorage.removeItem('user');
                         localStorage.removeItem('token');
                         localStorage.removeItem('refreshToken');
-                        window.location.href = '/login';
+                        // window.location.href = '/login';
                     }
                 }
             }
@@ -202,7 +171,7 @@ export function useUserV2() {
 
     return {
         user: data?.user,
-        userNow: user,
+        userNow: getLocalStorage("user"),
         isLoading,
         error,
         isAuthenticated: !!data?.user
