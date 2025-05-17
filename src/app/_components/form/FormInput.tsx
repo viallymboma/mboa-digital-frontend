@@ -45,60 +45,125 @@ const FormInput: React.FC<FormInputProps & React.InputHTMLAttributes<HTMLInputEl
   );
 };
 
-// CountrySelect Component
+// // CountrySelect Component
+// type CountrySelectProps = {
+//   label?: string;
+//   className?: string;
+//   value: string;
+//   error?: string;
+//   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+//   options: { value: string; label: string; flag?: string }[];
+// };
+
+// const CountrySelect: React.FC<CountrySelectProps> = ({ label, onChange, value, className, error, options, ...props }) => {
+//   const [searchQuery, setSearchQuery] = React.useState('');
+  
+//   // Filter countries based on the search query
+//   const filteredOptions = options.filter(option =>
+//     option.label.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   return (
+//     <div className="space-y-2 w-full">
+//       {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+//       <Select value={ value } {...props}>
+//         <SelectTrigger className={cn("w-full h-[56px]", className)}>
+//           <SelectValue placeholder="Select a country" />
+//         </SelectTrigger>
+//         <SelectContent>
+//           {/* Fixed search input field */}
+//           <div className="p-2 bg-white sticky top-0 z-10">
+//             <input
+//               type="text"
+//               placeholder="Search..."
+//               value={searchQuery}
+//               onChange={(e) => setSearchQuery(e.target.value)}
+//               className="w-full p-2 border rounded-md"
+//             />
+//           </div>
+
+//           {/* Scrollable options */}
+//           <div className="max-h-[200px] overflow-y-auto">
+//             {filteredOptions.map((option) => (
+//               <SelectItem key={option.value} value={option.value} onClick={() => onChange({ target: { value: option.value } } as React.ChangeEvent<HTMLSelectElement>)}>
+//                 <div className="flex items-center">
+//                   <span className="mr-2">{option.flag}</span> {/* Display flag icon */}
+//                   {option.label}
+//                 </div>
+//               </SelectItem>
+//             ))}
+//           </div>
+//         </SelectContent>
+//       </Select>
+//       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//     </div>
+//   );
+// };
+
 type CountrySelectProps = {
   label?: string;
   className?: string;
   value: string;
   error?: string;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (value: string) => void;
   options: { value: string; label: string; flag?: string }[];
 };
 
-const CountrySelect: React.FC<CountrySelectProps> = ({ label, onChange, value, className, error, options, ...props }) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  
-  // Filter countries based on the search query
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
+  ({ label, onChange, value, className, error, options }) => {
+    const [searchQuery, setSearchQuery] = React.useState('');
 
-  return (
-    <div className="space-y-2 w-full">
-      {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
-      <Select value={ value } {...props}>
-        <SelectTrigger className={cn("w-full h-[56px]", className)}>
-          <SelectValue placeholder="Select a country" />
-        </SelectTrigger>
-        <SelectContent>
-          {/* Fixed search input field */}
-          <div className="p-2 bg-white sticky top-0 z-10">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-2 border rounded-md"
-            />
-          </div>
+    // Filter countries based on search
+    const filteredOptions = options.filter(option =>
+      option.label.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-          {/* Scrollable options */}
-          <div className="max-h-[200px] overflow-y-auto">
-            {filteredOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} onClick={() => onChange({ target: { value: option.value } } as React.ChangeEvent<HTMLSelectElement>)}>
-                <div className="flex items-center">
-                  <span className="mr-2">{option.flag}</span> {/* Display flag icon */}
-                  {option.label}
-                </div>
-              </SelectItem>
-            ))}
-          </div>
-        </SelectContent>
-      </Select>
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-    </div>
-  );
-};
+    const handleSelect = (newValue: string) => {
+      // Direct value handling instead of synthetic event
+      onChange(newValue);
+    };
+
+    return (
+      <div className="space-y-2 w-full">
+        {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+        <Select value={value} onValueChange={handleSelect}>
+          <SelectTrigger className={cn("w-full h-[56px]", className)}>
+            <SelectValue placeholder="Select a country">
+              {value && options.find(opt => opt.value === value)?.label}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent className="max-h-[300px]">
+            <div className="p-2 sticky top-0 bg-white border-b">
+              <Input
+                type="text"
+                placeholder="Search countries..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-8"
+              />
+            </div>
+            <div className="overflow-y-auto">
+              {filteredOptions.map((option) => (
+                <SelectItem 
+                  key={option.value} 
+                  value={option.value}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
+                  <div className="flex items-center gap-2">
+                    {option.flag && <span>{option.flag}</span>}
+                    <span>{option.label}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </div>
+          </SelectContent>
+        </Select>
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      </div>
+    );
+  }
+);
+CountrySelect.displayName = "CountrySelect";
 
 
 // AmountInput Component
