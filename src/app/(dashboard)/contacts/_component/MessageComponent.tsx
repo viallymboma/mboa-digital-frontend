@@ -17,6 +17,11 @@ import { countCharacters } from '@/lib/utils';
 import { useContactStore } from '@/stores/contacts.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import BulkContactSelectionModal
+  from './table-sub-ui/BulkContactSelectionModal';
+
+// import { EnterpriseContactResponseType } from '@/types/contact';
+
 // Define schema validation using Zod
 const schema = z.object({
     message: z.string().min(1, { message: 'Message is required' }),
@@ -27,7 +32,7 @@ type FormData = z.infer<typeof schema>;
 
 const MessageComponent = () => {
 
-    const { selectedContactsData } = useContactStore();
+    const { selectedContactsData, contacts } = useContactStore();
     console.log(selectedContactsData, "selectedContactsData in MessageComponent");
 
     const [charCount, setCharCount] = React.useState({ total: 0, special: 0, specialCount: 0 });
@@ -56,10 +61,24 @@ const MessageComponent = () => {
         setCharCount(countCharacters(message));
     }, [message]);
 
-    const options = [
-        { value: '3598u034t94jtj24kri29u4r948r', label: '695500474' },
-        { value: 'dbwg62t4r892483714y0r9284903', label: '694950434' },
-    ];
+    // const options = [
+    //     { value: '3598u034t94jtj24kri29u4r948r', label: '695500474' },
+    //     { value: 'dbwg62t4r892483714y0r9284903', label: '694950434' },
+    // ];
+
+    const [isSelectionModalOpen, setIsSelectionModalOpen] = React.useState(false);
+
+    // // Transform contacts for MultiSelect options
+    // const getContactOptions = (contacts: EnterpriseContactResponseType []) => contacts.map(contact => ({
+    //     value: contact.id,
+    //     label: `${contact.firstname} ${contact.lastname} (${contact.phoneNumber})`,
+    //     phoneNumber: contact.phoneNumber
+    // }));
+
+    // // Use selected contacts if available, otherwise use all contacts
+    // const options: EnterpriseContactResponseType [] = selectedContactsData.length > 0 
+    //     ? getContactOptions(selectedContactsData)
+    //     : getContactOptions(contacts);
 
     const onSubmit = (data: FormData) => {
         console.log('New Contact:', data);
@@ -72,7 +91,7 @@ const MessageComponent = () => {
                     <span>
                         à:
                     </span>
-                    <Controller
+                    {/* <Controller
                         name="contactPhone"
                         control={control}
                         // defaultValue=""
@@ -85,6 +104,31 @@ const MessageComponent = () => {
                                 onChange={field.onChange}
                                 error={errors.contactPhone?.message}
                             />
+                        )}
+                    /> */}
+                    <Controller
+                        name="contactPhone"
+                        control={control}
+                        rules={{ required: 'Phone is required' }}
+                        render={({ field }) => (
+                            <>
+                                <MultiSelect
+                                    label="Select Items"
+                                    options={ selectedContactsData.length > 0 ? selectedContactsData : contacts }
+                                    value={field?.value}
+                                    onChange={field.onChange}
+                                    error={errors.contactPhone?.message}
+                                    onOpen={() => {
+                                        if (selectedContactsData.length === 0) {
+                                            setIsSelectionModalOpen(true);
+                                        }
+                                    }}
+                                />
+                                <BulkContactSelectionModal 
+                                    isOpen={isSelectionModalOpen}
+                                    onClose={() => setIsSelectionModalOpen(false)}
+                                />
+                            </>
                         )}
                     />
                 </div>

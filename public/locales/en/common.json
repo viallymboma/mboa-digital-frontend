@@ -13,6 +13,11 @@
             "ongoing": "Logging in...",
             "success": "Login successful",
             "error": "Login failed"
+        }, 
+        "signup": {
+            "ongoing": "Signing up...",
+            "success": "Sign up successful",
+            "error": "Sign up failed"
         }
     },
     "register": {

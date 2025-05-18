@@ -15,7 +15,7 @@ export type TransformedContactType = {
   city: string;
   enterprise: EnterpriseType;
   createdAt: string;
-  status: string;
+  status?: string;
   archived: boolean;
 }
 

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { EnterpriseContactResponseType } from '@/types/contact';
 
 // FormInput Component
 type FormInputProps = {
@@ -268,7 +269,8 @@ type MultiSelectProps = {
   className?: string;
   value: string[];
   onChange: (value: string[]) => void;
-  options: { value: string; label: string; flag?: string }[];
+  options: EnterpriseContactResponseType [];  // { value: string; label: string; flag?: string }[]; 
+  onOpen?: () => void;
   error?: string;
 };
 
@@ -279,83 +281,101 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   value,
   onChange,
   options,
+  onOpen,
   error,
 }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  // Filter options based on the search query
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   // Handle selection change
   const handleSelectChange = (selectedValue: string) => {
     if (!value?.includes(selectedValue)) {
-      onChange([...value, selectedValue]); // Add the selected value
+      onChange([...value, selectedValue]);
     }
   };
 
   // Handle removal of a selected item
   const handleRemoveItem = (itemValue: string) => {
-    onChange(value?.filter((val) => val !== itemValue)); // Remove the item
+    onChange(value?.filter((val) => val !== itemValue));
   };
+
+  // Filter options based on the search query
+  const filteredOptions = options.filter((option) =>
+    option.lastname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="space-y-2 w-full">
       {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
 
-      {/* Select Dropdown */}
-      <Select onValueChange={handleSelectChange}>
-        <SelectTrigger className={cn('w-full h-[56px]', className)}>
-          <SelectValue placeholder="Select items" />
-        </SelectTrigger>
-        <SelectContent>
-          {/* Search Input */}
-          <div className="p-2 bg-white sticky top-0 z-10">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-2 border rounded-md"
-            />
-          </div>
-
-          {/* Scrollable Options */}
-          <div className="max-h-[200px] overflow-y-auto">
-            {filteredOptions?.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                <div className="flex items-center">
-                  {option.flag && <span className="mr-2">{option.flag}</span>}
-                  {option.label}
-                  {value.includes(option.value) && <span className="tick">✔</span>}
-                </div>
-              </SelectItem>
-            ))}
-          </div>
-        </SelectContent>
-      </Select>
-
-      {/* Display Selected Items */}
-      <div className="flex flex-wrap gap-2 mt-2">
-        {value?.map((selectedValue) => {
-          const selectedOption = options.find((option) => option.value === selectedValue);
-          return (
-            <div
-              key={selectedValue}
-              className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
-            >
-              <span>{selectedOption?.label}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveItem(selectedValue)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-4 w-4" />
-              </button>
+      <div>
+        {/* Select Dropdown */}
+        <Select 
+          onValueChange={handleSelectChange} 
+          onOpenChange={(open) => {
+            if (open && onOpen) {
+              onOpen();
+            }
+          }}
+        >
+          <SelectTrigger className={cn('w-full h-[56px]', className)}>
+            <SelectValue placeholder="Select items" />
+          </SelectTrigger>
+          <SelectContent>
+            {/* Search Input */}
+            <div className="p-2 bg-white sticky top-0 z-10" onClick={(e) => e.stopPropagation()}>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full p-2 border rounded-md"
+              />
             </div>
-          );
-        })}
+
+            {/* Scrollable Options */}
+            <div className="max-h-[200px] overflow-y-auto">
+              {filteredOptions?.map((option) => (
+                <SelectItem 
+                  key={option.id} 
+                  value={option.id}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span>{option.firstname} {option.lastname}</span>
+                    {value.includes(option.id) && <span className="tick">✔</span>}
+                  </div>
+                </SelectItem>
+              ))}
+            </div>
+          </SelectContent>
+        </Select>
+
+        {/* Display Selected Items */}
+        <div className="flex flex-wrap gap-2 mt-2">
+          {value?.map((selectedValue) => {
+            const selectedOption = options.find((option) => option.id === selectedValue);
+            return (
+              selectedOption && (
+                <div
+                  key={selectedValue}
+                  className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
+                >
+                  <span>{selectedOption.firstname} {selectedOption.lastname}</span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveItem(selectedValue);
+                    }}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              )
+            );
+          })}
+        </div>
       </div>
 
       {/* Error Message */}
@@ -363,7 +383,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
     </div>
   );
 };
-
 export {
   AmountInput,
   CountrySelect,

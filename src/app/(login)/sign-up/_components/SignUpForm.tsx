@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Controller,
   useForm,
@@ -11,6 +12,9 @@ import { z } from 'zod';
 import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
 import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
+import LoadingUI from '@/components/loaders/LoadingUI';
+import { notify } from '@/components/utilities/helper';
+import { useSignup } from '@/hooks/useAuth.hook';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
@@ -34,6 +38,10 @@ type FormData = z.infer<typeof schema>;
 const SignUpForm = () => {
 
     const { t } = useTranslation();
+
+    const { signup, isLoading, error } = useSignup();
+
+    const router = useRouter();
 
     const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
@@ -67,8 +75,22 @@ const SignUpForm = () => {
         </span>
     );
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
         console.log(data);
+        notify.loading(t('loading.signup.ongoing'));
+
+        try {
+            console.log('Form data:', data);
+            await signup(data);
+            notify.dismiss();
+            notify.success(t('loading.signup.success'));
+            // Optionally, you can redirect the user or perform other actions here
+            // Handle successful login, e.g., redirect to dashboard
+            router.push('/dashboard');
+        } catch (error) {
+            notify.success(t('loading.signup.error'));
+            console.error('Login failed:', error);
+        }
     };
 
     return (
@@ -199,12 +221,19 @@ const SignUpForm = () => {
                     />
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <FormButton className='bg-primaryAppearance h-[56px]' type="submit">Submit</FormButton>
+                    <FormButton className='bg-primaryAppearance h-[56px]' type="submit">{ isLoading ? (
+                        <LoadingUI />
+                    ) : "Submit" }</FormButton>
                     <div className='flex items-center justify-center'>
                         <p className='text-center w-full'>
                             {t('register.loginPrompt')} <Link href={"/login"} className='text-primaryAppearance'>{t('register.login')}</Link> 
                         </p>
                     </div>
+                    {error && (
+                        <div className="text-red-500 text-sm text-center">
+                            {error.message}
+                        </div>
+                    )}
                 </div>
             </form>
         </div>

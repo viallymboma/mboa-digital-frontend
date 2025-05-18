@@ -14,6 +14,7 @@ import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
 // import FormInput from '@/app/_components/form/FormInput';
 import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
+import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
 import { useLogin } from '@/hooks/useAuth.hook';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -91,7 +92,9 @@ const SignInForm = () => {
                     />
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isLoading ? "Loading..." : "Submit" }</FormButton>
+                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isLoading ? (
+                        <LoadingUI />
+                    ) : "Submit" }</FormButton>
                     <div className='flex items-center justify-center'>
                         <p className='text-center w-full'>
                             { t('register.signupPrompt')} <Link href={"/sign-up"} className='text-primaryAppearance'>{t('register.signup')}</Link> 

@@ -178,31 +178,6 @@ export function useUser() {
     };
 }
 
-// export function useAuth() {
-//     const router = useRouter();
-
-//     useEffect(() => {
-//         const checkTokenExpiration = () => {
-//             const expiration = localStorage.getItem('tokenExpiration');
-//             if (expiration && new Date().getTime() > parseInt(expiration)) {
-//                 // Token is expired, trigger refresh
-//                 const apiService = ApiService.getInstance();
-//                 apiService.handleTokenRefresh().catch(() => {
-//                     router.push('/login');
-//                 });
-//             }
-//         };
-
-//         // Check on mount and periodically
-//         checkTokenExpiration();
-//         const interval = setInterval(checkTokenExpiration, 5 * 60 * 1000); // Check every 5 minutes
-
-//         return () => clearInterval(interval);
-//     }, [router]);
-
-//     return null;
-// }
-
 
 export function useLogout() {
     const router = useRouter();

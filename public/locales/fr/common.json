@@ -13,6 +13,11 @@
             "ongoing": "Connexion en cours...",
             "success": "Connexion réussie",
             "error": "Échec de la connexion"
+        }, 
+        "signup": {
+            "ongoing": "Enregistrement en cour...",
+            "success": "Enregistrement réussie",
+            "error": "Enregistrement échoué"
         }
     },
     "register": {
