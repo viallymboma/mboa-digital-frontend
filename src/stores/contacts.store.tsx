@@ -22,6 +22,7 @@ interface ContactState {
     addSelectedContact: (contact: EnterpriseContactResponseType) => void;
     removeSelectedContact: (contactId: string) => void;
     toggleMultipleContacts: (contacts: TransformedContactType[]) => void;
+    unToggleMultipleContacts: () => void;
     toggleAllContacts: (contacts: TransformedContactType[]) => void;
 }
 
@@ -83,6 +84,13 @@ export const useContactStore = create<ContactState>((set) => ({
         return {
             selectedContactsData: [...state.selectedContactsData, ...contactsToAdd],
             selectedContacts: [...currentIds, ...contactsToAdd.map(c => c.id)]
+        };
+    }),
+
+    unToggleMultipleContacts: () => set(() => {
+        return {
+            selectedContactsData: [],
+            selectedContacts: []
         };
     }),
 

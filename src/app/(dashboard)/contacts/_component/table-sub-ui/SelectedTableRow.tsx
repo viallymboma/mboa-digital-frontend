@@ -11,9 +11,7 @@ type SelectionCellType = {
 }
 
 const SelectedTableRow: React.FC<SelectionCellType> = ({ row }) => {
-    const { addSelectedContact, removeSelectedContact } = useContactStore(); 
-
-
+    const { addSelectedContact, removeSelectedContact, selectedContactsData } = useContactStore(); 
     const handleSelectionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             addSelectedContact(row.original);
@@ -25,7 +23,7 @@ const SelectedTableRow: React.FC<SelectionCellType> = ({ row }) => {
     return (
         <input
             type="checkbox"
-            checked={row.getIsSelected()}
+            checked={row.getIsSelected() || selectedContactsData?.find((ro: TransformedContactType) => ro.id === row.original.id ) ? true : false}
             onChange={(e) => {
                 row.getToggleSelectedHandler()(e);
                 handleSelectionChange(e);

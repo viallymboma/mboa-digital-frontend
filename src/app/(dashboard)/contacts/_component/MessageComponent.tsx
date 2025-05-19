@@ -8,17 +8,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import {
-  FormTextArea,
-  MultiSelect,
-} from '@/app/_components/form/FormInput';
+import { FormTextArea } from '@/app/_components/form/FormInput';
 import { Separator } from '@/components/ui/separator';
 import { countCharacters } from '@/lib/utils';
 import { useContactStore } from '@/stores/contacts.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import BulkContactSelectionModal
-  from './table-sub-ui/BulkContactSelectionModal';
+import RecipientsSection from './table-sub-ui/RecipientsSection';
 
 // import { EnterpriseContactResponseType } from '@/types/contact';
 
@@ -32,7 +28,7 @@ type FormData = z.infer<typeof schema>;
 
 const MessageComponent = () => {
 
-    const { selectedContactsData, contacts } = useContactStore();
+    const { selectedContactsData } = useContactStore();
     console.log(selectedContactsData, "selectedContactsData in MessageComponent");
 
     const [charCount, setCharCount] = React.useState({ total: 0, special: 0, specialCount: 0 });
@@ -44,7 +40,7 @@ const MessageComponent = () => {
         handleSubmit,
         control,
         watch, 
-        formState: { errors },
+        // formState: { errors },
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -61,52 +57,16 @@ const MessageComponent = () => {
         setCharCount(countCharacters(message));
     }, [message]);
 
-    // const options = [
-    //     { value: '3598u034t94jtj24kri29u4r948r', label: '695500474' },
-    //     { value: 'dbwg62t4r892483714y0r9284903', label: '694950434' },
-    // ];
-
-    const [isSelectionModalOpen, setIsSelectionModalOpen] = React.useState(false);
-
-    // // Transform contacts for MultiSelect options
-    // const getContactOptions = (contacts: EnterpriseContactResponseType []) => contacts.map(contact => ({
-    //     value: contact.id,
-    //     label: `${contact.firstname} ${contact.lastname} (${contact.phoneNumber})`,
-    //     phoneNumber: contact.phoneNumber
-    // }));
-
-    // // Use selected contacts if available, otherwise use all contacts
-    // const options: EnterpriseContactResponseType [] = selectedContactsData.length > 0 
-    //     ? getContactOptions(selectedContactsData)
-    //     : getContactOptions(contacts);
-
     const onSubmit = (data: FormData) => {
         console.log('New Contact:', data);
+
+        console.log(selectedContactsData)
     };
     return (
         <div className='max-h-[500px] p-1 overflow-y-auto'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
 
-                <div className='flex flex-row gap-4 items-center'>
-                    <span>
-                        à:
-                    </span>
-                    {/* <Controller
-                        name="contactPhone"
-                        control={control}
-                        // defaultValue=""
-                        rules={{ required: 'Phone is required' }}
-                        render={({ field }) => (
-                            <MultiSelect
-                                label="Select Items"
-                                options={options}
-                                value={field?.value}
-                                onChange={field.onChange}
-                                error={errors.contactPhone?.message}
-                            />
-                        )}
-                    /> */}
-                    <Controller
+                {/* <Controller
                         name="contactPhone"
                         control={control}
                         rules={{ required: 'Phone is required' }}
@@ -130,8 +90,9 @@ const MessageComponent = () => {
                                 />
                             </>
                         )}
-                    />
-                </div>
+                    /> */}
+
+                <RecipientsSection />
 
                 <Separator />
 

@@ -10,7 +10,7 @@ interface SelectAllCheckboxProps {
 }
 
 const SelectAllCheckbox: React.FC<SelectAllCheckboxProps> = ({ table }) => {
-    const { toggleAllContacts } = useContactStore();
+    const { toggleAllContacts, contacts, selectedContactsData } = useContactStore();
 
     const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Handle table selection
@@ -26,7 +26,7 @@ const SelectAllCheckbox: React.FC<SelectAllCheckboxProps> = ({ table }) => {
     return (
         <input
             type="checkbox"
-            checked={table.getIsAllRowsSelected()}
+            checked={table.getIsAllRowsSelected() || selectedContactsData?.length === contacts.length ? true : false }
             onChange={handleSelectAll}
             className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
