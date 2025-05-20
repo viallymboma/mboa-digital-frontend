@@ -8,20 +8,11 @@ import {
   contactColumns,
   TransformedContactType,
 } from './ContactTableElements';
-// import { EnterpriseContactResponseType } from '@/types/contact';
 import { ContactTableModuleProps } from './ContactTableModule';
-
-// import { dummyDataReal } from './dummyData';
 
 const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
 
   const { editContact, deleteContact } = useContacts();
-
-  // const [data, setData] = React.useState(dummyDataReal);
-
-  // const handleReorder = (reorderedData: typeof dummyDataReal) => {
-  //   setData(reorderedData); // Update the data state
-  // };
 
   // Transform the contacts data to match dummy data structure
   const transformedData = React.useMemo(() => 

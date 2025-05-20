@@ -59,32 +59,6 @@ const MessageComponent = () => {
         <div className='max-h-[500px] p-1 overflow-y-auto'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
 
-                {/* <Controller
-                        name="contactPhone"
-                        control={control}
-                        rules={{ required: 'Phone is required' }}
-                        render={({ field }) => (
-                            <>
-                                <MultiSelect
-                                    label="Select Items"
-                                    options={ selectedContactsData.length > 0 ? selectedContactsData : contacts }
-                                    value={field?.value}
-                                    onChange={field.onChange}
-                                    error={errors.contactPhone?.message}
-                                    onOpen={() => {
-                                        if (selectedContactsData.length === 0) {
-                                            setIsSelectionModalOpen(true);
-                                        }
-                                    }}
-                                />
-                                <BulkContactSelectionModal 
-                                    isOpen={isSelectionModalOpen}
-                                    onClose={() => setIsSelectionModalOpen(false)}
-                                />
-                            </>
-                        )}
-                    /> */}
-
                 <RecipientsSection />
 
                 <Separator />

@@ -41,6 +41,7 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useUser } from '@/hooks/useAuth.hook';
 
 import { NavProfile } from './NavProfile';
 import { SidebarNavItems } from './SidebarNavItems';
@@ -200,7 +201,8 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, isMobile } = useSidebar(); 
-  const { t } = useTranslation();
+  const { t } = useTranslation(); 
+  const { userNow } = useUser();
   return (
     <Sidebar className='dark:bg-gray-800' collapsible="icon" {...props}>
       <SidebarHeader className='flex justify-center items-center'>
@@ -239,7 +241,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
       </SidebarContent>
       <SidebarFooter>
-        <NavProfile user={data.user} />
+        <NavProfile user={userNow} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

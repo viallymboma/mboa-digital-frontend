@@ -13,11 +13,8 @@ type SelectionCellType = {
 const SelectedTableRow: React.FC<SelectionCellType> = ({ row }) => {
     const { addSelectedContact, removeSelectedContact, selectedContactsData } = useContactStore(); 
     const handleSelectionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-            addSelectedContact(row.original);
-        } else {
-            removeSelectedContact(row.original.id);
-        }
+        if (e.target.checked) addSelectedContact(row.original);
+        else removeSelectedContact(row.original.id);
     };
 
     return (

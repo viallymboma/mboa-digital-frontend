@@ -13,7 +13,6 @@ import {
   CountrySelect,
   FormInput,
 } from '@/app/_components/form/FormInput';
-// import { AddNewContactSvgIcon } from '@/app/svg_components/SvgIcons';
 import { notify } from '@/components/utilities/helper';
 import { useContacts } from '@/hooks/useContacts';
 import { useCountries } from '@/hooks/useCountry';
@@ -104,7 +103,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            // label={t('contact.contactForm.fullName')}
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
                             error={errors.firstname?.message}
@@ -119,7 +117,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            // label={t('contact.contactForm.fullName')}
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
                             error={errors.lastname?.message}
@@ -135,7 +132,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             className='border-primaryAppearance' 
                             type="number"
-                            // label={t('contact.contactForm.phoneNumber')}
                             label=""
                             placeholder={t('contact.contactForm.phoneNumberPlaceHolder')}
                             error={errors.phoneNumber?.message}
@@ -151,7 +147,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                     render={({ field }) => (
                         <CountrySelect
                             {...field}
-                            // label="Country"
                             options={formattedCountries}
                             value={field.value}
                             onChange={field.onChange}
@@ -167,7 +162,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance' 
-                            // label={t('contact.contactForm.city')}
                             label=""
                             placeholder={t('contact.contactForm.cityPlaceHolder')}
                             error={errors.city?.message}
@@ -177,10 +171,6 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
 
                 <div className='flex flex-col gap-4'>
                     <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isMutating ? "Loading..." : "Submit" }</FormButton>
-                    {/* <button type="submit" className='flex flex-row rounded-lg justify-center gap-3 bg-primaryAppearance p-[1.5rem]'>
-                        <AddNewContactSvgIcon color="white" />
-                        <span className='text-[18px] text-white'>{t('contact.contactForm.buttonLabel')}</span>
-                    </button> */}
                 </div>
             </form>
         </div>
