@@ -10,8 +10,8 @@ import {
 } from '@/app/svg_components/SvgIcons';
 // import { useContactStore } from '@/stores/contacts.store';
 import { useContacts } from '@/hooks/useContacts';
-import { useContactStore } from '@/stores/contacts.store';
 
+// import { useContactStore } from '@/stores/contacts.store';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import ContactTableModule from './ContactTableModule';
 import CreateContactForm from './CreateContactForm';
@@ -20,9 +20,9 @@ import ImportModule from './ImportModule';
 const ContactModule = () => {
 
     const { contacts, isLoading, error } = useContacts();
-    const { selectedContactsData } = useContactStore();
-    console.log(selectedContactsData, "selectedContactsData in contact module");
-    console.log(contacts, "contacts+++++++++++__________");
+    // const { selectedContactsData } = useContactStore();
+    // console.log(selectedContactsData, "selectedContactsData in contact module");
+    // console.log(contacts, "contacts+++++++++++__________");
 
     const buttons = [
         {

@@ -14,10 +14,6 @@ import {
   AddNewContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
 
-// import GenericPageHeader from '../../_components/_global/GenericPageHeader';
-// import CreateContactForm from '../../contacts/_component/CreateContactForm';
-// import MessageComponent from '../../contacts/_component/MessageComponent';
-
 const OneGroupHeader = () => {
     const pathName = usePathname ()
     const buttons = [
@@ -53,5 +49,3 @@ const OneGroupHeader = () => {
 }
 
 export default OneGroupHeader
-
-// clipRule
