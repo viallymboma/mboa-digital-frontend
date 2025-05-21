@@ -9,6 +9,7 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useGroupStore } from '@/stores/groups.store';
 
 import GroupCard from './GroupCard';
 import { groupData } from './GroupePageSampleData';
@@ -17,6 +18,15 @@ const GroupsGrid = () => {
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [minContacts, setMinContacts] = useState('');
+
+  const {
+      groups
+      // selectedGroups, 
+      // selectedGroupsData, 
+      // toggleGroup 
+  } = useGroupStore();
+
+  console.log(groups, "grouuuuuupsss")
 
   // Filtered Data
   const filteredGroups = groupData.filter(

@@ -234,3 +234,9 @@ export type ResponseType404 = {
     version: number,
     archived: true
 }
+
+export type CreateGroupType = {
+  name: string,
+  code: string,
+  enterpriseId: string
+}

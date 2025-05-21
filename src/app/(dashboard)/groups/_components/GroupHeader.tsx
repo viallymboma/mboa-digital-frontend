@@ -7,8 +7,9 @@ import {
 } from '@/app/svg_components/SvgIcons';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
-import CreateContactForm from '../../contacts/_component/CreateContactForm';
+// import CreateContactForm from '../../contacts/_component/CreateContactForm';
 import MessageComponent from '../../contacts/_component/MessageComponent';
+import CreateGroupForm from './forms/CreateGroupForm';
 
 const GroupHeader = () => {
     const buttons = [
@@ -26,7 +27,7 @@ const GroupHeader = () => {
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
-            dialogContent: <CreateContactForm />,
+            dialogContent: <CreateGroupForm />,
         },
     ];
 
