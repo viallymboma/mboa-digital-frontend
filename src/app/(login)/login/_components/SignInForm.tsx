@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
 // import FormInput from '@/app/_components/form/FormInput';
-import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
+import { FormPasswordInput } from '@/app/_components/form/FormPasswordInput';
 import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
 import { useLogin } from '@/hooks/useAuth.hook';

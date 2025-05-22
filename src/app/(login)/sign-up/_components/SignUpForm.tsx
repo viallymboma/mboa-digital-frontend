@@ -11,7 +11,7 @@ import { z } from 'zod';
 
 import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
-import FormPasswordInput from '@/app/_components/form/FormPasswordInput';
+import { FormPasswordInput } from '@/app/_components/form/FormPasswordInput';
 import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
 import { useSignup } from '@/hooks/useAuth.hook';
@@ -21,6 +21,7 @@ const schema = z.object({
     firstName: z.string().min(1, { message: 'First name is required' }),
     lastName: z.string().min(1, { message: 'Last name is required' }),
     email: z.string().email({ message: 'Invalid email address' }),
+    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
     password: z.string()
         .min(8, { message: 'Password must be at least 8 characters' })
         .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
@@ -78,17 +79,27 @@ const SignUpForm = () => {
     const onSubmit = async (data: FormData) => {
         console.log(data);
         notify.loading(t('loading.signup.ongoing'));
-
+        const final_data = {
+            ...data,
+            socialRaison: "no reason", 
+            telephoneEntreprise: data?.phoneNumber, 
+            emailEnterprise: data?.email,
+        }
         try {
-            console.log('Form data:', data);
-            await signup(data);
+            console.log('Form data:', final_data);
+
+            await signup(final_data);
             notify.dismiss();
             notify.success(t('loading.signup.success'));
             // Optionally, you can redirect the user or perform other actions here
             // Handle successful login, e.g., redirect to dashboard
             router.push('/dashboard');
-        } catch (error) {
+        } catch (error: unknown) {
             notify.success(t('loading.signup.error'));
+            if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'data' in error.response && error.response.data && typeof error.response.data === 'object' && 'message' in error.response.data) {
+                // @ts-expect-error: dynamic error shape
+                notify.success(error.response.data.message);
+            }
             console.error('Login failed:', error);
         }
     };
@@ -139,6 +150,22 @@ const SignUpForm = () => {
                                 label="Email" type={t('register.email')}
                                 placeholder={t('register.emailPlaceHolder')} 
                                 error={errors.email?.message}
+                            />
+                        )}
+                    />
+                </div>
+                <div className='flex flex-col gap-2 w-full'>
+                    <Controller
+                        name="phoneNumber"
+                        control={control}
+                        render={({ field }) => (
+                            <FormInput 
+                                {...field}
+                                className='border-primaryAppearance' 
+                                type="number"
+                                label={t('contact.contactForm.phoneNumber')}
+                                placeholder={t('contact.contactForm.phoneNumberPlaceHolder')}
+                                error={errors.phoneNumber?.message}
                             />
                         )}
                     />

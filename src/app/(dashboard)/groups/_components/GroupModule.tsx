@@ -10,7 +10,7 @@ import { useGroups } from '@/hooks/useGroupOps';
 
 // import { useGroupStore } from '@/stores/groups.store';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
-import CreateContactForm from '../../contacts/_component/CreateContactForm';
+import CreateGroupForm from './forms/CreateGroupForm';
 import GroupsGrid from './GroupsGrid';
 
 const GroupModule = () => {
@@ -23,7 +23,9 @@ const GroupModule = () => {
         isLoading,
         error,
     } = useGroups();
-    
+
+    console.log('Groups in group module:', groups);
+
     // const { 
     //     selectedGroups, 
     //     selectedGroupsData, 
@@ -35,7 +37,7 @@ const GroupModule = () => {
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-primaryAppearance", 
-            dialogContent: <CreateContactForm />,
+            dialogContent: <CreateGroupForm />,
         },
     ];
 

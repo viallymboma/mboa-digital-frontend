@@ -15,27 +15,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { EnterpriseContactResponseType } from '@/types/contact';
 
-// FormInput Component
-type FormInputProps = {
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder?: string;
   type?: string;
   className?: string;
   error?: string;
-};
+}
 
-const FormInput: React.FC<FormInputProps & React.InputHTMLAttributes<HTMLInputElement>> = ({ 
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({ 
   label, 
   placeholder, 
   type = "text", 
   className, 
-  error, 
+  error,
   ...props 
-}) => {
+}, ref) => {
   return (
     <div className="space-y-2 w-full">
       {label && <label className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
       <Input
+        ref={ref}
         type={type}
         placeholder={placeholder}
         className={cn('w-full h-[56px]', className)}
@@ -44,7 +44,40 @@ const FormInput: React.FC<FormInputProps & React.InputHTMLAttributes<HTMLInputEl
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-};
+});
+
+FormInput.displayName = 'FormInput';
+
+// // FormInput Component
+// type FormInputProps = {
+//   label?: string;
+//   placeholder?: string;
+//   type?: string;
+//   className?: string;
+//   error?: string;
+// };
+
+// const FormInput: React.FC<FormInputProps & React.InputHTMLAttributes<HTMLInputElement>> = ({ 
+//   label, 
+//   placeholder, 
+//   type = "text", 
+//   className, 
+//   error, 
+//   ...props 
+// }) => {
+//   return (
+//     <div className="space-y-2 w-full">
+//       {label && <label className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
+//       <Input
+//         type={type}
+//         placeholder={placeholder}
+//         className={cn('w-full h-[56px]', className)}
+//         {...props}
+//       />
+//       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//     </div>
+//   );
+// };
 
 
 type CountrySelectProps = {
@@ -54,26 +87,36 @@ type CountrySelectProps = {
   error?: string;
   onChange: (value: string) => void;
   options: { value: string; label: string; flag?: string }[];
-};
+} & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'>;
 
 const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
-  ({ label, onChange, value, className, error, options }) => {
+  ({ label, onChange, value, className, error, options, ...props }) => {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     // Filter countries based on search
-    const filteredOptions = options.filter(option =>
-      option.label.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredOptions = React.useMemo(() => 
+      options.filter(option =>
+        option.label.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+      [options, searchQuery]
     );
 
-    const handleSelect = (newValue: string) => {
-      // Direct value handling instead of synthetic event
+    const handleSelect = React.useCallback((newValue: string) => {
       onChange(newValue);
-    };
+    }, [onChange]);
 
     return (
       <div className="space-y-2 w-full">
-        {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
-        <Select value={value} onValueChange={handleSelect}>
+        {label && (
+          <label className="block text-[18px] font-medium text-gray-700">
+            {label}
+          </label>
+        )}
+        <Select 
+          value={value} 
+          onValueChange={handleSelect}
+          {...Object.fromEntries(Object.entries(props).filter(([key]) => key !== 'defaultValue'))}
+        >
           <SelectTrigger className={cn("w-full h-[56px]", className)}>
             <SelectValue placeholder="Select a country">
               {value && options.find(opt => opt.value === value)?.label}
@@ -87,6 +130,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-8"
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
             <div className="overflow-y-auto">
@@ -110,7 +154,74 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
     );
   }
 );
+
 CountrySelect.displayName = "CountrySelect";
+
+
+// type CountrySelectProps = {
+//   label?: string;
+//   className?: string;
+//   value: string;
+//   error?: string;
+//   onChange: (value: string) => void;
+//   options: { value: string; label: string; flag?: string }[];
+// };
+
+// const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
+//   ({ label, onChange, value, className, error, options }) => {
+//     const [searchQuery, setSearchQuery] = React.useState('');
+
+//     // Filter countries based on search
+//     const filteredOptions = options.filter(option =>
+//       option.label.toLowerCase().includes(searchQuery.toLowerCase())
+//     );
+
+//     const handleSelect = (newValue: string) => {
+//       // Direct value handling instead of synthetic event
+//       onChange(newValue);
+//     };
+
+//     return (
+//       <div className="space-y-2 w-full">
+//         {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+//         <Select value={value} onValueChange={handleSelect}>
+//           <SelectTrigger className={cn("w-full h-[56px]", className)}>
+//             <SelectValue placeholder="Select a country">
+//               {value && options.find(opt => opt.value === value)?.label}
+//             </SelectValue>
+//           </SelectTrigger>
+//           <SelectContent className="max-h-[300px]">
+//             <div className="p-2 sticky top-0 bg-white border-b">
+//               <Input
+//                 type="text"
+//                 placeholder="Search countries..."
+//                 value={searchQuery}
+//                 onChange={(e) => setSearchQuery(e.target.value)}
+//                 className="h-8"
+//               />
+//             </div>
+//             <div className="overflow-y-auto">
+//               {filteredOptions.map((option) => (
+//                 <SelectItem 
+//                   key={option.value} 
+//                   value={option.value}
+//                   className="cursor-pointer hover:bg-gray-100"
+//                 >
+//                   <div className="flex items-center gap-2">
+//                     {option.flag && <span>{option.flag}</span>}
+//                     <span>{option.label}</span>
+//                   </div>
+//                 </SelectItem>
+//               ))}
+//             </div>
+//           </SelectContent>
+//         </Select>
+//         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//       </div>
+//     );
+//   }
+// );
+// CountrySelect.displayName = "CountrySelect";
 
 
 // AmountInput Component
