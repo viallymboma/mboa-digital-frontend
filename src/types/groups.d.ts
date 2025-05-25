@@ -101,6 +101,25 @@ export type GroupType = {
     deleted: boolean;
 }
 
+export type EnterpriseGroupType = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    version: number;
+    groupId: string | null;
+    name: string;
+    code: string;
+    enterpriseContacts: EnterpriseType []; // You might want to define a proper type for contacts
+    archived: boolean;
+    statusCode?: number;
+    error?: string | null;
+    message?: string | null;
+};
+
+export type AddContactsToGroupType = {
+  listContactid: string []
+}
+
   // Type for Recharge
 export type RechargeType = {
     id: string;

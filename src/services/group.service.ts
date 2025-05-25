@@ -1,4 +1,7 @@
-import { GroupType } from '@/types/groups';
+import {
+  AddContactsToGroupType,
+  GroupType,
+} from '@/types/groups';
 
 import { ApiService } from './data.service';
 
@@ -33,14 +36,18 @@ export class GroupService {
         return this.apiService.put<GroupType, Partial<GroupType>>(`/api/v1/group/${groupId}`, data);
     }
 
+    async addContactToGroup(groupId: string, data: Partial<AddContactsToGroupType>) {
+        return this.apiService.put<AddContactsToGroupType, Partial<AddContactsToGroupType>>(`/api/v1/group/addContact/${groupId}`, data);
+    }
+
     async deleteGroup(groupId: string) {
         return this.apiService.delete(`/api/v1/group/${groupId}`);
     }
 
-    async addContactsToGroup(groupId: string, contactIds: string[]) {
-        return this.apiService.post<GroupType, { contactIds: string[] }>(
+    async addContactsToGroup(groupId: string, listContactid: string[]) {
+        return this.apiService.put<GroupType, { listContactid: string[] }>(
             `/api/v1/group/addContact/${groupId}`,
-            { contactIds }
+            { listContactid }
         );
     }
 

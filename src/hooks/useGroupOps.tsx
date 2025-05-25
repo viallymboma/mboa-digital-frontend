@@ -40,6 +40,7 @@ export function useGroups() {
                 enterprise: enterpriseId
             });
             addGroup(response);
+            refetchGroups ()
             notify.success('Group created successfully');
             return response;
         } catch (error) {
@@ -79,6 +80,7 @@ export function useGroups() {
             const response = await groupService.addContactsToGroup(groupId, contactIds);
             updateGroupInStore(response);
             notify.success('Contacts added to group successfully');
+            refetchGroups();
             return response;
         } catch (error) {
             console.error('Error adding contacts to group:', error);
