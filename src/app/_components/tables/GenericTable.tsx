@@ -82,6 +82,67 @@ const GenericTable = <TData extends { id?: string }>({
     option.columnDef.header.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // const renderDraggableTable = React.useCallback((provided: import('react-beautiful-dnd').DroppableProvided) => (
+  //   <div
+  //     {...provided.droppableProps}
+  //     ref={provided.innerRef}
+  //     className="rounded-lg border overflow-hidden"
+  //   >
+  //     <table className="w-full">
+  //       <thead className="bg-primaryAppearanceLight text-white">
+  //         {table.getHeaderGroups().map((headerGroup) => (
+  //           <tr key={headerGroup.id}>
+  //             {headerGroup.headers.map((header) => (
+  //               <th
+  //                 key={header.id}
+  //                 className="p-2 text-left cursor-pointer"
+  //                 onClick={header.column.getToggleSortingHandler()}
+  //               >
+  //                 {typeof header.column.columnDef.header === 'function'
+  //                   ? header.column.columnDef.header(header.getContext())
+  //                   : header.column.columnDef.header}
+  //                 {{
+  //                   asc: ' 🔼',
+  //                   desc: ' 🔽',
+  //                 }[header.column.getIsSorted() as string] ?? null}
+  //               </th>
+  //             ))}
+  //           </tr>
+  //         ))}
+  //       </thead>
+  //       <tbody>
+  //         {table.getRowModel().rows.map((row, index) => (
+  //           <Draggable 
+  //             key={row.original.id || `row-${index}`} 
+  //             draggableId={row.original.id || `row-${index}`} 
+  //             index={index}
+  //           >
+  //             {(dragProvided) => (
+  //               <tr
+  //                 ref={dragProvided.innerRef}
+  //                 {...dragProvided.draggableProps}
+  //                 {...dragProvided.dragHandleProps}
+  //                 className="hover:bg-gray-100"
+  //               >
+  //                 {row.getVisibleCells().map((cell) => (
+  //                   <td key={cell.id} className="p-2 border-t">
+  //                     {cell.column.columnDef.cell
+  //                       ? typeof cell.column.columnDef.cell === 'function'
+  //                         ? cell.column.columnDef.cell(cell.getContext())
+  //                         : cell.getValue()
+  //                       : cell.getValue()}
+  //                   </td>
+  //                 ))}
+  //               </tr>
+  //             )}
+  //           </Draggable>
+  //         ))}
+  //         {provided.placeholder}
+  //       </tbody>
+  //     </table>
+  //   </div>
+  // ), [table]);
+
   return (
     <div className="p-4 flex flex-col gap-4 border-primaryAppearance border rounded-[12px]">
       {/* Filter input */}
@@ -152,6 +213,7 @@ const GenericTable = <TData extends { id?: string }>({
       {/* Table */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="table-body">
+          {/* {renderDraggableTable} */}
           {(provided) => (
             <div
               {...provided.droppableProps}

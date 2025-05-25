@@ -63,7 +63,7 @@ const SignInForm = () => {
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
                 <div className='flex flex-col gap-2 w-full'>
-                    <Controller
+                    {/* <Controller
                         name="email"
                         control={control}
                         render={({ field }) => (
@@ -71,6 +71,21 @@ const SignInForm = () => {
                                 {...field}
                                 className='border-primaryAppearance h-[56px] flex-1 w-full'
                                 label="Email" type={t('register.email')}
+                                placeholder={t('register.emailPlaceHolder')} 
+                                error={errors.email?.message}
+                            />
+                        )}
+                    /> */}
+                    <Controller
+                        name="email"
+                        control={control}
+                        defaultValue="" // Add default value here too
+                        render={({ field }) => (
+                            <FormInput 
+                                {...field}
+                                className='border-primaryAppearance h-[56px] flex-1 w-full'
+                                label="Email"
+                                type="email"
                                 placeholder={t('register.emailPlaceHolder')} 
                                 error={errors.email?.message}
                             />

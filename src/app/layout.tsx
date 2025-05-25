@@ -28,8 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <style>{`
+          :root {
+            ${geistSans.variable}
+            ${geistMono.variable}
+          }
+        `}</style>
+      </head>
       <body
+        // Add these data attributes to suppress the warning
+        data-new-gr-c-s-check-loaded="14.1147.0"
+        data-gr-ext-installed=""
+        suppressHydrationWarning // Add this attribute
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastProvider />

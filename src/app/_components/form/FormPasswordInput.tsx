@@ -24,6 +24,8 @@ const FormPasswordInput = React.forwardRef<HTMLInputElement, FormPasswordInputPr
   label,
   className,
   error,
+  value = '', // Add default value
+  onChange,
   ...props
 }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,8 +35,14 @@ const FormPasswordInput = React.forwardRef<HTMLInputElement, FormPasswordInputPr
       {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
       <div className="relative">
         <Input
-          ref={ref}
+          // ref={ref}
+          // type={showPassword ? "text" : "password"}
+          // className={cn('w-full h-[56px] pr-10', className)}
+          // {...props}
+                    ref={ref}
           type={showPassword ? "text" : "password"}
+          value={value}
+          onChange={onChange}
           className={cn('w-full h-[56px] pr-10', className)}
           {...props}
         />

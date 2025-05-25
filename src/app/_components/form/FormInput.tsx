@@ -23,12 +23,37 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
+// const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({ 
+//   label, 
+//   placeholder, 
+//   type = "text", 
+//   className, 
+//   error,
+//   ...props 
+// }, ref) => {
+//   return (
+//     <div className="space-y-2 w-full">
+//       {label && <label className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
+//       <Input
+//         ref={ref}
+//         type={type}
+//         placeholder={placeholder}
+//         className={cn('w-full h-[56px]', className)}
+//         {...props}
+//       />
+//       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//     </div>
+//   );
+// });
+
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({ 
   label, 
   placeholder, 
   type = "text", 
   className, 
   error,
+  value = '', // Add default value
+  onChange,
   ...props 
 }, ref) => {
   return (
@@ -38,6 +63,8 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({
         ref={ref}
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className={cn('w-full h-[56px]', className)}
         {...props}
       />
@@ -259,6 +286,33 @@ const AmountInput: React.FC<AmountInputProps & React.InputHTMLAttributes<HTMLInp
 };
 
 // TextArea Component
+// type TextAreaProps = {
+//   label?: string;
+//   placeholder?: string;
+//   className?: string;
+//   error?: string;
+// };
+
+// const FormTextArea: React.FC<TextAreaProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>> = ({
+//   label,
+//   placeholder,
+//   className,
+//   error,
+//   ...props
+// }) => {
+//   return (
+//     <div className="space-y-2 w-full">
+//       {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+//       <Textarea
+//         placeholder={placeholder}
+//         className={cn('w-full h-[120px]', className)}
+//         {...props}
+//       />
+//       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//     </div>
+//   );
+// };
+
 type TextAreaProps = {
   label?: string;
   placeholder?: string;
@@ -266,17 +320,18 @@ type TextAreaProps = {
   error?: string;
 };
 
-const FormTextArea: React.FC<TextAreaProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>> = ({
+const FormTextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>>(({
   label,
   placeholder,
   className,
   error,
   ...props
-}) => {
+}, ref) => {
   return (
     <div className="space-y-2 w-full">
       {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
       <Textarea
+        ref={ref}
         placeholder={placeholder}
         className={cn('w-full h-[120px]', className)}
         {...props}
@@ -284,7 +339,9 @@ const FormTextArea: React.FC<TextAreaProps & React.TextareaHTMLAttributes<HTMLTe
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-};
+});
+
+FormTextArea.displayName = 'FormTextArea';
 
 type SelectProps = {
   label: string;

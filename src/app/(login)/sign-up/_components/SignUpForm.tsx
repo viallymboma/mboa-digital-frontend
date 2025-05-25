@@ -98,9 +98,11 @@ const SignUpForm = () => {
             notify.success(t('loading.signup.error'));
             if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'data' in error.response && error.response.data && typeof error.response.data === 'object' && 'message' in error.response.data) {
                 // @ts-expect-error: dynamic error shape
-                notify.success(error.response.data.message);
+                notify.error(error.response.data.message);
             }
             console.error('Login failed:', error);
+        } finally {
+            notify.dismiss();
         }
     };
 

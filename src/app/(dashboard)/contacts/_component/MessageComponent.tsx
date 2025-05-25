@@ -8,8 +8,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { FormButton } from '@/app/_components/form/FormButton';
 import { FormTextArea } from '@/app/_components/form/FormInput';
 import { Separator } from '@/components/ui/separator';
+import { notify } from '@/components/utilities/helper';
+import { useMessages } from '@/hooks/useMessage';
 import { countCharacters } from '@/lib/utils';
 import { useContactStore } from '@/stores/contacts.store';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,28 +22,29 @@ import RecipientsSection from './table-sub-ui/RecipientsSection';
 // Define schema validation using Zod
 const schema = z.object({
     message: z.string().min(1, { message: 'Message is required' }),
-    contactPhone: z.array(z.string()).min(1, { message: 'At least one item must be selected' }), // z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    // contactPhone: z.array(z.string()).min(1, { message: 'At least one item must be selected' }), // z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const MessageComponent = () => {
     const { selectedContactsData } = useContactStore();
+    const { sendMessage, messages } = useMessages();
     const [charCount, setCharCount] = React.useState({ total: 0, special: 0, specialCount: 0 });
     const { t } = useTranslation();
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+    console.log(messages, "89347984792482049")
 
     // Initialize react-hook-form with resolver
     const {
         handleSubmit,
         control,
-        watch, 
-        // formState: { errors },
+        watch,
+        formState: { errors }, // Add this
+        reset // Add this for form reset
     } = useForm<FormData>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            contactPhone: [], // Ensure this is initialized as an empty array
-            message: '',      // Initialize other fields as needed
-        },
     });
 
     // Watch the message field for changes
@@ -51,10 +55,39 @@ const MessageComponent = () => {
         setCharCount(countCharacters(message));
     }, [message]);
 
-    const onSubmit = (data: FormData) => {
-        console.log('New Contact:', data);
+
+
+    const onSubmit = async (data: FormData) => {
+        console.log('New Message:', data);
         console.log(selectedContactsData)
+
+        // return
+
+        if (selectedContactsData.length === 0) {
+            notify.error('Please select at least one recipient');
+            return;
+        }
+
+        try {
+            setIsSubmitting(true);
+            const contacts = selectedContactsData.map(contact => contact.phoneNumber);
+            await sendMessage(data.message, contacts);
+            notify.success('Message sent successfully');
+            reset(); // Reset form after successful submission
+        } catch (error) {
+            console.error('Error sending message:', error);
+            if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'data' in error.response && error.response.data && typeof error.response.data === 'object' && 'message' in error.response.data) {
+                // @ts-expect-error: dynamic error shape
+                notify.error(error.response.data.message);
+                console.error('Error sending message:', error.response.data.message);
+            }
+            return;
+        } finally {
+            setIsSubmitting(false);
+            // notify.dismiss();
+        }
     };
+
     return (
         <div className='max-h-[500px] p-1 overflow-y-auto'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
@@ -82,13 +115,19 @@ const MessageComponent = () => {
                 <Controller
                     name="message"
                     control={control}
-                    render={({ field }) => <FormTextArea label="Message" placeholder="Enter your message" {...field}  />}
+                    render={({ field }) => (
+                        <FormTextArea 
+                            {...field}  
+                            label="Message" 
+                            placeholder="Enter your message" 
+                            error={errors.message?.message}
+                        />
+                    )}
                 />
 
+
                 <div className='flex flex-col gap-4'>
-                    <button type="submit" className='flex flex-row rounded-lg justify-center gap-3 bg-primaryAppearance p-[1.5rem]'>
-                        <span className='text-[18px] text-white'>{t('contact.sendMessageFormBtn')}</span>
-                    </button>
+                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isSubmitting ? 'Sending...' : t('contact.sendMessageFormBtn') }</FormButton>
                 </div>
             </form>
         </div>

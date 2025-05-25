@@ -1,59 +1,81 @@
-// Enum for PaymentMethod
-enum PaymentMethod {
-    CASH = "CASH",
-    MOBILE_MONEY = "MOBILE_MONEY",
-    BANK_TRANSFER = "BANK_TRANSFER",
-    CREDIT_CARD = "CREDIT_CARD"
-}
-
-// Type for Sort properties
-export type SortType = {
-    sorted: boolean;
-    unsorted: boolean;
-    empty: boolean;
-}
-
-// Type for Pageable
-export type PageableType = {
-    pageNumber: number;
-    pageSize: number;
-    paged: boolean;
-    unpaged: boolean;
-    sort: SortType;
-    offset: number;
-}
-
-// Type for a Recharge item
-export type RechargeType = {
-    statusCode: number;
-    error: string;
+export type SendMessageRequestType = {
     message: string;
-    id: string;
-    createdAt: string; // ISO date string
-    updatedAt: string; // ISO date string
-    version: number;
-    qteMessage: number; // Quantity of messages
-    messagePriceUnit: number; // Price per message unit
-    enterprise: string; // Could be expanded to Enterprise export type ifType = needed
-    user: string; // Could be expanded to User export type ifType = needed
-    paymentMethod: PaymentMethod;
-    debitPhoneNumber: string;
-    debitBankAccountNumber: string;
-    couponCode: string;
-    archived: boolean;
+    enterpriseId: string;
+    contacts: string;
+    senderId: string;
+    msisdn: string;
+    smsCount: number;
 }
 
-  // Main Paginated Response Interface
-export type PaginatedRechargeResponseType = {
+export type SendMessageResponseType = {
+    statusCode: number,
+    error: string,
+    message: string,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    version: number,
+    contact: string,
+    enterprise: string,
+    status: ACCEPTED,
+    sender: string,
+    ticket: string,
+    smscount: number,
+    msisdn: string,
+    code: string,
+    codeGroupe: string,
+    type: string,
+    apiResponse?: string,
+    archived: boolean
+}
+
+
+export type MessageType = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    version: number;
+    qteMessage?: number;
+    messagePriceUnit?: number;
+    enterprise: string;
+    user?: string;
+    paymentMethod?: string | 'CASH' | 'MOBILE_MONEY' | 'BANK';
+    debitPhoneNumber?: string;
+    debitBankAccountNumber?: string;
+    couponCode?: string;
+    archived: boolean;
+    statusCode?: number;
+    error?: string;
+    message?: string;
+}
+
+export type PaginatedResponse<T> = {
+    content: T[];
     totalPages: number;
     totalElements: number;
-    pageable: PageableType;
+    pageable: {
+        pageNumber: number;
+        pageSize: number;
+        paged: boolean;
+        unpaged: boolean;
+        sort: {
+            sorted: boolean;
+            unsorted: boolean;
+            empty: boolean;
+        };
+        offset: number;
+    };
     numberOfElements: number;
     first: boolean;
     last: boolean;
-    sort: SortType;
-    number: number; // current page number
-    size: number;   // page size
-    content: RechargeType [];
+    sort: {
+        sorted: boolean;
+        unsorted: boolean;
+        empty: boolean;
+    };
+    number: number;
+    size: number;
     empty: boolean;
 }
+
+export type GetMessageResponseType = PaginatedResponse<MessageType>;
