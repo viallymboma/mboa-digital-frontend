@@ -23,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const editSchema = z.object({
     firstname: z.string().min(1, { message: 'First name is required' }),
     lastname: z.string().min(1, { message: 'Last name is required' }),
-    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    phoneNumber: z.string().min(7, { message: 'Phone number must be at least 10 digits' }),
     country: z.string().min(1, { message: 'Country is required' }),
     city: z.string().min(1, { message: 'City is required' }), 
 });
@@ -79,6 +79,13 @@ const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) =
                 id: contact.id,
                 email: contact.email,
                 enterpriseId: contact.enterpriseId,
+                socialRaison: contact?.socialRaison, 
+                activityDomain: contact?.activityDomain, 
+                villeEntreprise: contact?.villeEntreprise, 
+                contribuableNumber: contact?.contribuableNumber, 
+                pays: contact?.pays,
+                user: contact?.user,
+                smsSenderId: contact?.smsSenderId, 
                 createdAt: contact.createdAt,
             });
             notify.success("Contact updated successfully");
@@ -88,7 +95,8 @@ const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) =
             console.error('Error updating contact:', error);
             notify.error("Error updating contact");
         } finally {
-            notify.dismiss();
+            console.error('Finished process in finally');
+            // notify.dismiss();
         }
     };
 

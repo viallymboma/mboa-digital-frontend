@@ -30,9 +30,9 @@ const getCountryFlag = (countryCode: string): string => {
 
 // Define schema validation using Zod
 const schema = z.object({
-    firstname: z.string().min(1, { message: 'First name is required' }),
-    lastname: z.string().min(1, { message: 'Last name is required' }),
-    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    firstName: z.string().min(1, { message: 'First name is required' }),
+    lastName: z.string().min(1, { message: 'Last name is required' }),
+    phoneNumber: z.string().min(7, { message: 'Phone number must be at least 10 digits' }),
     country: z.string().min(1, { message: 'Country is required' }),
     city: z.string().min(1, { message: 'City is required' }), 
 });
@@ -97,7 +97,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
         <div className='max-h-[500px] overflow-y-auto p-2'>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
                 <Controller
-                    name="firstname"
+                    name="firstName"
                     control={control}
                     render={({ field }) => (
                         <FormInput 
@@ -105,13 +105,13 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             className='border-primaryAppearance'
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
-                            error={errors.firstname?.message}
+                            error={errors.firstName?.message}
                         />
                     )}
                 />
 
                 <Controller
-                    name="lastname"
+                    name="lastName"
                     control={control}
                     render={({ field }) => (
                         <FormInput 
@@ -119,7 +119,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             className='border-primaryAppearance'
                             label=""
                             placeholder={t('contact.contactForm.fullNamePlaceHolder')}
-                            error={errors.lastname?.message}
+                            error={errors.lastName?.message}
                         />
                     )}
                 />

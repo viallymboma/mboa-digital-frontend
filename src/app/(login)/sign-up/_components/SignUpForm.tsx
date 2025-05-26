@@ -21,7 +21,7 @@ const schema = z.object({
     firstName: z.string().min(1, { message: 'First name is required' }),
     lastName: z.string().min(1, { message: 'Last name is required' }),
     email: z.string().email({ message: 'Invalid email address' }),
-    phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
+    phoneNumber: z.string().min(7, { message: 'Phone number must be at least 10 digits' }),
     password: z.string()
         .min(8, { message: 'Password must be at least 8 characters' })
         .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })

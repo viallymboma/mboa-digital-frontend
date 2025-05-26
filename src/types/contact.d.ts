@@ -215,8 +215,8 @@ export type PaginatedEnterpriseContactsResponseType = {
 }
 
 export type CreateContactRequestType = {
-    firstname: string,
-    lastname: string,
+    firstName: string,
+    lastName: string,
     email: string,
     phoneNumber: string,
     country: string,
@@ -231,13 +231,20 @@ export type UpdateContactRequestType = {
     createdAt: string,
     // updatedAt: string,
     // version: number,
+    socialRaison: string, 
+    smsSenderId: string, 
+    activityDomain: string, 
+    contribuableNumber: string; 
+    villeEntreprise: string;
     firstname: string,
     lastname: string,
     email: string,
     phoneNumber: string,
     country: string,
+    pays: string,
     city: string,
-    gender?: Gender,
+    user: string, 
+    // gender?: Gender,
     enterpriseId?: string,
     group?: string
 }
