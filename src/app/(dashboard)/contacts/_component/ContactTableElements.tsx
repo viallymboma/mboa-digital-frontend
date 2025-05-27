@@ -1,4 +1,7 @@
-import { EnterpriseType } from '@/types/contact';
+import {
+  EnterpriseType,
+  UserType,
+} from '@/types/contact';
 import { ColumnDef } from '@tanstack/react-table';
 
 import ContactActionUI from './ContactActionUI';
@@ -6,17 +9,24 @@ import SelectAllCheckbox from './table-sub-ui/SelectAllCheckbox';
 import SelectedTableRow from './table-sub-ui/SelectedTableRow';
 
 export type TransformedContactType = {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  phoneNumber: string;
-  country: string;
-  city: string;
-  enterprise: EnterpriseType;
-  createdAt: string;
-  status?: string;
-  archived: boolean;
+    id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phoneNumber: string;
+    country: string;
+    city: string;
+    enterprise: EnterpriseType;
+    createdAt: string;
+    status?: string;
+    archived: boolean;
+    socialRaison?: string, 
+    smsSenderId: string, 
+    activityDomain: string, 
+    contribuableNumber?: string; 
+    villeEntreprise: string;
+    pays: string,
+    user: UserType, 
 }
 
 // Handle action button click

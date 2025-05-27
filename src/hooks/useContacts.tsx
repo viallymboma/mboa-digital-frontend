@@ -129,6 +129,51 @@ export function useContacts() {
         }
     };
 
+    const importContacts = async (file: File) => {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            // formData.append('enterpriseId', getLocalStorage("user")?.enterprise?.id);
+
+            const service = ContactService.getInstance();
+            const response = await service.importContacts(formData);
+            
+            // if (response.importedCount > 0) {
+            //     notify.success(`Successfully imported ${response.importedCount} contacts`);
+            //     await refetchEnterpriseContactsInStore();
+            // }
+
+            // if (response.failedCount > 0) {
+            //     notify.warning(`Failed to import ${response.failedCount} contacts`);
+            // }
+
+            return response;
+        } catch (error) {
+            console.error('Import failed:', error);
+            notify.error('Failed to import contacts');
+            throw error;
+        }
+    };
+
+    const downloadTemplate = async () => {
+        try {
+            const service = ContactService.getInstance();
+            const blob = await service.downloadTemplate();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'contact_import_template.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error('Download failed:', error);
+            notify.error('Failed to download template');
+            throw error;
+        }
+    };
+
     const refetchEnterpriseContactsInStore = async () => {
         await mutate(); // Revalidates the SWR cache
     };
@@ -144,6 +189,8 @@ export function useContacts() {
         refetchEnterpriseContactsInStore, 
         editContact,
         deleteContact,
+        importContacts, 
+        downloadTemplate, 
         isUpdating,
         isDeleting,
         updateError,

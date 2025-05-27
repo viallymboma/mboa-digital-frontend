@@ -82,10 +82,15 @@ export const useContactStore = create<ContactState>((set) => ({
 
         // Find contacts to add (not currently selected)
         const contactsToAdd = contacts.filter(c => !currentIds.includes(c.id));
-        
+
+        // Map TransformedContactType[] to EnterpriseContactResponseType[]
+        const contactsToAddFull = state.contacts.filter(contact =>
+            contactsToAdd.some(c => c.id === contact.id)
+        );
+
         return {
-            selectedContactsData: [...state.selectedContactsData, ...contactsToAdd],
-            selectedContacts: [...currentIds, ...contactsToAdd.map(c => c.id)]
+            selectedContactsData: [...state.selectedContactsData, ...contactsToAddFull],
+            selectedContacts: [...currentIds, ...contactsToAddFull.map(c => c.id)]
         };
     }),
 
@@ -105,8 +110,11 @@ export const useContactStore = create<ContactState>((set) => ({
             };
         } else {
             // Otherwise, select all
+            const selectedContactsData = state.contacts.filter(contact =>
+                contacts.some(c => c.id === contact.id)
+            );
             return {
-                selectedContactsData: contacts,
+                selectedContactsData,
                 selectedContacts: contacts.map(c => c.id)
             };
         }

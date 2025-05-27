@@ -164,10 +164,14 @@ export type EnterpriseContactResponseType = {
     country: string;
     city: string;
     gender?: Gender;
-    user?: UserType;
+    user: UserType;
     enterprise: EnterpriseType;
     group?: GroupType;
     archived: boolean;
+    smsSenderId: string;
+    activityDomain: string;
+    villeEntreprise: string;
+    pays: string;
 }
 export type EnterpriseContactDTO = {
     firstname: string,
@@ -231,10 +235,10 @@ export type UpdateContactRequestType = {
     createdAt: string,
     // updatedAt: string,
     // version: number,
-    socialRaison: string, 
+    socialRaison?: string, 
     smsSenderId: string, 
     activityDomain: string, 
-    contribuableNumber: string; 
+    contribuableNumber?: string; 
     villeEntreprise: string;
     firstname: string,
     lastname: string,
@@ -243,11 +247,13 @@ export type UpdateContactRequestType = {
     country: string,
     pays: string,
     city: string,
-    user: string, 
+    user: UserType, 
     // gender?: Gender,
     enterpriseId?: string,
     group?: string
 }
 
 
-
+export type ImportContactsType = {
+    file: string
+}

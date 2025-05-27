@@ -22,8 +22,7 @@ const GroupsGrid = () => {
 
   // Filtered Data
   const filteredGroups = groups.filter((group) => {
-    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         group.code.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) || group.code.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesArchived = showArchived ? true : !group.archived;
     return matchesSearch && matchesArchived;
   });

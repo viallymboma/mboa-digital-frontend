@@ -45,7 +45,11 @@ const GroupCard = ({ group, view }: { group: GroupType; view: 'grid' | 'list' })
         {/* Content */}
         <div className={`flex flex-row justify-between items-center w-[80%] ml-4`}>
           <div className="p-4 rounded-lg">
-            <h2 className="text-lg font-semibold">{group.name}</h2>
+            <Link 
+              href={`/groups/${group.id}`}
+            >
+              <h2 className="text-lg font-semibold">{group.name}</h2>
+            </Link>
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center gap-2">
                 <GroupContactCountSvgIcon />

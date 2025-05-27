@@ -1,8 +1,7 @@
 "use client";
 import React from 'react';
 
-import { usePathname } from 'next/navigation';
-
+// import { useParams, usePathname } from 'next/navigation';
 import GenericPageHeader
   from '@/app/(dashboard)/_components/_global/GenericPageHeader';
 import CreateContactForm
@@ -13,9 +12,19 @@ import {
   AddMessageSvgIcon,
   AddNewContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { GroupType } from '@/types/groups';
 
-const OneGroupHeader = () => {
-    const pathName = usePathname ()
+type OneGroupHeaderType = {
+    currentGroup?: GroupType; // Define the type of currentGroup if known
+};
+
+const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
+    // const pathName = usePathname ()
+    // const { id } = useParams ()
+    // const currentGroup = React.useMemo(() => 
+    //   groups?.find(group => group.id === id),
+    //   [groups, id]
+    // );
     const buttons = [
         {
             label: 'group.groupMessage',
@@ -43,7 +52,8 @@ const OneGroupHeader = () => {
 
     return (
         <>
-            <GenericPageHeader buttons={buttons} title={`Group - ${ pathName?.split("/")[pathName?.split("/").length - 1] }`} breadcrumbLinks={breadcrumbLinks} />
+            {/* <GenericPageHeader buttons={buttons} title={`Group - ${ pathName?.split("/")[pathName?.split("/").length - 1] }`} breadcrumbLinks={breadcrumbLinks} /> */}
+            <GenericPageHeader buttons={buttons} title={`Group - ${ currentGroup?.name }`} breadcrumbLinks={breadcrumbLinks} />
         </>
     )
 }

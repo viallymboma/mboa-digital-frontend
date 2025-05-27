@@ -32,6 +32,19 @@ export class ContactService {
         return this.apiService.post<EnterpriseContactResponseType>('/api/v1/contact', contact);
     }
 
+    async importContacts(formData: FormData): Promise<string> {
+        return this.apiService.post<string>(
+            '/api/v1/contact/importContact',
+            formData as unknown as Record<string, unknown>
+        );
+    }
+
+    async downloadTemplate(): Promise<Blob> {
+        return this.apiService.get('/api/v1/contact/template', {
+            responseType: 'blob'
+        });
+    }
+
     async deleteContacts(contactIds: string[]): Promise<void> {
         return this.apiService.delete(`/api/v1/contacts/${contactIds}`);
     }
