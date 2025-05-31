@@ -8,8 +8,7 @@ export type SvgIconProp = {
 
 
 export const WhoAreYouSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -22,8 +21,7 @@ export const WhoAreYouSvgIcon = () => {
 }
 
 export const HomeSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -39,8 +37,7 @@ export const HomeSvgIcon = () => {
 }
 
 export const NotificationSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -56,8 +53,7 @@ export const NotificationSvgIcon = () => {
 
 
 export const MessagingSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -74,8 +70,7 @@ export const MessagingSvgIcon = () => {
 
 
 export const SearchSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -92,8 +87,7 @@ export const SearchSvgIcon = () => {
 
 
 export const SvgLogoIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     console.log(color)
     return (
         <div
@@ -112,8 +106,7 @@ export const SvgLogoIcon: React.FC <SvgIconProp> = ({ color, height, width}) => 
 
 
 export const SmsStatisticsSvgIcon = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -134,8 +127,7 @@ export const SmsStatisticsSvgIcon = () => {
 
 // DASHBOARD FIRST CARD ICONS
 export const SentSmsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -152,8 +144,7 @@ export const SentSmsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) 
 }
 
 export const CreditSmsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -173,8 +164,7 @@ export const CreditSmsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}
 
 
 export const TotalContactsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -193,8 +183,7 @@ export const TotalContactsSvgIcon: React.FC <SvgIconProp> = ({ color, height, wi
 
 
 export const TotalRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -216,9 +205,8 @@ export const TotalRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, w
 
 // 
 
-export const MultipleContactsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+export const MultipleContactsSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -245,9 +233,8 @@ export const MultipleContactsSvgIcon: React.FC <SvgIconProp> = ({ color, height,
 
 // SIDEBAR SVGS ICONS
 
-export const DashboardSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+export const DashboardSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -262,9 +249,8 @@ export const DashboardSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}
     )
 }
 
-export const ContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+export const ContactSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -281,8 +267,7 @@ export const ContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) 
 
 
 export const GroupSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -299,8 +284,7 @@ export const GroupSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) =>
 
 
 export const HistorySvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -316,9 +300,8 @@ export const HistorySvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) 
 }
 
 
-export const RechargesWhiteSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+export const RechargesWhiteSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -337,8 +320,7 @@ export const RechargesWhiteSvgIcon: React.FC <SvgIconProp> = ({ color, height, w
 
 
 export const RechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -356,8 +338,7 @@ export const RechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}
 
 
 export const PaymentsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
             style={{
@@ -373,8 +354,7 @@ export const PaymentsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width})
 }
 
 export const SchoolsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
             style={{
@@ -392,8 +372,7 @@ export const SchoolsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) 
 
 
 export const PlusMessaginSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+    const { theme } = useTheme(); 
     return (
         <div
         style={{
@@ -411,9 +390,8 @@ export const PlusMessaginSvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
 // ================ EMPTY UI ==================================
 
 
-export const ContactEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ContactEmptyUISvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -431,9 +409,8 @@ export const ContactEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, w
     )
 }
 
-export const GroupEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const GroupEmptyUISvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div>
             <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -445,9 +422,8 @@ export const GroupEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
 }
 
 
-export const HistoriesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const HistoriesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -465,9 +441,8 @@ export const HistoriesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height,
 }
 
 
-export const RechargesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const RechargesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -481,9 +456,8 @@ export const RechargesEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height,
     )
 }
 
-export const RechargesEmptyUISvgIcon2: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const RechargesEmptyUISvgIcon2: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -503,9 +477,8 @@ export const RechargesEmptyUISvgIcon2: React.FC <SvgIconProp> = ({ color, height
 }
 
 
-export const PaymentEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const PaymentEmptyUISvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -522,9 +495,8 @@ export const PaymentEmptyUISvgIcon: React.FC <SvgIconProp> = ({ color, height, w
 }
 
 
-export const EditSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const EditSvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -553,9 +525,8 @@ export const EditSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => 
 
 
 
-export const AddNewContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const AddNewContactSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         style={{
@@ -569,9 +540,8 @@ export const AddNewContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, wi
     )
 }
 
-export const ImporterContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ImporterContactSvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -586,9 +556,8 @@ export const ImporterContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, 
     )
 }
 
-export const FileDownloadSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const FileDownloadSvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -607,9 +576,8 @@ export const FileDownloadSvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
 
 
 
-export const FileUploadSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const FileUploadSvgIcon: React.FC <SvgIconProp> = ({ }) => {
     // const { themes, theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
         // style={{
@@ -629,9 +597,8 @@ export const FileUploadSvgIcon: React.FC <SvgIconProp> = ({ color, height, width
 
 // ======================================================
 
-export const ProfileNameSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfileNameSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -647,9 +614,8 @@ export const ProfileNameSvgIcon: React.FC <SvgIconProp> = ({ color, height, widt
     )
 }
 
-export const ProfileLocationSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfileLocationSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -665,9 +631,8 @@ export const ProfileLocationSvgIcon: React.FC <SvgIconProp> = ({ color, height, 
 }
 
 
-export const ProfilEmailSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfilEmailSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -686,9 +651,8 @@ export const ProfilEmailSvgIcon: React.FC <SvgIconProp> = ({ color, height, widt
 
 
 
-export const ProfilAccountTypeSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfilAccountTypeSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -705,9 +669,8 @@ export const ProfilAccountTypeSvgIcon: React.FC <SvgIconProp> = ({ color, height
 }
 
 
-export const AddMessageSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const AddMessageSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -724,9 +687,8 @@ export const AddMessageSvgIcon: React.FC <SvgIconProp> = ({ color, height, width
 
 
 
-export const ContactStatisticsSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ContactStatisticsSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -744,9 +706,8 @@ export const ContactStatisticsSvgIcon: React.FC <SvgIconProp> = ({ color, height
 }
 
 
-export const WorkingContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const WorkingContactSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -764,9 +725,8 @@ export const WorkingContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, w
 
 
 
-export const UnavailableContactSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const UnavailableContactSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -786,9 +746,8 @@ export const UnavailableContactSvgIcon: React.FC <SvgIconProp> = ({ color, heigh
 
 // TABLE SVG ICONS
 
-export const EditTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const EditTableRowSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -806,9 +765,8 @@ export const EditTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
 }
 
 
-export const DeleteTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const DeleteTableRowSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -828,9 +786,8 @@ export const DeleteTableRowSvgIcon: React.FC <SvgIconProp> = ({ color, height, w
 }
 
 
-export const FilterSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const FilterSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -846,9 +803,8 @@ export const FilterSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) =
 }
 
 
-export const TitleListSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const TitleListSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -865,9 +821,8 @@ export const TitleListSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}
 }
 
 
-export const ImportSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ImportSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -888,9 +843,8 @@ export const ImportSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) =
 
 // GROUP SECTION SVG ICONS
 
-export const GroupContactCountSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const GroupContactCountSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -907,9 +861,8 @@ export const GroupContactCountSvgIcon: React.FC <SvgIconProp> = ({ color, height
 }
 
 
-export const GroupContactViewMoreSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const GroupContactViewMoreSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -924,9 +877,8 @@ export const GroupContactViewMoreSvgIcon: React.FC <SvgIconProp> = ({ color, hei
 }
 
 
-export const DeliveredSMSSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const DeliveredSMSSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -943,9 +895,8 @@ export const DeliveredSMSSvgIcon: React.FC <SvgIconProp> = ({ color, height, wid
 }
 
 
-export const FailedSMSSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const FailedSMSSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -963,9 +914,8 @@ export const FailedSMSSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}
 
 
 
-export const PerformedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const PerformedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -984,9 +934,8 @@ export const PerformedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, heigh
 
 
 
-export const ValidatedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ValidatedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1006,9 +955,8 @@ export const ValidatedRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, heigh
 
 
 
-export const PendingRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const PendingRechargesSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1023,9 +971,8 @@ export const PendingRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height,
     )
 }
 
-export const MoreOptionRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const MoreOptionRechargesSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1068,9 +1015,8 @@ export const MoreOptionRechargesSvgIcon: React.FC <SvgIconProp> = ({ color, heig
 
 
 
-export const ProfilPhoneSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfilPhoneSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1092,9 +1038,8 @@ export const ProfilPhoneSvgIcon: React.FC <SvgIconProp> = ({ color, height, widt
 
 
 
-export const ProfilMoreAccountSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfilMoreAccountSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1115,8 +1060,7 @@ export const ProfilMoreAccountSvgIcon: React.FC <SvgIconProp> = ({ color, height
 
 
 export const SvgIconsLogo = () => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them")
+    const { theme } = useTheme(); 
     return (
         <div style={{
             color: theme === "dark" ? "white" : "#7B18CC"
@@ -1140,9 +1084,8 @@ export const SvgIconsLogo = () => {
 
 
 
-export const ProfilPubNameSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
+export const ProfilPubNameSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
     const { theme } = useTheme(); 
-    console.log(color, "here is the them", height, width)
     return (
         <div
             style={{
@@ -1169,9 +1112,8 @@ export const ProfilPubNameSvgIcon: React.FC <SvgIconProp> = ({ color, height, wi
 
 
 
-export const DshbordMotifSvgIcon: React.FC <SvgIconProp> = ({ color, height, width}) => {
-    const { themes, theme } = useTheme(); 
-    console.log(themes, "here is the them", height, width)
+export const DshbordMotifSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
+    const { theme } = useTheme(); 
     return (
         <div
             style={{

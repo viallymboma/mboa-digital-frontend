@@ -33,7 +33,7 @@ const GroupHeader = () => {
 
     const breadcrumbLinks = [
         { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Contact' },
+        { label: 'Groupe' },
     ];
 
     return (

@@ -36,8 +36,8 @@ interface GenericTableProps<TData> {
   title: string;
   description?: string;
   defaultPageSize?: number;
-  onEdit?: (row: TData) => void;
-  onDelete?: (row: TData) => void;
+  // onEdit?: (row: TData) => void;
+  // onDelete?: (row: TData) => void;
   onReorder?: (reorderedData: TData[]) => void;
 }
 
@@ -47,15 +47,15 @@ const GenericTable = <TData extends { id?: string }>({
   title,
   description,
   defaultPageSize = 7,
-  onEdit,
-  onDelete,
+  // onEdit,
+  // onDelete,
   onReorder,
 }: GenericTableProps<TData>) => {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [localData, setLocalData] = React.useState(data);
 
-  console.log(onEdit, onDelete)
+  // console.log(onEdit, onDelete)
 
   const { table, setGlobalFilter, startIndex, endIndex } = useTable({ data: localData, columns, defaultPageSize });
 

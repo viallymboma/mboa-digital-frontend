@@ -1,5 +1,6 @@
 import axios, {
   AxiosInstance,
+  AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from 'axios';
 
@@ -134,9 +135,32 @@ export class ApiService {
         return response.data;
     }
 
-    public async post<T, D = Record<string, unknown>>(url: string, data?: D): Promise<T> {
-        const response = await this.axiosInstance.post<T>(url, data);
-        return response.data;
+    // public async post<T, D = Record<string, unknown>>(url: string, data?: D): Promise<T> {
+    //     const response = await this.axiosInstance.post<T>(url, data);
+    //     return response.data;
+    // }
+
+    public async post<T, D = Record<string, unknown>>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
+        try {
+            const response = await this.axiosInstance.post<T>(
+                url,
+                data,
+                {
+                    ...config,
+                    // If data is FormData, let browser handle Content-Type
+                    headers: data instanceof FormData 
+                        ? { 
+                            ...config?.headers,
+                            'Content-Type': undefined 
+                        }
+                        : config?.headers,
+                }
+            );
+            return response.data;
+        } catch (error) {
+            // this.handleError(error);
+            throw error;
+        }
     }
 
     public async put<T, D = Record<string, unknown>>(url: string, data?: D): Promise<T> {

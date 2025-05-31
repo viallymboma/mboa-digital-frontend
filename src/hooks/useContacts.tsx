@@ -137,6 +137,11 @@ export function useContacts() {
 
             const service = ContactService.getInstance();
             const response = await service.importContacts(formData);
+
+            console.log('Import response:', response);
+            notify.success(response); 
+            // Optionally, you can refetch the contacts after import
+            await refetchEnterpriseContactsInStore();
             
             // if (response.importedCount > 0) {
             //     notify.success(`Successfully imported ${response.importedCount} contacts`);

@@ -20,8 +20,8 @@ const RechargesTable = () => {
       title="Listes des Recharges"
       description="Liste de toutes les catégories disponibles"
       defaultPageSize={7}
-      onEdit={(row) => console.log('Edit:', row)}
-      onDelete={(row) => console.log('Delete:', row)}
+      // onEdit={(row) => console.log('Edit:', row)}
+      // onDelete={(row) => console.log('Delete:', row)}
       onReorder={handleReorder} // Pass the reorder handler
     />
   );

@@ -8,18 +8,41 @@ import {
   GroupEmptyUISvgIcon,
   SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useContactStore } from '@/stores/contacts.store';
 import { useGroupStore } from '@/stores/groups.store';
 
 import OneGroupData from './OneGroupData';
 import OneGroupHeader from './OneGroupHeader';
 
 const OneGroupModule = () => {
-    const { id } = useParams ()
+    // const { id } = useParams ()
+    // const { groups, isLoading, error } = useGroupStore();
+    // const currentGroup = React.useMemo(() => 
+    //     groups?.find(group => group.id === id),
+    //     [groups, id]
+    // );
+
+        const { id } = useParams();
     const { groups, isLoading, error } = useGroupStore();
+    const { setSelectedContactsData, clearSelectedContacts } = useContactStore();
+    
     const currentGroup = React.useMemo(() => 
         groups?.find(group => group.id === id),
         [groups, id]
     );
+
+    // Update selectedContactsData when currentGroup changes
+    React.useEffect(() => {
+        if (currentGroup?.enterpriseContacts) {
+            setSelectedContactsData(currentGroup.enterpriseContacts as []);
+        }
+        
+        // Cleanup function to clear selected contacts when unmounting
+        return () => {
+            clearSelectedContacts();
+        };
+    }, [currentGroup, setSelectedContactsData, clearSelectedContacts]);
+
 
     if (isLoading) {
         return (<div className='relative flex items-center justify-center w-full h-screen'>

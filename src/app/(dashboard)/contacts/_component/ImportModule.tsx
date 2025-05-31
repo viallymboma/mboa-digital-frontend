@@ -70,6 +70,8 @@ const ImportModule = () => {
     const handleImport = async () => {
         if (!selectedFile) return;
 
+        console.log(selectedFile, "PPPPPPPPPPPPPPP")
+
         try {
             setIsUploading(true);
             await importContacts(selectedFile);

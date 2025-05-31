@@ -20,8 +20,8 @@ const PaymentsTable = () => {
       title="Payment Transactions"
       description="List of all recharge transactions"
       defaultPageSize={7}
-      onEdit={(row) => console.log('Edit:', row)}
-      onDelete={(row) => console.log('Delete:', row)}
+      // onEdit={(row) => console.log('Edit:', row)}
+      // onDelete={(row) => console.log('Delete:', row)}
       onReorder={handleReorder}
     />
   );

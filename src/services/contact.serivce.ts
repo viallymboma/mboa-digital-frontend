@@ -35,7 +35,21 @@ export class ContactService {
     async importContacts(formData: FormData): Promise<string> {
         return this.apiService.post<string>(
             '/api/v1/contact/importContact',
-            formData as unknown as Record<string, unknown>
+            formData as unknown as Record<string, unknown>,
+            {
+                headers: {
+                    // Remove Content-Type header to let browser set it with boundary
+                    'Content-Type': undefined,
+                },
+            }
+            // formData as unknown as Record<string, unknown>, 
+            // {
+            //     file: formData, 
+            //     headers: {
+            //         // Remove Content-Type header to let browser set it with boundary
+            //         'Content-Type': undefined,
+            //     },
+            // }
         );
     }
 
