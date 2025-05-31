@@ -1,20 +1,23 @@
-import { MoreOptionRechargesSvgIcon } from '@/app/svg_components/SvgIcons';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { RechargeListContentType } from '@/types/recharges';
+// import { MoreOptionRechargesSvgIcon } from '@/app/svg_components/SvgIcons';
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@/components/ui/popover';
 import { ColumnDef } from '@tanstack/react-table';
 
-import { RechargesType } from './dummyData';
+import RechargeActionUI from '../RechargeActionUI';
+
+// import { RechargeListContentType } from './dummyData';
 
 // Handle action button click
-export const handleAction = (contact: RechargesType) => {
+export const handleAction = (contact: RechargeListContentType) => {
   console.log('Action clicked for:', contact);
 };
 
 // Define the columns
-export const rechargesColumns: ColumnDef<RechargesType>[] = [
+export const rechargesColumns: ColumnDef<RechargeListContentType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -40,8 +43,8 @@ export const rechargesColumns: ColumnDef<RechargesType>[] = [
     accessorKey: 'receiver',
     header: 'Receiver',
     cell: ({ row }) => {
-      const receiverName = row.original.receiverName;
-      const receiverContact = row.original.receiverContact;
+      const receiverName = row.original.debitPhoneNumber;
+      const receiverContact = row.original.debitBankAccountNumber;
       return (
         <div className="flex flex-col">
           <span className="font-medium">{receiverName}</span>
@@ -77,11 +80,11 @@ export const rechargesColumns: ColumnDef<RechargesType>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'archived',
     header: 'Status',
     enableSorting: true,
     cell: ({ row }) => {
-      const status = row.getValue('status') as string;
+      const status = row.getValue('archived') as string;
       let statusColor = '';
 
       switch (status) {
@@ -108,36 +111,42 @@ export const rechargesColumns: ColumnDef<RechargesType>[] = [
     },
   },
   {
-    accessorKey: 'actions',
-    header: 'Actions',
-    cell: ({ row }) => (
-      <div className="flex gap-4 justify-between">
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => <RechargeActionUI rowData={row.original} />,
+        enableSorting: false,
+    },
+  // {
+  //   accessorKey: 'actions',
+  //   header: 'Actions',
+  //   cell: ({ row }) => (
+  //     <div className="flex gap-4 justify-between">
 
-        <Popover>
-          <PopoverTrigger>
-            <MoreOptionRechargesSvgIcon />
-          </PopoverTrigger>
-          <PopoverContent onClick={() => console.log('Delete:', row.original)}>
-            hello
-          </PopoverContent>
+  //       <Popover>
+  //         <PopoverTrigger>
+  //           <MoreOptionRechargesSvgIcon />
+  //         </PopoverTrigger>
+  //         <PopoverContent onClick={() => console.log('Delete:', row.original)}>
+  //           hello
+  //         </PopoverContent>
 
-        </Popover>
+  //       </Popover>
 
-        {/* <button
-          className="text-gray-600 hover:text-gray-900"
-          onClick={() => console.log('Edit:', row.original)}
-        >
-          Edit
-        </button>
-        <button
-          className="text-gray-600 hover:text-gray-900"
-          onClick={() => console.log('Delete:', row.original)}
-        >
-          Delete
-        </button> */}
-      </div>
-    ),
-    enableSorting: false,
-  },
+  //       {/* <button
+  //         className="text-gray-600 hover:text-gray-900"
+  //         onClick={() => console.log('Edit:', row.original)}
+  //       >
+  //         Edit
+  //       </button>
+  //       <button
+  //         className="text-gray-600 hover:text-gray-900"
+  //         onClick={() => console.log('Delete:', row.original)}
+  //       >
+  //         Delete
+  //       </button> */}
+  //     </div>
+  //   ),
+  //   enableSorting: false,
+  // },
 ];
 

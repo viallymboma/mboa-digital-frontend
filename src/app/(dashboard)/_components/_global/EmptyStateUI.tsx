@@ -30,7 +30,7 @@ const EmptyStateUI: React.FC<EmptyStateUIProps> = ({ SvgIcon, mainTitle, secondT
       <div className='w-[30%] text-center'>
         <h1 className='text-[34px] font-bold'>{t(mainTitle)}</h1>
       </div>
-      <div className='w-[20%] text-center mt-1'>
+      <div className='w-[100%] text-center mt-1'>
         <p className='text-[18px]'>{t(secondTitle)}</p>
       </div>
       <ButtonList buttons={buttons} />
