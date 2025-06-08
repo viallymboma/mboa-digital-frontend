@@ -1,8 +1,6 @@
 "use client";
 import React from 'react';
 
-import { useParams } from 'next/navigation';
-
 import { GroupType } from '@/types/groups';
 
 // import { GroupType } from '@/types/groups';
@@ -13,13 +11,10 @@ type OneGroupHeaderType = {
 };
 
 const OneGroupData: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
-    const { id } = useParams ()
-
-    console.log (currentGroup, id, "needed info ===>")
 
     return (
         <div className=' w-[100%]'>
-            <OneGroupTable />
+            <OneGroupTable contacts={currentGroup?.enterpriseContacts} />
         </div>
     )
 }

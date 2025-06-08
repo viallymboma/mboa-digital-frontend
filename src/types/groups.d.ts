@@ -1,3 +1,5 @@
+import { EnterpriseContactResponseType } from './contact';
+
 // Enums for fixed values
 enum Gender {
     MALE = "MALE",
@@ -96,7 +98,7 @@ export type GroupType = {
     name: string;
     code: string;
     enterprise: string;
-    enterpriseContacts: EnterpriseContactType [];
+    enterpriseContacts: EnterpriseContactResponseType [];
     archived: boolean;
     deleted: boolean;
 }
@@ -160,7 +162,7 @@ export type EnterpriseType = {
     contribuableNumber: string;
     pays: Pays;
     user: string[];
-    enterpriseContacts: EnterpriseContactType [];
+    enterpriseContacts: EnterpriseContactResponseType [];
     groupes: GroupType [];
     recharges: RechargeType [];
     archived: boolean;
@@ -196,7 +198,7 @@ export type ContentItemType = {
     groupId: string;
     name: string;
     code: string;
-    enterpriseContacts: EnterpriseContactType [];
+    enterpriseContacts: EnterpriseContactResponseType [];
     archived: boolean;
 }
 

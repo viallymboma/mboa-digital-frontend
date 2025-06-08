@@ -112,12 +112,14 @@ type CountrySelectProps = {
   className?: string;
   value: string;
   error?: string;
+  placeHolder?: string;
+  placeHolderSearch?: string;
   onChange: (value: string) => void;
   options: { value: string; label: string; flag?: string }[];
 } & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'>;
 
 const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
-  ({ label, onChange, value, className, error, options, ...props }) => {
+  ({ label, onChange, value, className, error, placeHolder, placeHolderSearch, options, ...props }) => {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     // Filter countries based on search
@@ -145,7 +147,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
           {...Object.fromEntries(Object.entries(props).filter(([key]) => key !== 'defaultValue'))}
         >
           <SelectTrigger className={cn("w-full h-[56px]", className)}>
-            <SelectValue placeholder="Select a country">
+            <SelectValue placeholder={ placeHolder ? placeHolder : "Select a country"}>
               {value && options.find(opt => opt.value === value)?.label}
             </SelectValue>
           </SelectTrigger>
@@ -153,7 +155,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
             <div className="p-2 sticky top-0 bg-white border-b">
               <Input
                 type="text"
-                placeholder="Search countries..."
+                placeholder={ placeHolderSearch ? placeHolderSearch : "Search countries..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-8"

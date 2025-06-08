@@ -68,6 +68,7 @@ export function useGroups() {
             await groupService.deleteGroup(groupId);
             removeGroup(groupId);
             notify.success('Group deleted successfully');
+            refetchGroups();
         } catch (error) {
             console.error('Error deleting group:', error);
             notify.error('Failed to delete group');
@@ -83,9 +84,23 @@ export function useGroups() {
             refetchGroups();
             return response;
         } catch (error) {
-            console.error('Error adding contacts to group:', error);
-            notify.error('Failed to add contacts to group');
-            throw error;
+            let message = 'Failed to fetch recharges';
+            if (
+                error &&
+                typeof error === 'object' &&
+                'response' in error &&
+                (error as { response?: unknown }).response &&
+                typeof (error as { response?: unknown }).response === 'object' &&
+                'data' in (error as { response: { data?: unknown } }).response &&
+                (error as { response: { data?: unknown } }).response.data &&
+                typeof (error as { response: { data?: unknown } }).response.data === 'object' &&
+                'message' in (error as { response: { data: { message?: string } } }).response.data
+            ) {
+                // @ts-expect-error: dynamic error shape
+                message = error.response.data.message || message;
+            }
+            notify.error(message);
+            // setError(message);
         }
     }, []);
 

@@ -8,7 +8,6 @@ import {
 } from '@/app/svg_components/SvgIcons';
 import { useGroups } from '@/hooks/useGroupOps';
 
-// import { useGroupStore } from '@/stores/groups.store';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import CreateGroupForm from './forms/CreateGroupForm';
 import GroupsGrid from './GroupsGrid';
@@ -16,21 +15,12 @@ import GroupsGrid from './GroupsGrid';
 const GroupModule = () => {
     const { 
         groups, 
-        // createGroup, 
-        // updateGroup, 
-        // deleteGroup,
-        // addContactsToGroup, 
         isLoading,
         error,
     } = useGroups();
 
     console.log('Groups in group module:', groups);
 
-    // const { 
-    //     selectedGroups, 
-    //     selectedGroupsData, 
-    //     toggleGroup 
-    // } = useGroupStore();
     const buttons = [
         {
             label: 'group.emptyUI.newGroup',

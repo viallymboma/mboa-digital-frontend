@@ -32,7 +32,9 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
         try {
             setIsSubmitting(true);
             const contactIds = selectedContactsData.map(contact => contact.id);
-            await addContactsToGroup(group.id, contactIds);
+            const removeAlreadySelectedContacts = group.enterpriseContacts?.map(contact => contact.id) || [];
+            const filteredContactIds = contactIds.filter(id => !removeAlreadySelectedContacts.includes(id));
+            await addContactsToGroup(group.id, filteredContactIds);
             onClose();
         } catch (error) {
             console.error('Error adding contacts to group:', error);

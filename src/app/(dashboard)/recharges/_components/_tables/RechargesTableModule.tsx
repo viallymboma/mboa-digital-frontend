@@ -6,10 +6,12 @@ import {
   PerformedRechargesSvgIcon,
   ValidatedRechargesSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useRecharges } from '@/hooks/useRecharges';
 
 import RechargesTable from './RechargesTable';
 
 const RechargesTableModule = () => {
+  const {  recharges, } = useRecharges();
   return (
     <div className=' w-[100%]'>
 
@@ -38,7 +40,7 @@ const RechargesTableModule = () => {
         />
       </div>
 
-      <RechargesTable />
+      <RechargesTable recharges={ recharges } />
 
     </div>
   )

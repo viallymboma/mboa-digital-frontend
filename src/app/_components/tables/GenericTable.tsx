@@ -57,7 +57,16 @@ const GenericTable = <TData extends { id?: string }>({
 
   // console.log(onEdit, onDelete)
 
-  const { table, setGlobalFilter, startIndex, endIndex } = useTable({ data: localData, columns, defaultPageSize });
+  // const { table, setGlobalFilter, startIndex, endIndex } = useTable({ data: localData, columns, defaultPageSize });
+
+  // Initialize table with proper error handling
+  const { table, setGlobalFilter, startIndex, endIndex } = useTable({ 
+    data: localData || [], 
+    columns, 
+    defaultPageSize 
+  });
+
+  
 
   // Handle drag-and-drop reordering
   const handleDragEnd = (result: DropResult) => {
@@ -76,72 +85,20 @@ const GenericTable = <TData extends { id?: string }>({
     setLocalData(data);
   }, [data]);
 
+  // Add loading state check
+  if (!table) {
+    return (
+      <div className="p-4 flex items-center justify-center border-primaryAppearance border rounded-[12px]">
+        <span>Loading table...</span>
+      </div>
+    );
+  }
+
   // Filter columns based on the search query
   const filteredOptions = table.getAllColumns().filter(option =>
     typeof option.columnDef.header === 'string' &&
     option.columnDef.header.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  // const renderDraggableTable = React.useCallback((provided: import('react-beautiful-dnd').DroppableProvided) => (
-  //   <div
-  //     {...provided.droppableProps}
-  //     ref={provided.innerRef}
-  //     className="rounded-lg border overflow-hidden"
-  //   >
-  //     <table className="w-full">
-  //       <thead className="bg-primaryAppearanceLight text-white">
-  //         {table.getHeaderGroups().map((headerGroup) => (
-  //           <tr key={headerGroup.id}>
-  //             {headerGroup.headers.map((header) => (
-  //               <th
-  //                 key={header.id}
-  //                 className="p-2 text-left cursor-pointer"
-  //                 onClick={header.column.getToggleSortingHandler()}
-  //               >
-  //                 {typeof header.column.columnDef.header === 'function'
-  //                   ? header.column.columnDef.header(header.getContext())
-  //                   : header.column.columnDef.header}
-  //                 {{
-  //                   asc: ' 🔼',
-  //                   desc: ' 🔽',
-  //                 }[header.column.getIsSorted() as string] ?? null}
-  //               </th>
-  //             ))}
-  //           </tr>
-  //         ))}
-  //       </thead>
-  //       <tbody>
-  //         {table.getRowModel().rows.map((row, index) => (
-  //           <Draggable 
-  //             key={row.original.id || `row-${index}`} 
-  //             draggableId={row.original.id || `row-${index}`} 
-  //             index={index}
-  //           >
-  //             {(dragProvided) => (
-  //               <tr
-  //                 ref={dragProvided.innerRef}
-  //                 {...dragProvided.draggableProps}
-  //                 {...dragProvided.dragHandleProps}
-  //                 className="hover:bg-gray-100"
-  //               >
-  //                 {row.getVisibleCells().map((cell) => (
-  //                   <td key={cell.id} className="p-2 border-t">
-  //                     {cell.column.columnDef.cell
-  //                       ? typeof cell.column.columnDef.cell === 'function'
-  //                         ? cell.column.columnDef.cell(cell.getContext())
-  //                         : cell.getValue()
-  //                       : cell.getValue()}
-  //                   </td>
-  //                 ))}
-  //               </tr>
-  //             )}
-  //           </Draggable>
-  //         ))}
-  //         {provided.placeholder}
-  //       </tbody>
-  //     </table>
-  //   </div>
-  // ), [table]);
 
   return (
     <div className="p-4 flex flex-col gap-4 border-primaryAppearance border rounded-[12px]">
@@ -295,19 +252,19 @@ const GenericTable = <TData extends { id?: string }>({
 
         {/* Current page range and total items */}
         <span className="text-sm">
-          {startIndex}-{endIndex} of {localData.length}
+          {startIndex}-{endIndex} of {localData?.length}
         </span>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => table?.previousPage()}
+            disabled={!table?.getCanPreviousPage()}
           >
             <ChevronLeft />
           </button>
           <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => table?.nextPage()}
+            disabled={!table?.getCanNextPage()}
           >
             <ChevronRight />
           </button>
@@ -315,11 +272,17 @@ const GenericTable = <TData extends { id?: string }>({
 
         {/* Total number of pages */}
         <span className="text-sm">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {table?.getState().pagination.pageIndex + 1} of {table?.getPageCount()}
         </span>
       </div>
+
     </div>
   );
 };
 
 export default GenericTable; 
+
+
+
+
+

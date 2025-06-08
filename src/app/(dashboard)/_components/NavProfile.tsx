@@ -29,6 +29,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { notify } from '@/components/utilities/helper';
+import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 import { useLogout } from '@/hooks/useLogout';
 import { UserType } from '@/types/auth';
 
@@ -39,6 +40,7 @@ export function NavProfile({
 }) {
   const { isMobile } = useSidebar()
   const { logout } = useLogout();
+  const { getLocalStorage } = useGetLocalStorage ()
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -103,6 +105,20 @@ export function NavProfile({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
+            {
+              getLocalStorage("user")?.role === "ADMIN" ? 
+                <>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <BadgeCheck />
+                      <Link href={"/clients"}>Clients</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                </>
+                : 
+                ""
+            }
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out

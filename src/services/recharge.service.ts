@@ -30,14 +30,29 @@ export class RechargeService {
      * Create a new recharge
      */
     async createRecharge(data: CreateRechargeRequestType): Promise<CreateRechargeTypeResponse> {
-        return this.apiService.post<CreateRechargeTypeResponse>('/api/v1/recharge', data);
+        return this.apiService.post<CreateRechargeTypeResponse>('/api/v1/recharge/create-request', data);
+    }
+
+    // /**
+    //  * Get paginated list of recharges
+    //  */
+    // async getRecharges(page: number = 0, size: number = 10): Promise<RechargePageType> {
+    //     return this.apiService.get<RechargePageType>(`/api/v1/recharge?page=${page}&size=${size}`);
+    // }
+
+    /**
+     * Get paginated list of recharges
+     */
+    async getRecharges(enterpriseId: string): Promise<RechargePageType> {
+        return this.apiService.get<RechargePageType>(`/api/v1/recharge/${ enterpriseId }/enterprise`);
+        // /api/v1/recharge/{enterpriseId}/enterprise
     }
 
     /**
      * Get paginated list of recharges
      */
-    async getRecharges(page: number = 0, size: number = 10): Promise<RechargePageType> {
-        return this.apiService.get<RechargePageType>(`/api/v1/recharge?page=${page}&size=${size}`);
+    async getAllRecharges(): Promise<RechargePageType> {
+        return this.apiService.get<RechargePageType>(`/api/v1/recharge/all`);
     }
 
     /**

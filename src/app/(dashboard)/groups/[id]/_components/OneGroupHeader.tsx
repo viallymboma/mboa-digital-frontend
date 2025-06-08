@@ -4,8 +4,6 @@ import React from 'react';
 // import { useParams, usePathname } from 'next/navigation';
 import GenericPageHeader
   from '@/app/(dashboard)/_components/_global/GenericPageHeader';
-import CreateContactForm
-  from '@/app/(dashboard)/contacts/_component/CreateContactForm';
 import MessageComponent
   from '@/app/(dashboard)/contacts/_component/MessageComponent';
 import {
@@ -14,17 +12,16 @@ import {
 } from '@/app/svg_components/SvgIcons';
 import { GroupType } from '@/types/groups';
 
+import AddContactsToGroupForm
+  from '../../_components/forms/AddContactsToGroupForm';
+
 type OneGroupHeaderType = {
     currentGroup?: GroupType; // Define the type of currentGroup if known
 };
 
 const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
-    // const pathName = usePathname ()
-    // const { id } = useParams ()
-    // const currentGroup = React.useMemo(() => 
-    //   groups?.find(group => group.id === id),
-    //   [groups, id]
-    // );
+    const [isAddContactsModalOpen, setIsAddContactsModalOpen] = React.useState(false);
+    console.log('Current Group in isAddContactsModalOpen:', isAddContactsModalOpen);
     const buttons = [
         {
             label: 'group.groupMessage',
@@ -36,11 +33,15 @@ const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
             </>,
         },
         {
-            label: 'group.newGroupBtn',
+            label: '',
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
-            dialogContent: <CreateContactForm />,
+            // dialogContent: <CreateGroupForm />,
+            dialogContent: <AddContactsToGroupForm
+                            group={currentGroup as GroupType} 
+                            onClose={() => setIsAddContactsModalOpen(false)} 
+                        />
         },
     ];
 

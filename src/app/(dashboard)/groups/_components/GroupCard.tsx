@@ -20,6 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { useGroups } from '@/hooks/useGroupOps';
 import { formatDate } from '@/lib/formatDate';
 import { GroupType } from '@/types/groups';
 
@@ -29,6 +30,7 @@ import AddContactsToGroupForm from './forms/AddContactsToGroupForm';
 
 const GroupCard = ({ group, view }: { group: GroupType; view: 'grid' | 'list' }) => {
   const [isAddContactsModalOpen, setIsAddContactsModalOpen] = React.useState(false);
+  const { deleteGroup } = useGroups();
   return (
 
     <>
@@ -93,6 +95,7 @@ const GroupCard = ({ group, view }: { group: GroupType; view: 'grid' | 'list' })
                         className="w-full text-left p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
                         onClick={(e) => {
                           e.preventDefault();
+                          deleteGroup (group.id);
                           // Add your archive handler here
                         }}
                       >

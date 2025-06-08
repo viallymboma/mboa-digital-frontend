@@ -61,10 +61,10 @@ export const useTable = <TData,>({data, columns, defaultPageSize = 7, }: {
         table,
         globalFilter,
         setGlobalFilter,
-        startIndex: pagination.pageIndex * pagination.pageSize + 1,
+        startIndex: pagination?.pageIndex * pagination?.pageSize + 1,
         endIndex: Math.min(
-            (pagination.pageIndex + 1) * pagination.pageSize,
-            data.length
+            (pagination?.pageIndex + 1) * pagination?.pageSize,
+            data?.length
         ),
     };
 };

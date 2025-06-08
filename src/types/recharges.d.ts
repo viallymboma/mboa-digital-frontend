@@ -1,9 +1,10 @@
 // Keep only the essential types and make them consistent
 export enum PaymentMethod {
     CASH = "CASH",
-    MOBILE_MONEY = "MOBILE_MONEY",
-    BANK_TRANSFER = "BANK_TRANSFER",
-    CREDIT_CARD = "CREDIT_CARD"
+    ORANGE_MONEY = "OM",
+    MTN_MONEY = "MOMO",
+    BANK_ACCOUNT = "BANK",
+    PAYPAL = "PAYPAL"
 }
 
 export enum RechargeStatus {
@@ -22,7 +23,8 @@ export type CreateRechargeResponseType = {
     qteMessage: number;
     messagePriceUnit: number;
     enterpriseId: string;
-    paymentMethod: PaymentMethod;
+    // paymentMethod: PaymentMethod;
+    paymentMethod: string;
     debitPhoneNumber: string;
     debitBankAccountNumber?: string;
     couponCode?: string;
@@ -94,7 +96,7 @@ export type RechargeListContentType = {
     qteMessage: number;
     messagePriceUnit: number;
     enterprise: EnterpriseType;
-    paymentMethod: "CASH" | string;
+    paymentMethod: string;
     debitPhoneNumber: string;
     debitBankAccountNumber: string;
     couponCode: string;
@@ -306,7 +308,8 @@ export type GroupeType = {
 export type CreateRechargeRequestType = {
     qteMessage: number;
     enterpriseId: string;
-    paymentMethod: PaymentMethod;
+    // paymentMethod: PaymentMethod;
+    paymentMethod: string;
     debitPhoneNumber: string;
     debitBankAccountNumber?: string;
     couponCode?: string;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useRouter } from 'next/navigation';
 import {
   Controller,
   useForm,
@@ -29,6 +30,7 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
     const { createGroup } = useGroups();
     const { getLocalStorage } = useGetLocalStorage();
     const user = getLocalStorage("user");
+    const router = useRouter();
 
     const {
         control,
@@ -49,8 +51,10 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
                 enterpriseId: user?.enterprise?.id
             };
 
-            await createGroup(groupData);
+            const response = await createGroup(groupData);
+            console.log('Group created:', response);
             notify.success('Group created successfully');
+            router.push(`/groups/${response.id}`);
             onClose?.();
         } catch (error) {
             notify.error('Failed to create group');

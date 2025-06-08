@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useContacts } from '@/hooks/useContacts';
 import { useContactStore } from '@/stores/contacts.store';
 import { EnterpriseContactResponseType } from '@/types/contact';
 
@@ -26,10 +27,15 @@ const BulkContactSelectionModal: React.FC<BulkContactSelectionModalProps> = ({ i
     const [searchQuery, setSearchQuery] = React.useState('');
     const [ uneven, setUneven ] = React.useState<boolean> (false)
     const { contacts, addSelectedContact, removeSelectedContact, toggleMultipleContacts, unToggleMultipleContacts, selectedContactsData } = useContactStore();
+    const { contacts: allContacts } = useContacts();
 
     // Filter contacts based on search query
     const filteredContacts = useMemo(() => {
-        return contacts.filter(contact => 
+        return contacts && contacts.length > 0 ? contacts?.filter(contact => 
+            contact.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            contact.lastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            contact.phoneNumber.includes(searchQuery)
+        ) : allContacts?.filter(contact =>
             contact.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
             contact.lastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
             contact.phoneNumber.includes(searchQuery)
@@ -88,7 +94,7 @@ const BulkContactSelectionModal: React.FC<BulkContactSelectionModalProps> = ({ i
                 {/* Contacts List */}
                 <ScrollArea className="flex-1 px-1">
                     <div className="space-y-2">
-                        {filteredContacts.map((contact) => (
+                        {filteredContacts?.map((contact) => (
                             <div
                                 key={contact.id}
                                 className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50"

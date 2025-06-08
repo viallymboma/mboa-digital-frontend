@@ -9,12 +9,16 @@ import {
 } from '@/app/svg_components/SvgIcons';
 import { useRecharges } from '@/hooks/useRecharges';
 
+// import { useRechargeStore } from '@/stores/recharges.store';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import RechargeForm from './_forms/RechargeForm';
 import RechargesTableModule from './_tables/RechargesTableModule';
 
 const RechargesModule = () => {
     const { recharges, isLoading, error } = useRecharges();
+    // console.log('Recharges:', recharges);
+    // const { recharges: stroreRecharge } = useRechargeStore();
+    // console.log('Store Recharges:', stroreRecharge);
     const buttons = [
         {
             label: 'recharges.emptyUI.actionButtonLabel',

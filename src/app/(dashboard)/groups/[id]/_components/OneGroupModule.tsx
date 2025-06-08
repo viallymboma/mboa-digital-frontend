@@ -8,28 +8,22 @@ import {
   GroupEmptyUISvgIcon,
   SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useGroups } from '@/hooks/useGroupOps';
 import { useContactStore } from '@/stores/contacts.store';
-import { useGroupStore } from '@/stores/groups.store';
 
 import OneGroupData from './OneGroupData';
 import OneGroupHeader from './OneGroupHeader';
 
 const OneGroupModule = () => {
-    // const { id } = useParams ()
-    // const { groups, isLoading, error } = useGroupStore();
-    // const currentGroup = React.useMemo(() => 
-    //     groups?.find(group => group.id === id),
-    //     [groups, id]
-    // );
-
-        const { id } = useParams();
-    const { groups, isLoading, error } = useGroupStore();
+    const { id } = useParams();
+    const { groups, isLoading, error } = useGroups();
     const { setSelectedContactsData, clearSelectedContacts } = useContactStore();
-    
+
     const currentGroup = React.useMemo(() => 
         groups?.find(group => group.id === id),
         [groups, id]
     );
+    console.log('Current Group in OnGroupModule:', currentGroup, id);
 
     // Update selectedContactsData when currentGroup changes
     React.useEffect(() => {
@@ -88,9 +82,9 @@ const OneGroupModule = () => {
     }
     return (
         <div>
-            <OneGroupHeader />
+            <OneGroupHeader currentGroup={ currentGroup } />
             <div className='h-full flex flex-col items-center justify-center'>
-                <OneGroupData />
+                <OneGroupData currentGroup={currentGroup} />
             </div>
         </div>
     )
