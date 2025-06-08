@@ -35,6 +35,8 @@ import {
 import { useRecharges } from '@/hooks/useRecharges';
 import { RechargeListContentType } from '@/types/recharges';
 
+import EditRechargeForm from './_forms/EditRechargeForm';
+
 type RechargeActionUIProps = {
     rowData: RechargeListContentType;
 }
@@ -81,7 +83,7 @@ const RechargeActionUI: React.FC<RechargeActionUIProps> = ({ rowData }) => {
                                     <Button 
                                         variant="ghost" 
                                         className="w-full justify-start"
-                                        onClick={() => setIsPopoverOpen(false)}
+                                        // onClick={() => setIsPopoverOpen(false)}
                                     >
                                         <Edit className="mr-2 h-4 w-4" />
                                         Edit
@@ -91,7 +93,14 @@ const RechargeActionUI: React.FC<RechargeActionUIProps> = ({ rowData }) => {
                                     <DialogHeader>
                                         <DialogTitle>Edit Recharge</DialogTitle>
                                     </DialogHeader>
-                                    coming soon...
+                                    {/* coming soon... */}
+                                    <EditRechargeForm 
+                                        recharge={rowData} 
+                                        onClose={() => {
+                                            setIsEditDialogOpen(false);
+                                            setIsPopoverOpen(false);
+                                        }}
+                                    />
                                 </DialogContent>
                             </Dialog>
 

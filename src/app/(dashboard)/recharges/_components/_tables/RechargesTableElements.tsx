@@ -33,19 +33,8 @@ export const rechargesColumns: ColumnDef<RechargeListContentType>[] = [
         enableSorting: false,
     },
     {
-        accessorKey: 'createdAt',
-        header: 'Date',
-        cell: ({ row }) => format(new Date(row.getValue('createdAt')), 'dd/MM/yyyy HH:mm'),
-    },
-    {
-        accessorKey: 'qteMessage',
-        header: 'Quantity SMS',
-        cell: ({ row }) => (row.getValue('qteMessage') as number).toLocaleString(),
-    },
-    {
-        accessorKey: 'messagePriceUnit',
-        header: 'Unit Price',
-        cell: ({ row }) => `${row.getValue('messagePriceUnit')} FCFA`,
+        accessorKey: 'debitPhoneNumber',
+        header: 'Phone Number',
     },
     {
         accessorKey: 'paymentMethod',
@@ -59,13 +48,49 @@ export const rechargesColumns: ColumnDef<RechargeListContentType>[] = [
             );
         },
     },
+    
     {
-        accessorKey: 'debitPhoneNumber',
-        header: 'Phone Number',
+        accessorKey: 'qteMessage',
+        header: 'Quantity SMS',
+        cell: ({ row }) => (row.getValue('qteMessage') as number).toLocaleString(),
+    },
+    {
+        accessorKey: 'messagePriceUnit',
+        header: 'Unit Price',
+        cell: ({ row }) => `${row.getValue('messagePriceUnit')} FCFA`,
+    },
+    {
+        id: 'totalPrice',
+        header: 'Total Price',
+        cell: ({ row }) => {
+            const quantity = row.getValue('qteMessage') as number;
+            const unitPrice = row.getValue('messagePriceUnit') as number;
+            const total = quantity * unitPrice;
+            return `${total.toLocaleString()} FCFA`;
+        },
+        enableSorting: true,
+    },
+    {
+        accessorKey: 'createdAt',
+        header: 'Date',
+        cell: ({ row }) => format(new Date(row.getValue('createdAt')), 'dd/MM/yyyy HH:mm'),
+    },
+    {
+        accessorKey: 'status',
+        header: 'Status',
+        cell: ({ row }) => {
+            const isArchived = row.getValue('status') as string;
+            return (
+                <Badge className={isArchived === "REFUSE" ? 'bg-red-100 text-red-800' : isArchived === "VALIDE" ? 'bg-green-100 text-green-800' : isArchived === "DEMANDE" ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'}>
+                    {/* {isArchived ? 'Validee' : 'Pending'} */}
+                    { isArchived === "DEMANDE" ? "En attente" : isArchived === "REFUSE" ? "Rejetée" : isArchived === "VALIDE" ? "Validée" : "UNKNOWN"}
+                </Badge>
+            );
+        },
     },
     {
         accessorKey: 'archived',
-        header: 'Status',
+        header: 'Archived',
         cell: ({ row }) => {
             const isArchived = row.getValue('archived') as boolean;
             return (

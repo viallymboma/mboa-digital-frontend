@@ -34,7 +34,8 @@ export type CreateRechargeResponseType = {
 export type UpdateRechargeRequestType = {
     qteMessage: number;
     enterpriseId: string;
-    paymentMethod: PaymentMethod;
+    paymentMethod: string;
+    // paymentMethod: PaymentMethod;
     debitPhoneNumber: string;
     debitBankAccountNumber?: string;
     couponCode?: string;
@@ -87,6 +88,7 @@ export type RechargePageType = {
 
 export type RechargeListContentType = {
     statusCode: number;
+    status: string;
     error: string;
     message: string;
     id: string;
