@@ -31,11 +31,23 @@ import { useContacts } from '@/hooks/useContacts';
 
 const ImportModule = () => {
     const { t } = useTranslation();
-    const { importContacts, downloadTemplate } = useContacts();
+    const { importContacts } = useContacts();
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const [previewData, setPreviewData] = React.useState<Record<string, unknown>[]>([]);
     const [isUploading, setIsUploading] = React.useState(false);
     const [showPreview, setShowPreview] = React.useState(false);
+
+    const downloadTemplate = () => {
+        // Create a link element
+        const link = document.createElement('a');
+        link.href = '/templates/contacts.xlsx';
+        link.download = 'contacts_template.xlsx';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     const onDrop = useCallback(async (acceptedFiles: File[]) => {
         if (acceptedFiles.length === 0) return;

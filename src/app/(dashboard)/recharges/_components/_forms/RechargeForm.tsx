@@ -19,7 +19,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { notify } from '@/components/utilities/helper';
-import { usePricingPlan } from '@/hooks/usePricingPlan';
+import {
+  PlanInfoType,
+  usePricingPlan,
+} from '@/hooks/usePricingPlan';
 import { useRecharges } from '@/hooks/useRecharges';
 // import { useRecharges } from '@/hooks/useRecharges';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -91,18 +94,37 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
         return price;
     }, [qteMessage, calculatePrice]);
 
+    // const handleQuantityChange = (value: string) => {
+    //     const qty = Number(value);
+    //     const plan = getApplicablePlan(qty);
+        
+    //     if (!plan) {
+    //         setError('qteMessage', {
+    //             type: 'manual',
+    //             message: 'La quantité doit être dans une fourchette de plan disponible'
+    //         });
+    //         return;
+    //     }
+        
+    //     clearErrors('qteMessage');
+    // };
+
+    const [selectedPlanInfo, setSelectedPlanInfo] = React.useState<PlanInfoType>();
+
     const handleQuantityChange = (value: string) => {
         const qty = Number(value);
-        const plan = getApplicablePlan(qty);
+        const { planInfo } = getApplicablePlan(qty);
         
-        if (!plan) {
+        if (!planInfo) {
             setError('qteMessage', {
                 type: 'manual',
                 message: 'La quantité doit être dans une fourchette de plan disponible'
             });
+            setSelectedPlanInfo(undefined);
             return;
         }
         
+        setSelectedPlanInfo(planInfo);
         clearErrors('qteMessage');
     };
 
@@ -177,6 +199,35 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                     {totalPrice.toLocaleString()} FCFA
                 </div>
                 <p className="text-gray-500 text-center mb-4">Prix total</p>
+
+                {selectedPlanInfo && (
+                    <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                        <h3 className="font-semibold text-lg text-purple-700">
+                            Plan {selectedPlanInfo.name}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                            {selectedPlanInfo.description}
+                        </p>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span className="font-medium">Quantité min:</span>{' '}
+                                {selectedPlanInfo.minSMS.toLocaleString()} SMS
+                            </div>
+                            <div>
+                                <span className="font-medium">Quantité max:</span>{' '}
+                                {selectedPlanInfo.maxSMS.toLocaleString()} SMS
+                            </div>
+                            <div>
+                                <span className="font-medium">Prix unitaire:</span>{' '}
+                                {selectedPlanInfo.unitPrice} FCFA
+                            </div>
+                            <div>
+                                <span className="font-medium">Validité:</span>{' '}
+                                {selectedPlanInfo.validity} jours
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {step === 1 ? (
                     <>

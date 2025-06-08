@@ -20,6 +20,21 @@ import { PricingPlanType } from '@/types/pricing';
 //     return apiService.getActivePlans();
 // }
 
+export type PlanInfoType = {
+    name: string;
+    description: string;
+    minSMS: number;
+    maxSMS: number;
+    unitPrice: number;
+    validity: number;
+    total?: number;
+}
+
+export type PlanDetailsType = {
+    plan: PricingPlanType | null;
+    planInfo: PlanInfoType | null;
+};
+
 export function usePricingPlan() {
     const { 
         setPlans, 
@@ -72,13 +87,38 @@ export function usePricingPlan() {
         ]);
     };
 
-    const getApplicablePlan = (qteMessage: number): PricingPlanType | null => {
-        if (!activePlans?.length) return null;
+    const getApplicablePlan = (qteMessage: number): PlanDetailsType => {
+        if (!activePlans?.length) return { plan: null, planInfo: null };
 
-        return activePlans.find(
+        const applicablePlan = activePlans.find(
             (plan: PricingPlanType) => qteMessage >= plan.minSMS && qteMessage <= plan.maxSMS
-        ) || null;
+        );
+
+        if (!applicablePlan) return { plan: null, planInfo: null };
+
+        return {
+            plan: applicablePlan,
+            planInfo: {
+                name: applicablePlan.planNameFr,
+                description: applicablePlan.descriptionFr,
+                minSMS: applicablePlan.minSMS,
+                maxSMS: applicablePlan.maxSMS,
+                unitPrice: applicablePlan.smsUnitPrice,
+                validity: applicablePlan.nbDaysToExpired,
+                total: qteMessage * applicablePlan.smsUnitPrice
+            }
+        };
     };
+
+    // const getApplicablePlan = (qteMessage: number): PricingPlanType | null => {
+    //     if (!activePlans?.length) return null;
+
+    //     console.log('Active Plans:', activePlans);
+
+    //     return activePlans.find(
+    //         (plan: PricingPlanType) => qteMessage >= plan.minSMS && qteMessage <= plan.maxSMS
+    //     ) || null;
+    // };
 
     return {
         plans: allPlans,

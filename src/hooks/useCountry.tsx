@@ -9,7 +9,7 @@ export function useCountries() {
     const { pageNumber, pageSize } = pagination;
 
     const { data, error, isLoading, mutate } = useSWR<PaginatedCountryResponseType>(
-        [`countries`, pageNumber, pageSize],
+        [`/api/v1/pays`, pageNumber, pageSize],
         async () => {
             const service = CountryService.getInstance();
             const response = await service.getCountries(pageNumber, pageSize);

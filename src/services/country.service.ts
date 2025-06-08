@@ -21,8 +21,10 @@ export class CountryService {
     }
 
     async getCountries(pageNumber: number = 0, pageSize: number = 10): Promise<PaginatedCountryResponseType> {
+        console.log('Fetching countries with pagination:', { pageNumber, pageSize });
         return this.apiService.get<PaginatedCountryResponseType>(
-            `/api/v1/pays?page=${pageNumber}&size=${pageSize}`
+            // `/api/v1/pays?page=${pageNumber}&size=${pageSize}`
+            `/api/v1/pays`
         );
     }
 

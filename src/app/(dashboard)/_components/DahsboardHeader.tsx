@@ -22,12 +22,14 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
+import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 
 import ThemeSwitcher from './ThemeSwitcher';
 
 const DahsboardHeader = () => {
     const { isMobile } = useSidebar(); 
     const { t } = useTranslation();
+    const { getLocalStorage } = useGetLocalStorage ();
     return (
         <div className={`border-b-[1px] border-b-slate-200 flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12`}>
             <div className='pl-4 flex flex-row items-center gap-4'>
@@ -44,7 +46,7 @@ const DahsboardHeader = () => {
                             <PopoverContent className='flex flex-col gap-3'>
                                 <Button className='bg-primaryAppearance flex flex-row gap-2 rounded-[20px] p-3'>
                                     <MessagingSvgIcon />
-                                    <span>1.3K SMS</span>
+                                    <span>{ getLocalStorage("user")?.enterprise?.smsCredit } SMS</span>
                                     {t('register.remainingSMS')}
                                 </Button>
                                 <Button className='bg-transparent'>
@@ -62,7 +64,7 @@ const DahsboardHeader = () => {
                     <div className='flex flex-row items-center gap-2 pr-4'>
                         <Button className='bg-primaryAppearance flex flex-row gap-2 rounded-[20px] p-3'>
                             <MessagingSvgIcon />
-                            <span>1.3K SMS</span>
+                            <span>{ getLocalStorage("user")?.enterprise?.smsCredit } SMS</span>
                             {t('register.remainingSMS')}
                         </Button>
                         <Button className='bg-transparent'>

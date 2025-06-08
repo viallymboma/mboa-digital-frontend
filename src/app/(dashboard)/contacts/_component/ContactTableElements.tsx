@@ -46,12 +46,12 @@ export const contactColumns: ColumnDef<TransformedContactType>[] = [
         enableSorting: false,
         enableHiding: false,
     },
-    {
-        accessorFn: (row) => row.id,
-        id: 'id',
-        header: 'Uniq ID',
-        enableSorting: true,
-    },
+    // {
+    //     accessorFn: (row) => row.id,
+    //     id: 'id',
+    //     header: 'Uniq ID',
+    //     enableSorting: true,
+    // },
     {
         accessorFn: (row) => row.firstname,
         id: 'firstname',
