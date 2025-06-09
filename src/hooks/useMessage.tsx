@@ -44,7 +44,7 @@ export function useMessages(page = 0, size = 10) {
 
     const sendMessage = useCallback(async (message: string, contacts: string[]) => {
         try {
-            const messageData: SendMessageRequestType = {
+            let messageData: SendMessageRequestType = {
                 message,
                 enterpriseId: enterpriseId!,
                 contacts: contacts.join(','),
@@ -52,10 +52,19 @@ export function useMessages(page = 0, size = 10) {
                 msisdn: user?.id || '',
                 smsCount: Math.ceil(message.length / 160)
             };
+            if (user?.id) {
+                messageData = {
+                    message,
+                    enterpriseId: enterpriseId!,
+                    contacts: contacts.join(','),
+                    senderId: user?.id || '',
+                    msisdn: user?.id || '',
+                    smsCount: Math.ceil(message.length / 160)
+                };
+                
+            }
 
             console.log(user, messageData, "let us check")
-
-            return
 
             const response = await messageService.sendMessage(messageData);
             addMessage(response);
