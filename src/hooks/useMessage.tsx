@@ -5,10 +5,8 @@ import useSWR from 'swr';
 import { notify } from '@/components/utilities/helper';
 import { MessageService } from '@/services/message.service';
 import { useMessageStore } from '@/stores/message.store';
-// import { useMessageStore } from '@/stores/messages.store';
 import { SendMessageRequestType } from '@/types/messages';
 
-// import { notify } from '@/lib/utils';
 import useGetLocalStorage from './useGetLocalStorage';
 
 export function useMessages(page = 0, size = 10) {
@@ -48,7 +46,7 @@ export function useMessages(page = 0, size = 10) {
                 message,
                 enterpriseId: enterpriseId!,
                 contacts: contacts.join(','),
-                senderId: user?.id || '',
+                senderId: user?.enterprise?.smsESenderId || '',
                 msisdn: user?.id || '',
                 smsCount: Math.ceil(message.length / 160)
             };
@@ -57,11 +55,10 @@ export function useMessages(page = 0, size = 10) {
                     message,
                     enterpriseId: enterpriseId!,
                     contacts: contacts.join(','),
-                    senderId: user?.id || '',
+                    senderId: user?.enterprise?.smsESenderId || '',
                     msisdn: user?.id || '',
                     smsCount: Math.ceil(message.length / 160)
                 };
-                
             }
 
             console.log(user, messageData, "let us check")

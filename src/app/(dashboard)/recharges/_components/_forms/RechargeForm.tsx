@@ -197,6 +197,14 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                                 <span className="font-medium">Validité:</span>{' '}
                                 {selectedPlanInfo.validity} jours
                             </div>
+                            <div>
+                                <span className="font-medium">Quantité Totale:</span>{' '}
+                                {selectedPlanInfo.minSMS * qteMessage} SMS
+                            </div>
+                            <div>
+                                <span className="font-medium">Prix Totale:</span>{' '}
+                                {(selectedPlanInfo.minSMS * qteMessage) * selectedPlanInfo.unitPrice} SMS Total
+                            </div>
                         </div>
                     </div>
                 )}

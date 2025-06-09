@@ -107,6 +107,124 @@ FormInput.displayName = 'FormInput';
 // };
 
 
+// type CountrySelectProps = {
+//   label?: string;
+//   className?: string;
+//   value: string;
+//   error?: string;
+//   placeHolder?: string;
+//   placeHolderSearch?: string;
+//   onChange: (value: string) => void;
+//   options: { value: string; label: string; flag?: string }[];
+// } & Omit<React.ComponentProps<typeof Select>, 'onValueChange' | 'value'>;
+
+// const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
+//   ({ label, onChange, value, className, error, placeHolder, placeHolderSearch, options, ...props }) => {
+//     const [searchQuery, setSearchQuery] = React.useState('');
+//     const searchInputRef = React.useRef<HTMLInputElement>(null);
+//     const [isOpen, setIsOpen] = React.useState(false);
+
+//     // Filter countries based on search
+//     const filteredOptions = React.useMemo(() => 
+//       options.filter(option =>
+//         option.label.toLowerCase().includes(searchQuery.toLowerCase())
+//       ), [options, searchQuery]
+//     );
+
+//     const selectedLabel = React.useMemo(() => 
+//       options.find(opt => opt.value === value)?.label
+//     , [options, value]);
+
+//     const handleSelect = React.useCallback((newValue: string) => {
+//       onChange(newValue);
+//       setSearchQuery('');
+//       setIsOpen(false);
+//     }, [onChange]);
+
+//     // Focus search input when dropdown opens
+//     React.useEffect(() => {
+//       if (isOpen) {
+//         // Add a small delay to ensure the input is mounted
+//         const timeoutId = setTimeout(() => {
+//           searchInputRef.current?.focus();
+//         }, 50);
+//         return () => clearTimeout(timeoutId);
+//       }
+//     }, [isOpen]);
+
+//     return (
+//       <div className="space-y-2 w-full">
+//         {label && (
+//           <label className="block text-[14px] font-medium text-gray-700">
+//             {label}
+//           </label>
+//         )}
+//         <Select 
+//           value={value} 
+//           onValueChange={handleSelect}
+//           open={isOpen}
+//           onOpenChange={setIsOpen}
+//           {...props}
+//         >
+//           <SelectTrigger 
+//             className={cn("w-full h-[56px]", className, error && "border-red-500")}
+//           >
+//             <SelectValue placeholder={placeHolder || "Select a country"}>
+//               {selectedLabel}
+//             </SelectValue>
+//           </SelectTrigger>
+//           <SelectContent className="max-h-[300px]">
+//             <div onPointerDown={(e) => e.stopPropagation()} className="p-2 sticky top-0 bg-white border-b z-10">
+//               <Input
+//                 ref={searchInputRef}
+//                 type="text"
+//                 placeholder={placeHolderSearch || "Search countries..."}
+//                 value={searchQuery}
+//                 onChange={(e) => {
+//                   // e.stopPropagation();
+//                   setSearchQuery(e.target.value);
+//                 }}
+//                 className="h-8"
+//                 onClick={(e) => e.stopPropagation()}
+//                 onKeyDown={(e) => {
+//                   e.stopPropagation();
+//                   if (e.key === 'Escape') {
+//                     setIsOpen(false);
+//                   }
+//                 }}
+//               />
+//             </div>
+//             <div className="overflow-y-auto">
+//               {filteredOptions.length > 0 ? (
+//                 filteredOptions.map((option) => (
+//                   <SelectItem 
+//                     key={option.value} 
+//                     value={option.value}
+//                     className="cursor-pointer hover:bg-gray-100"
+//                   >
+//                     <div className="flex items-center gap-2">
+//                       {option.flag && <span>{option.flag}</span>}
+//                       <span>{option.label}</span>
+//                     </div>
+//                   </SelectItem>
+//                 ))
+//               ) : (
+//                 <div className="py-2 text-center text-gray-500">
+//                   No countries found
+//                 </div>
+//               )}
+//             </div>
+//           </SelectContent>
+//         </Select>
+//         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//       </div>
+//     );
+//   }
+// );
+
+// CountrySelect.displayName = "CountrySelect";
+
+
 type CountrySelectProps = {
   label?: string;
   className?: string;
@@ -143,12 +261,8 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
 
     // Focus search input when dropdown opens
     React.useEffect(() => {
-      if (isOpen) {
-        // Add a small delay to ensure the input is mounted
-        const timeoutId = setTimeout(() => {
-          searchInputRef.current?.focus();
-        }, 50);
-        return () => clearTimeout(timeoutId);
+      if (isOpen && searchInputRef.current) {
+        searchInputRef.current.focus();
       }
     }, [isOpen]);
 
@@ -174,20 +288,20 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="max-h-[300px]">
-            <div onPointerDown={(e) => e.stopPropagation()} className="p-2 sticky top-0 bg-white border-b z-10">
+            <div className="p-2 sticky top-0 bg-white border-b z-10">
               <Input
                 ref={searchInputRef}
                 type="text"
                 placeholder={placeHolderSearch || "Search countries..."}
                 value={searchQuery}
                 onChange={(e) => {
-                  // e.stopPropagation();
+                  console.log('Search input changed:', e.target.value);
                   setSearchQuery(e.target.value);
                 }}
-                className="h-8"
-                onClick={(e) => e.stopPropagation()}
+                className="h-8 pointer-events-auto"
+                disabled={false}
                 onKeyDown={(e) => {
-                  e.stopPropagation();
+                  console.log('Key pressed:', e.key);
                   if (e.key === 'Escape') {
                     setIsOpen(false);
                   }
