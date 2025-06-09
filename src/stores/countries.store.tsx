@@ -17,6 +17,7 @@ interface CountryState {
     isLoading: boolean;
     error: Error | null;
     setCountries: (response: PaginatedCountryResponseType) => void;
+    // setCountries: (response: CountryType []) => void;
     setSelectedCountry: (country: CountryType) => void;
     setPageNumber: (pageNumber: number) => void;
     setPageSize: (pageSize: number) => void;
@@ -43,6 +44,9 @@ export const useCountryStore = create<CountryState>((set) => ({
             totalPages: response.totalPages
         }
     }),
+    // setCountries: (response: CountryType []) => set({
+    //     countries: response,
+    // }),
     setSelectedCountry: (country) => set({ selectedCountry: country }),
     setPageNumber: (pageNumber) => set(state => ({
         pagination: { ...state.pagination, pageNumber }

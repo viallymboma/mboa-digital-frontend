@@ -1,19 +1,25 @@
+"use client";
+// import { useDashboardStats } from '@/hooks/useDashboardStats';
 import {
+  Loader2,
   TrendingDownIcon,
   TrendingUpIcon,
 } from 'lucide-react';
 
+// ...existing imports...
+// import { StatCard } from '@/app/(dashboard)/dashboard/_components/_sections/StatCard';
+import { useDashboardStats } from '@/hooks/useDashboardStat';
+
+import { Badge } from './badge';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from './card';
 
-import { Badge } from './badge';
-
-interface StatCardProps {
+export type StatCardProps = {
   title: string;
   value: string | number;
   trend: {
@@ -24,6 +30,119 @@ interface StatCardProps {
   description: string;
   footer: string;
 }
+
+export function SectionCards() {
+    const { data: stats, isLoading } = useDashboardStats ();
+
+    if (isLoading) {
+        return (
+            <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+                {[1, 2, 3, 4].map((i) => (
+                    <Card key={i} className="bg-white dark:bg-gray-800">
+                        <CardHeader className="relative">
+                            <Loader2 className="h-8 w-8 animate-spin" />
+                        </CardHeader>
+                    </Card>
+                ))}
+            </div>
+        );
+    }
+
+    const dashboardStats: StatCardProps[] = [
+        {
+            title: 'SMS Envoyés',
+            value: stats?.sentSMS.value.toLocaleString() || '0',
+            trend: { 
+                value: stats?.sentSMS.trend || '0%', 
+                direction: stats?.sentSMS.trend.startsWith('-') ? 'down' : 'up' 
+            },
+            description: 'Evolution mensuelle des envois',
+            footer: 'Total des SMS envoyés ce mois'
+        },
+        {
+            title: 'Crédit SMS',
+            value: stats?.smsCredits.value.toLocaleString() || '0',
+            trend: { 
+                value: stats?.smsCredits.trend || '0%', 
+                direction: stats?.smsCredits.trend.startsWith('-') ? 'down' : 'up'
+            },
+            description: 'Evolution du crédit SMS',
+            footer: 'Solde SMS disponible'
+        },
+        {
+            title: 'Total des Contacts',
+            value: stats?.totalContacts.value.toLocaleString() || '0',
+            trend: { 
+                value: stats?.totalContacts.trend || '0%', 
+                direction: stats?.totalContacts.trend.startsWith('-') ? 'down' : 'up'
+            },
+            description: 'Evolution de la base contacts',
+            footer: 'Nombre total de contacts'
+        },
+        {
+            title: 'Total des recharges',
+            value: stats?.totalRecharges.value.toLocaleString() || '0',
+            trend: { 
+                value: stats?.totalRecharges.trend || '0%', 
+                direction: stats?.totalRecharges.trend.startsWith('-') ? 'down' : 'up'
+            },
+            description: 'Evolution des recharges',
+            footer: 'Nombre total de recharges'
+        }
+    ];
+
+    console.log('Dashboard Stats:', dashboardStats); 
+
+    return (
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+            {dashboardStats.map((stat, index) => (
+                <StatCard key={index} {...stat} />
+            ))}
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import {
+//   TrendingDownIcon,
+//   TrendingUpIcon,
+// } from 'lucide-react';
+
+// import {
+//   Card,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle,
+// } from '@/components/ui/card';
+
+// import { Badge } from './badge';
+
+// interface StatCardProps {
+//   title: string;
+//   value: string | number;
+//   trend: {
+//     value: string;
+//     direction: 'up' | 'down';
+//     // color: string;
+//   };
+//   description: string;
+//   footer: string;
+// }
 
 const StatCard = ({ title, value, trend, description, footer }: StatCardProps) => {
   const TrendIcon = trend.direction === 'up' ? TrendingUpIcon : TrendingDownIcon;
@@ -55,46 +174,46 @@ const StatCard = ({ title, value, trend, description, footer }: StatCardProps) =
   );
 };
 
-export function SectionCards() {
-  const stats: StatCardProps[] = [
-    {
-      title: 'SMS Envoyés',
-      value: '$1,250.00',
-      trend: { value: '+12.5%', direction: 'up' },
-      description: 'Trending up this month',
-      footer: 'Visitors for the last 6 months'
-    },
-    {
-      title: 'Crédit SMS',
-      value: '1,234',
-      trend: { value: '-20%', direction: 'down' },
-      description: 'Down 20% this period',
-      footer: 'Acquisition needs attention'
-    },
-    {
-      title: 'Total des Contacts',
-      value: '45,678',
-      trend: { value: '+12.5%', direction: 'up' },
-      description: 'Strong user retention',
-      footer: 'Engagement exceed targets'
-    },
-    {
-      title: 'Total des recharges',
-      value: '4.5%',
-      trend: { value: '+4.5%', direction: 'up' },
-      description: 'Steady performance',
-      footer: 'Meets growth projections'
-    }
-  ];
+// export function SectionCards() {
+//   const stats: StatCardProps[] = [
+//     {
+//       title: 'SMS Envoyés',
+//       value: '$1,250.00',
+//       trend: { value: '+12.5%', direction: 'up' },
+//       description: 'Trending up this month',
+//       footer: 'Visitors for the last 6 months'
+//     },
+//     {
+//       title: 'Crédit SMS',
+//       value: '1,234',
+//       trend: { value: '-20%', direction: 'down' },
+//       description: 'Down 20% this period',
+//       footer: 'Acquisition needs attention'
+//     },
+//     {
+//       title: 'Total des Contacts',
+//       value: '45,678',
+//       trend: { value: '+12.5%', direction: 'up' },
+//       description: 'Strong user retention',
+//       footer: 'Engagement exceed targets'
+//     },
+//     {
+//       title: 'Total des recharges',
+//       value: '4.5%',
+//       trend: { value: '+4.5%', direction: 'up' },
+//       description: 'Steady performance',
+//       footer: 'Meets growth projections'
+//     }
+//   ];
 
-  return (
-    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
-      {stats.map((stat, index) => (
-        <StatCard key={index} {...stat} />
-      ))}
-    </div>
-  );
-}
+//   return (
+//     <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+//       {stats.map((stat, index) => (
+//         <StatCard key={index} {...stat} />
+//       ))}
+//     </div>
+//   );
+// }
 
 
 

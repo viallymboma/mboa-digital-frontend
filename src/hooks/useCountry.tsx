@@ -8,11 +8,22 @@ export function useCountries() {
     const { pagination, setCountries } = useCountryStore();
     const { pageNumber, pageSize } = pagination;
 
-    const { data, error, isLoading, mutate } = useSWR<PaginatedCountryResponseType>(
+    const { data: dataPaginated, error: errorPaginated, isLoading: isLoadingPaginated } = useSWR<PaginatedCountryResponseType>(
         [`/api/v1/pays`, pageNumber, pageSize],
         async () => {
             const service = CountryService.getInstance();
-            const response = await service.getCountries(pageNumber, pageSize);
+            const response = await service.getCountriesPaginated(pageNumber, pageSize);
+            setCountries(response);
+            return response;
+        }
+    );
+
+    const { data, error, isLoading, mutate } = useSWR<PaginatedCountryResponseType>(
+        [`/api/v1/pays`],
+        async () => {
+            const service = CountryService.getInstance();
+            const response = await service.getCountriesPaginated();
+            // console.log('Countries fetched initially:', response);
             setCountries(response);
             return response;
         }
@@ -22,12 +33,17 @@ export function useCountries() {
         await mutate(); // Revalidates the SWR cache
     };
 
+    // console.log('Countries fetched:', data);
+
     return {
-        countries: data?.content || [],
+        countries: data?.content || [], 
+        countriesPaginated: dataPaginated?.content || [], 
+        errorPaginated, 
+        isLoadingPaginated, 
         pagination: {
-            currentPage: data?.number || 0,
-            totalPages: data?.totalPages || 0,
-            totalElements: data?.totalElements || 0
+            currentPage: dataPaginated?.number || 0,
+            totalPages: dataPaginated?.totalPages || 0,
+            totalElements: dataPaginated?.totalElements || 0
         },
         isLoading,
         error,

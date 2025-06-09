@@ -48,17 +48,19 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
 
     const { getLocalStorage } = useGetLocalStorage();
 
-    const {countries } = useCountries (); 
+    const { countries } = useCountries (); 
     const { createContact, isMutating, refetchEnterpriseContactsInStore } = useContacts();
     console.log('Countries:', countries);
 
     // Transform the countries data to include flags
     const formattedCountries = React.useMemo(() => {
-        return countries?.map(country => ({
+        const result = countries.map(country => ({
             value: country.code.toLowerCase(),
             label: country.nom,
             flag: getCountryFlag(country.code)
         })) || [];
+        console.log('Formatted Countries:', result);
+        return result
     }, [countries]);
 
     // Initialize react-hook-form with resolver
