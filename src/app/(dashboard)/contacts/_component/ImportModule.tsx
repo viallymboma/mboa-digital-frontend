@@ -27,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { notify } from '@/components/utilities/helper';
 import { useContacts } from '@/hooks/useContacts';
 
 const ImportModule = () => {
@@ -38,15 +39,26 @@ const ImportModule = () => {
     const [showPreview, setShowPreview] = React.useState(false);
 
     const downloadTemplate = () => {
-        // Create a link element
-        const link = document.createElement('a');
-        link.href = '/templates/contacts.xlsx';
-        link.download = 'contacts_template.xlsx';
-        
-        // Append to body, click, and remove
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        try {
+            // Use the correct path from public directory
+            const link = document.createElement('a');
+            link.href = '/templates/contacts.xlsx';
+            link.download = 'contacts_template.xlsx';
+            
+            // Add error handling
+            link.onerror = () => {
+                console.error('Failed to download template');
+                notify.error('Failed to download template file');
+            };
+            
+            document.body.appendChild(link);
+            link.click();
+            notify.success("Downloaded successfully")
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Download error:', error);
+            notify.error('Failed to initiate download');
+        }
     };
 
     const onDrop = useCallback(async (acceptedFiles: File[]) => {

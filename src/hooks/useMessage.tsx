@@ -53,6 +53,10 @@ export function useMessages(page = 0, size = 10) {
                 smsCount: Math.ceil(message.length / 160)
             };
 
+            console.log(user, messageData, "let us check")
+
+            return
+
             const response = await messageService.sendMessage(messageData);
             addMessage(response);
             notify.success('Message sent successfully');

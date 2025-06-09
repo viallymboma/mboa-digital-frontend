@@ -12,7 +12,7 @@ const RechargesPageHeader = () => {
         {
             label: 'Recharger',
             icon: RechargesWhiteSvgIcon, 
-            dialoContentStyle: "sm:max-w-[400px]", 
+            dialoContentStyle: "sm:max-w-[700px]", 
             buttonBg: "bg-primaryAppearance", 
             dialogContent: <>
                 <RechargeForm />

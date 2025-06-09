@@ -67,19 +67,6 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
         }
     });
 
-    // // Fetch active plans on mount
-    // React.useEffect(() => {
-    //     const fetchPlans = async () => {
-    //         try {
-    //             await activePlans();
-    //         } catch (error) {
-    //             console.error('Failed to fetch plans:', error);
-    //             notify.error('Failed to fetch pricing plans');
-    //         }
-    //     };
-    //     fetchPlans();
-    // }, []);
-
     // Watch qteMessage to calculate total price
     const qteMessage = watch('qteMessage');
 
@@ -93,21 +80,6 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
         
         return price;
     }, [qteMessage, calculatePrice]);
-
-    // const handleQuantityChange = (value: string) => {
-    //     const qty = Number(value);
-    //     const plan = getApplicablePlan(qty);
-        
-    //     if (!plan) {
-    //         setError('qteMessage', {
-    //             type: 'manual',
-    //             message: 'La quantité doit être dans une fourchette de plan disponible'
-    //         });
-    //         return;
-    //     }
-        
-    //     clearErrors('qteMessage');
-    // };
 
     const [selectedPlanInfo, setSelectedPlanInfo] = React.useState<PlanInfoType>();
 
@@ -238,6 +210,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                                 <FormInput 
                                     {...field}
                                     className="border-primaryAppearance"
+                                    label='Phone number'
                                     type="tel"
                                     placeholder="Ex: 237612345678"
                                     error={errors.debitPhoneNumber?.message}
@@ -254,6 +227,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                                     className="border-primaryAppearance"
                                     type="number"
                                     min="1"
+                                    label='Number of sms'
                                     placeholder="Entrez le nombre de SMS"
                                     error={errors.qteMessage?.message}
                                     onChange={(e) => {
@@ -270,6 +244,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                             render={({ field }) => (
                                 <CountrySelect
                                     {...field}
+                                    label='Payment Method'
                                     placeHolder='Selectionnez une methode'
                                     placeHolderSearch='Rechercher une methode'
                                     className="border-primaryAppearance"
@@ -291,8 +266,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                 ) : (
                     <>
                         <p className="text-center text-black font-medium mb-4">
-                            Valider la transaction sur votre mobile et cliquer sur terminer la
-                            transaction
+                            Cliquez sur Initier la transaction et valider sur votre mobile money
                         </p>
 
                         <Button 

@@ -58,7 +58,7 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({
 }, ref) => {
   return (
     <div className="space-y-2 w-full">
-      {label && <label className="block text-[18px] font-medium dark:text-white text-gray-700">{label}</label>}
+      {label && <label className="block text-[14px] font-medium dark:text-white text-gray-700">{label}</label>}
       <Input
         ref={ref}
         type={type}
@@ -155,7 +155,7 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
     return (
       <div className="space-y-2 w-full">
         {label && (
-          <label className="block text-[18px] font-medium text-gray-700">
+          <label className="block text-[14px] font-medium text-gray-700">
             {label}
           </label>
         )}
