@@ -20,7 +20,7 @@ const UsersPageHeader = () => {
         {
             label: 'Creer nouveau contact',
             icon: AddNewContactSvgIcon, 
-            dialoContentStyle: "sm:max-w-[425px]", 
+            dialoContentStyle: "sm:max-w-[625px]", 
             buttonBg: "bg-black", 
             dialogContent: <CreateClientForm />,
         },

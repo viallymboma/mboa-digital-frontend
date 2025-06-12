@@ -57,9 +57,33 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
         formState: { errors },
     } = useForm<FormData>({
         resolver: zodResolver(schema),
+        mode: 'onChange', // Validate on change
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            socialRaison: '',
+            email: '',
+            password: '',
+            phoneNumber: '',
+            country: '',
+            city: '',
+            activityDomain: '',
+            address: '',
+            contribuableNumber: '',
+            villeEntreprise: '',
+            numeroCommerce: '',
+            urlImage: '',
+            urlSiteweb: '',
+            telephoneEntreprise: '',
+            smsESenderId: '',
+            adresseEnterprise: '',
+            emailEnterprise: '',
+            enterpriseCountryId: ''
+        }
     });
 
     const onSubmit = async (data: FormData) => {
+        console.log('Form data:', data);
         try {
             notify.loading('Creating client...');
             await signup({
@@ -102,161 +126,248 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
 
     return (
         <div className="max-h-[80vh] overflow-y-auto p-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                    {/* Personal Information */}
-                    <Controller
-                        name="firstName"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="First Name"
-                                error={errors.firstName?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="lastName"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="Last Name"
-                                error={errors.lastName?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Enterprise Information */}
-                <Controller
-                    name="socialRaison"
-                    control={control}
-                    render={({ field }) => (
-                        <FormInput 
-                            {...field}
-                            label="Social Reason"
-                            error={errors.socialRaison?.message}
-                            className="border-primaryAppearance"
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Personal Information Section */}
+                <FormSection title="Personal Information">
+                    <div className="grid grid-cols-2 gap-4">
+                        <Controller
+                            name="firstName"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="First Name"
+                                    placeholder="Enter first name"
+                                    error={errors.firstName?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
                         />
-                    )}
-                />
-
-                {/* Contact Information */}
-                <div className="grid grid-cols-2 gap-4">
-                    <Controller
-                        name="email"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                type="email"
-                                label="Email"
-                                error={errors.email?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="phoneNumber"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                type="tel"
-                                label="Phone Number"
-                                error={errors.phoneNumber?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Location Information */}
-                <div className="grid grid-cols-2 gap-4">
-                    <Controller
-                        name="country"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="Country"
-                                error={errors.country?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="city"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="City"
-                                error={errors.city?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Enterprise Details */}
-                <div className="grid grid-cols-2 gap-4">
-                    <Controller
-                        name="activityDomain"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="Activity Domain"
-                                error={errors.activityDomain?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="contribuableNumber"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="Contribuable Number"
-                                error={errors.contribuableNumber?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                </div>
-
-                {/* Security */}
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field }) => (
-                        <FormPasswordInput 
-                            {...field}
-                            label="Password"
-                            error={errors.password?.message}
-                            className="border-primaryAppearance"
+                        <Controller
+                            name="lastName"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Last Name"
+                                    placeholder="Enter last name"
+                                    error={errors.lastName?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
                         />
-                    )}
-                />
+                    </div>
+                </FormSection>
 
-                <FormButton 
+                {/* Enterprise Information Section */}
+                <FormSection title="Enterprise Information">
+                    <Controller
+                        name="socialRaison"
+                        control={control}
+                        render={({ field }) => (
+                            <FormInput 
+                                {...field}
+                                label="Company Name"
+                                placeholder="Enter company name"
+                                error={errors.socialRaison?.message}
+                                className="border-primaryAppearance"
+                            />
+                        )}
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                        <Controller
+                            name="activityDomain"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Business Sector"
+                                    placeholder="e.g. Technology, Retail"
+                                    error={errors.activityDomain?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="contribuableNumber"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Tax ID"
+                                    placeholder="Enter tax ID number"
+                                    error={errors.contribuableNumber?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                    </div>
+                </FormSection>
+
+                {/* Contact Information Section */}
+                <FormSection title="Contact Information">
+                    <div className="grid grid-cols-2 gap-4">
+                        <Controller
+                            name="email"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    type="email"
+                                    label="Personal Email"
+                                    placeholder="name@example.com"
+                                    error={errors.email?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="emailEnterprise"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    type="email"
+                                    label="Company Email"
+                                    placeholder="company@example.com"
+                                    error={errors.emailEnterprise?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="phoneNumber"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    type="tel"
+                                    label="Personal Phone"
+                                    placeholder="+237 6XX XXX XXX"
+                                    error={errors.phoneNumber?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="telephoneEntreprise"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    type="tel"
+                                    label="Company Phone"
+                                    placeholder="+237 6XX XXX XXX"
+                                    error={errors.telephoneEntreprise?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                    </div>
+                </FormSection>
+
+                {/* Location Section */}
+                <FormSection title="Location Details">
+                    <div className="grid grid-cols-2 gap-4">
+                        <Controller
+                            name="country"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Country"
+                                    placeholder="Select country"
+                                    error={errors.country?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="city"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="City"
+                                    placeholder="Enter city"
+                                    error={errors.city?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="address"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Address"
+                                    placeholder="Enter address"
+                                    error={errors.address?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        />
+                    </div>
+                </FormSection>
+
+                {/* SMS Configuration Section */}
+                <FormSection title="SMS Configuration">
+                    <Controller
+                        name="smsESenderId"
+                        control={control}
+                        render={({ field }) => (
+                            <FormInput 
+                                {...field}
+                                label="SMS Sender ID"
+                                placeholder="Enter sender ID"
+                                error={errors.smsESenderId?.message}
+                                className="border-primaryAppearance"
+                            />
+                        )}
+                    />
+                </FormSection>
+
+                {/* Security Section */}
+                <FormSection title="Security">
+                    <Controller
+                        name="password"
+                        control={control}
+                        render={({ field }) => (
+                            <FormPasswordInput 
+                                {...field}
+                                label="Password"
+                                placeholder="Enter secure password"
+                                error={errors.password?.message}
+                                className="border-primaryAppearance"
+                            />
+                        )}
+                    />
+                </FormSection>
+
+                {/* <FormButton 
                     type="submit" 
-                    className="w-full bg-primaryAppearance text-white"
+                    className="w-full bg-primaryAppearance text-white py-3 rounded-lg"
                     disabled={isLoading}
                 >
                     {isLoading ? <LoadingUI /> : 'Create Client'}
-                </FormButton>
+                </FormButton> */}
+
+                <div className='flex flex-col gap-4'>
+                    <FormButton className='bg-primaryAppearance h-[56px]' type="submit">{ isLoading ? (
+                        <LoadingUI />
+                    ) : "Submit" }</FormButton>
+                    {error && (
+                        <div className="text-red-500 text-sm text-center">
+                            {error.message}
+                        </div>
+                    )}
+                </div>
 
                 {error && (
-                  <div className="text-red-500 text-sm text-center">
-                      {error.message}
-                  </div>
+                    <div className="text-red-500 text-sm text-center">
+                        {error.message}
+                    </div>
                 )}
             </form>
         </div>
@@ -264,3 +375,13 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
 };
 
 export default CreateClientForm;
+
+
+const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">{title}</h3>
+        <div className="space-y-4">
+            {children}
+        </div>
+    </div>
+);

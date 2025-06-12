@@ -20,7 +20,7 @@ const SignInModule = () => {
                 </div>
                 <div className='flex flex-col gap-4 w-[75%]'>
                     <div className='mb-4'>
-                        <h1 className='font-bold text-[36px]'>{ t('register.title') }</h1>
+                        <h1 className='font-bold text-[36px]'>{ t('register.login') }</h1>
                     </div>
                     <SignInForm />
                 </div>
