@@ -20,7 +20,7 @@ import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // Add this helper function at the top of your file
-const getCountryFlag = (countryCode: string): string => {
+export const getCountryFlag = (countryCode: string): string => {
     const codePoints = countryCode
         .toUpperCase()
         .split('')

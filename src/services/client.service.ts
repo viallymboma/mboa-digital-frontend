@@ -36,8 +36,12 @@ export class ClientService {
         return this.apiService.put<ClientResponseType, UpdateClientRequestType>(`/api/v1/auth/update-user/${id}`, data);
     }
 
-    async getClients(enterpriseId: string): Promise<ClientResponseType[]> {
+    async getClientsEnterprise(enterpriseId: string): Promise<ClientResponseType[]> {
         return this.apiService.get<ClientResponseType[]>(`/api/v1/auth/all/${enterpriseId}`);
+    }
+
+    async getClients(): Promise<ClientResponseType[]> {
+        return this.apiService.get<ClientResponseType[]>(`/api/v1/auth/all/`);
     }
 
     async getClient(id: string): Promise<ClientResponseType> {

@@ -23,17 +23,38 @@ export function useClients() {
     } = useClientStore();
 
     const { getLocalStorage } = useGetLocalStorage();
+    // Get user role from localStorage
+    // const userRole = getLocalStorage("user")?.role;
+    // const enterpriseId = getLocalStorage("user")?.enterprise?.id;
 
     // Fetch all clients
     const { data, error, isLoading, mutate } = useSWR<ClientResponseType[]>(
         'clients',
         async () => {
             const service = ClientService.getInstance();
-            const response = await service.getClients(getLocalStorage("user")?.enterprise?.id);
+            // const response = await service.getClients();
+            const response = await service.getClientsEnterprise(getLocalStorage("user")?.enterprise?.id);
             console.log('Fetched clients:', response);
             setClients(response);
             return response;
         }
+        // async () => {
+        //     const service = ClientService.getInstance();
+        //     let response: ClientResponseType[];
+
+        //     if (userRole === 'ADMIN') {
+        //         response = await service.getClients();
+        //     } else {
+        //         if (!enterpriseId) {
+        //             throw new Error('Enterprise ID not found');
+        //         }
+        //         response = await service.getClientsEnterprise(enterpriseId);
+        //     }
+
+        //     console.log('Fetched clients:', response);
+        //     setClients(response);
+        //     return response;
+        // }
     );
 
     // Create client mutation

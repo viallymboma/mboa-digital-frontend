@@ -4,6 +4,7 @@ import React from 'react';
 import { X } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
   SelectContent,
@@ -225,6 +226,8 @@ FormInput.displayName = 'FormInput';
 // CountrySelect.displayName = "CountrySelect";
 
 
+
+
 type CountrySelectProps = {
   label?: string;
   className?: string;
@@ -241,93 +244,176 @@ const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
     const [searchQuery, setSearchQuery] = React.useState('');
     const searchInputRef = React.useRef<HTMLInputElement>(null);
     const [isOpen, setIsOpen] = React.useState(false);
+    const searchContainerRef = React.useRef<HTMLDivElement>(null);
 
-    // Filter countries based on search
-    const filteredOptions = React.useMemo(() => 
-      options.filter(option =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase())
-      ), [options, searchQuery]
+    // Filter countries based on search (with better matching)
+    const filteredOptions = React.useMemo(() => {
+      if (!searchQuery) return options;
+      
+      const query = searchQuery.toLowerCase();
+      return options.filter(option =>
+        option.label.toLowerCase().includes(query) ||
+        option.value.toLowerCase().includes(query)
+      );
+    }, [options, searchQuery]);
+
+    // Find selected option
+    const selectedOption = React.useMemo(() => 
+      options.find(opt => opt.value === value),
+      [options, value]
     );
-
-    const selectedLabel = React.useMemo(() => 
-      options.find(opt => opt.value === value)?.label
-    , [options, value]);
 
     const handleSelect = React.useCallback((newValue: string) => {
       onChange(newValue);
-      setSearchQuery('');
+      setSearchQuery(''); // Clear search on selection
       setIsOpen(false);
     }, [onChange]);
 
-    // Focus search input when dropdown opens
+    // Handle clicks on search container
+    const handleSearchContainerClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+    };
+
+    // Focus management and search reset
     React.useEffect(() => {
-      if (isOpen && searchInputRef.current) {
-        searchInputRef.current.focus();
+      if (isOpen) {
+        setSearchQuery(''); // Reset search when opening
+        setTimeout(() => {
+          if (searchInputRef.current) {
+            searchInputRef.current.focus();
+          }
+        }, 0);
       }
     }, [isOpen]);
 
+    // // Keyboard navigation improvements
+    // const handleKeyDown = (e: React.KeyboardEvent) => {
+    //   if (e.key === 'Escape') {
+    //     setIsOpen(false);
+    //   }
+    //   // Prevent form submission when searching
+    //   if (e.key === 'Enter' && searchQuery) {
+    //     e.preventDefault();
+    //   }
+    // };
+
     return (
-      <div className="space-y-2 w-full">
+      <div className="space-y-2 w-full relative">
         {label && (
           <label className="block text-[14px] font-medium text-gray-700">
             {label}
           </label>
         )}
+
+        {/* Search Input - Moved outside Select */}
+        {isOpen && (
+          <div 
+            ref={searchContainerRef}
+            onClick={handleSearchContainerClick}
+            onMouseDown={handleSearchContainerClick}
+            className=" absolute bottom-0 h-[56px] bg-white w-full z-10">
+            <Input
+              ref={searchInputRef}
+              type="text"
+              placeholder={placeHolderSearch || "Search countries..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className=" w-full h-[90%]"
+              // onKeyDown={handleKeyDown}
+              onKeyDown={(e) => {
+                  // Prevent the default selection behavior
+                  if (e.key === 'a' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                  }
+                  // Prevent closing on keydown
+                  e.stopPropagation();
+              }}
+              // Prevent auto-selection of text
+              onSelect={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  target.selectionStart = target.selectionEnd;
+              }}
+              // Ensure cursor is always at the end
+              onFocus={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  const length = target.value.length;
+                  target.setSelectionRange(length, length);
+              }}
+              autoComplete="off"
+              aria-label="Search countries"
+              autoFocus
+            />
+          </div>
+        )}
+
         <Select 
           value={value} 
           onValueChange={handleSelect}
           open={isOpen}
-          onOpenChange={setIsOpen}
+          // onOpenChange={setIsOpen}
+          onOpenChange={(open) => {
+            setIsOpen(open);
+            if (!open) {
+              // Only clear search when actually selecting an item
+              setSearchQuery('');
+            }
+          }}
           {...props}
         >
           <SelectTrigger 
-            className={cn("w-full h-[56px]", className, error && "border-red-500")}
+            className={cn(
+              "w-full h-[56px] text-left",
+              className, 
+              error && "border-red-500"
+            )}
+            aria-expanded={isOpen}
           >
             <SelectValue placeholder={placeHolder || "Select a country"}>
-              {selectedLabel}
+              {selectedOption && (
+                <div className="flex items-center gap-2 truncate">
+                  {selectedOption.flag && <span>{selectedOption.flag}</span>}
+                  <span>{selectedOption.label}</span>
+                </div>
+              )}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent className="max-h-[300px]">
-            <div className="p-2 sticky top-0 bg-white border-b z-10">
+          <SelectContent className="max-h-[300px] p-0">
+            {/* Search input */}
+            {/* <div className="p-2 sticky top-0 bg-background z-10 border-b">
               <Input
                 ref={searchInputRef}
                 type="text"
                 placeholder={placeHolderSearch || "Search countries..."}
                 value={searchQuery}
-                onChange={(e) => {
-                  console.log('Search input changed:', e.target.value);
-                  setSearchQuery(e.target.value);
-                }}
-                className="h-8 pointer-events-auto"
-                disabled={false}
-                onKeyDown={(e) => {
-                  console.log('Key pressed:', e.key);
-                  if (e.key === 'Escape') {
-                    setIsOpen(false);
-                  }
-                }}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-8"
+                onKeyDown={handleKeyDown}
+                aria-label="Search countries"
               />
-            </div>
-            <div className="overflow-y-auto">
+            </div> */}
+            
+            {/* Results list */}
+            <ScrollArea className="h-[200px]">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => (
                   <SelectItem 
                     key={option.value} 
                     value={option.value}
-                    className="cursor-pointer hover:bg-gray-100"
+                    className="cursor-pointer hover:bg-accent"
                   >
                     <div className="flex items-center gap-2">
-                      {option.flag && <span>{option.flag}</span>}
-                      <span>{option.label}</span>
+                      {option.flag && <span className="text-lg">{option.flag}</span>}
+                      <span className="truncate">{option.label}</span>
                     </div>
                   </SelectItem>
                 ))
               ) : (
-                <div className="py-2 text-center text-gray-500">
+                <div className="py-4 text-center text-muted-foreground">
                   No countries found
                 </div>
               )}
-            </div>
+            </ScrollArea>
           </SelectContent>
         </Select>
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -344,56 +430,103 @@ CountrySelect.displayName = "CountrySelect";
 //   className?: string;
 //   value: string;
 //   error?: string;
+//   placeHolder?: string;
+//   placeHolderSearch?: string;
 //   onChange: (value: string) => void;
 //   options: { value: string; label: string; flag?: string }[];
-// };
+// } & Omit<React.ComponentProps<typeof Select>, 'onValueChange' | 'value'>;
 
 // const CountrySelect = React.forwardRef<HTMLSelectElement, CountrySelectProps>(
-//   ({ label, onChange, value, className, error, options }) => {
+//   ({ label, onChange, value, className, error, placeHolder, placeHolderSearch, options, ...props }) => {
 //     const [searchQuery, setSearchQuery] = React.useState('');
+//     const searchInputRef = React.useRef<HTMLInputElement>(null);
+//     const [isOpen, setIsOpen] = React.useState(false);
 
 //     // Filter countries based on search
-//     const filteredOptions = options.filter(option =>
-//       option.label.toLowerCase().includes(searchQuery.toLowerCase())
+//     const filteredOptions = React.useMemo(() => 
+//       options.filter(option =>
+//         option.label.toLowerCase().includes(searchQuery.toLowerCase())
+//       ), [options, searchQuery]
 //     );
 
-//     const handleSelect = (newValue: string) => {
-//       // Direct value handling instead of synthetic event
+//     const selectedLabel = React.useMemo(() => 
+//       options.find(opt => opt.value === value)?.label
+//     , [options, value]);
+
+//     const handleSelect = React.useCallback((newValue: string) => {
 //       onChange(newValue);
-//     };
+//       setSearchQuery('');
+//       setIsOpen(false);
+//     }, [onChange]);
+
+//     // Focus search input when dropdown opens
+//     React.useEffect(() => {
+//       if (isOpen && searchInputRef.current) {
+//         searchInputRef.current.focus();
+//       }
+//     }, [isOpen]);
 
 //     return (
 //       <div className="space-y-2 w-full">
-//         {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
-//         <Select value={value} onValueChange={handleSelect}>
-//           <SelectTrigger className={cn("w-full h-[56px]", className)}>
-//             <SelectValue placeholder="Select a country">
-//               {value && options.find(opt => opt.value === value)?.label}
+//         {label && (
+//           <label className="block text-[14px] font-medium text-gray-700">
+//             {label}
+//           </label>
+//         )}
+//         <Select 
+//           value={value} 
+//           onValueChange={handleSelect}
+//           open={isOpen}
+//           onOpenChange={setIsOpen}
+//           {...props}
+//         >
+//           <SelectTrigger 
+//             className={cn("w-full h-[56px]", className, error && "border-red-500")}
+//           >
+//             <SelectValue placeholder={placeHolder || "Select a country"}>
+//               {selectedLabel}
 //             </SelectValue>
 //           </SelectTrigger>
 //           <SelectContent className="max-h-[300px]">
-//             <div className="p-2 sticky top-0 bg-white border-b">
+//             <div className="p-2 sticky top-0 bg-white border-b z-10">
 //               <Input
+//                 ref={searchInputRef}
 //                 type="text"
-//                 placeholder="Search countries..."
+//                 placeholder={placeHolderSearch || "Search countries..."}
 //                 value={searchQuery}
-//                 onChange={(e) => setSearchQuery(e.target.value)}
-//                 className="h-8"
+//                 onChange={(e) => {
+//                   console.log('Search input changed:', e.target.value);
+//                   setSearchQuery(e.target.value);
+//                 }}
+//                 className="h-8 pointer-events-auto"
+//                 disabled={false}
+//                 onKeyDown={(e) => {
+//                   console.log('Key pressed:', e.key);
+//                   if (e.key === 'Escape') {
+//                     setIsOpen(false);
+//                   }
+//                 }}
 //               />
 //             </div>
 //             <div className="overflow-y-auto">
-//               {filteredOptions.map((option) => (
-//                 <SelectItem 
-//                   key={option.value} 
-//                   value={option.value}
-//                   className="cursor-pointer hover:bg-gray-100"
-//                 >
-//                   <div className="flex items-center gap-2">
-//                     {option.flag && <span>{option.flag}</span>}
-//                     <span>{option.label}</span>
-//                   </div>
-//                 </SelectItem>
-//               ))}
+//               {filteredOptions.length > 0 ? (
+//                 filteredOptions.map((option) => (
+//                   <SelectItem 
+//                     key={option.value} 
+//                     value={option.value}
+//                     className="cursor-pointer hover:bg-gray-100"
+//                   >
+//                     <div className="flex items-center gap-2">
+//                       {option.flag && <span>{option.flag}</span>}
+//                       <span>{option.label}</span>
+//                     </div>
+//                   </SelectItem>
+//                 ))
+//               ) : (
+//                 <div className="py-2 text-center text-gray-500">
+//                   No countries found
+//                 </div>
+//               )}
 //             </div>
 //           </SelectContent>
 //         </Select>
@@ -402,6 +535,7 @@ CountrySelect.displayName = "CountrySelect";
 //     );
 //   }
 // );
+
 // CountrySelect.displayName = "CountrySelect";
 
 
