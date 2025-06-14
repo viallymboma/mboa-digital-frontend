@@ -44,7 +44,7 @@ export class RechargeService {
      * Get paginated list of recharges
      */
     async getRecharges(enterpriseId: string): Promise<RechargePageType> {
-        return this.apiService.get<RechargePageType>(`/api/v1/recharge/${ enterpriseId }/enterprise`);
+        return this.apiService.get<RechargePageType>(`/api/v1/recharge/${ enterpriseId }/all`);
         // /api/v1/recharge/{enterpriseId}/enterprise
     }
 
