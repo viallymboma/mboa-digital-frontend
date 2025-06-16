@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
+// import { notify } from '@/components/utilities/helper';
 import { ApiService } from '@/services/data.service';
 import {
   LoginResponse,
@@ -71,8 +72,26 @@ export function useSignup() {
         {
             onSuccess: (data) => {
                 localStorage.setItem('token', data.token);
-                router.push('/dashboard');
+                router.push('/login');
             },
+            // onError: (error: unknown) => {
+            //     let message = 'Failed to fetch recharges';
+            //     if (
+            //         error &&
+            //         typeof error === 'object' &&
+            //         'response' in error &&
+            //         (error as { response?: unknown }).response &&
+            //         typeof (error as { response?: unknown }).response === 'object' &&
+            //         'data' in (error as { response: { data?: unknown } }).response &&
+            //         (error as { response: { data?: unknown } }).response.data &&
+            //         typeof (error as { response: { data?: unknown } }).response.data === 'object' &&
+            //         'message' in (error as { response: { data: { message?: string } } }).response.data
+            //     ) {
+            //         // @ts-expect-error: dynamic error shape
+            //         message = error.response.data.message || message;
+            //     }
+            //     notify.error(message);
+            // }
         }
     );
 

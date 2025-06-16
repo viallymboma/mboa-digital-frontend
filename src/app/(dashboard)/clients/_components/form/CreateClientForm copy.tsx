@@ -1,12 +1,10 @@
 "use client";
 import React from 'react';
 
-import Link from 'next/link';
 import {
   Controller,
   useForm,
 } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 // import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
@@ -60,8 +58,8 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const SignUpForm = () => {
-    const { t } = useTranslation();
+const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
+    // const { t } = useTranslation();
     // const { createClient, isLoading } = useClients();
     // Add state for cities
     const [selectedCountry, setSelectedCountry] = React.useState<string>('');
@@ -176,7 +174,7 @@ const SignUpForm = () => {
                 ...finalData
             });
             notify.success('Client created successfully');
-            // onClose?.();
+            onClose?.();
         } catch (error: unknown) {
             let errorMessage = 'Failed to create client';
 
@@ -211,7 +209,7 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className=" p-4">
+        <div className="max-h-[80vh] overflow-y-auto p-4">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 {/* Personal Information Section */}
                 <FormSection title="Personal Information">
@@ -355,7 +353,19 @@ const SignUpForm = () => {
                 {/* Location Section */}
                 <FormSection title="Location Details">
                     <div className="grid grid-cols-2 gap-4">
-
+                        {/* <Controller
+                            name="country"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="Country"
+                                    placeholder="Select country"
+                                    error={errors.country?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        /> */}
                         <Controller
                             name="country"
                             control={control}
@@ -377,6 +387,19 @@ const SignUpForm = () => {
                                 />
                             )}
                         />
+                        {/* <Controller
+                            name="city"
+                            control={control}
+                            render={({ field }) => (
+                                <FormInput 
+                                    {...field}
+                                    label="City"
+                                    placeholder="Enter city"
+                                    error={errors.city?.message}
+                                    className="border-primaryAppearance"
+                                />
+                            )}
+                        /> */}
                         <Controller
                             name="city"
                             control={control}
@@ -427,7 +450,7 @@ const SignUpForm = () => {
                     />
                 </FormSection>
 
-                {/* Security Section */}
+
                 <FormSection title="Security">
                     <Controller
                         name="password"
@@ -655,12 +678,6 @@ const SignUpForm = () => {
                     )}
                 </div>
 
-                <div className='flex items-center justify-center'>
-                    <p className='text-center w-full'>
-                        {t('register.loginPrompt')} <Link href={"/login"} className='text-primaryAppearance'>{t('register.login')}</Link> 
-                    </p>
-                </div>
-
                 {error && (
                     <div className="text-red-500 text-sm text-center">
                         {error.message}
@@ -671,10 +688,10 @@ const SignUpForm = () => {
     );
 };
 
-export default SignUpForm;
+export default CreateClientForm;
 
 
-export const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="space-y-4">
         <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">{title}</h3>
         <div className="space-y-4">

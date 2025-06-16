@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Controller,
@@ -8,22 +9,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import {
-  getCountryFlag,
-} from '@/app/(dashboard)/contacts/_component/CreateContactForm';
-import { FormSection } from '@/app/(login)/sign-up/_components/SignUpForm';
 import { FormButton } from '@/app/_components/form/FormButton';
-import {
-  CountrySelect,
-  FormInput,
-} from '@/app/_components/form/FormInput';
+import { FormInput } from '@/app/_components/form/FormInput';
 import { FormPasswordInput } from '@/app/_components/form/FormPasswordInput';
 import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
-import { useClients } from '@/hooks/useClients';
-import { useCountries } from '@/hooks/useCountry';
-import { USER_ROLE } from '@/utils/constants';
-import { countriesAndCities } from '@/utils/countriesAndCities';
+import { useSignup } from '@/hooks/useAuth.hook';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
@@ -37,28 +28,19 @@ const schema = z.object({
         .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
         .regex(/[0-9]/, { message: 'Password must contain at least one number' })
         .regex(/[^A-Za-z0-9]/, { message: 'Password must contain at least one special character' }),
-    confirmPassword: z.string(), 
-    country: z.string().min(1, { message: 'Country is required' }),
-    city: z.string().min(1, { message: 'City is required' }),
-    address: z.string().min(1, { message: 'Address is required' }),
-    }).refine((data) => data.password === data.confirmPassword, {
-        message: "Passwords don't match",
-        path: ["confirmPassword"],
-    });
+    confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+});
 
 type FormData = z.infer<typeof schema>;
 
-const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
+const SignUpForm = () => {
 
     const { t } = useTranslation();
 
-    const [selectedCountry, setSelectedCountry] = React.useState<string>('');
-        const [availableCities, setAvailableCities] = React.useState<Array<{ value: string; label: string }>>([]);
-
-    // const { signup, isLoading, error } = useSignup(); 
-    const { createClient, isLoading, error } = useClients();
-
-    const { countries } = useCountries (); 
+    const { signup, isLoading, error } = useSignup();
 
     const router = useRouter();
 
@@ -72,20 +54,6 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
     } = useForm<FormData>({
         resolver: zodResolver(schema),
     });
-
-    // Effect to update available cities when country changes
-    React.useEffect(() => {
-        if (selectedCountry) {
-            const country = formattedCountries.find(c => c.value === selectedCountry);
-            if (country) {
-                setAvailableCities(country.cities);
-            } else {
-                setAvailableCities([]);
-            }
-        } else {
-            setAvailableCities([]);
-        }
-    }, [selectedCountry]);
 
     // Watch password fields for real-time validation
     const password = watch('password');
@@ -108,46 +76,24 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
         </span>
     );
 
-    // const countriesData = countriesAndCities
-
-    // Transform the countries data to include flags and cities
-    const formattedCountries = React.useMemo(() => {
-        const result = countries.map(country => {
-            // Find matching country in countriesAndCities
-            const countryData = countriesAndCities.find(
-                c => c.country.toLowerCase() === country.nom.toLowerCase()
-            );
-
-            return {
-                value: country.id ?? country.code.toLowerCase() ?? "", // Ensure value is always a string
-                label: `${country.nom} - ${country.code.toLowerCase()}`,
-                flag: getCountryFlag(country.code),
-                cities: countryData?.cities.map(city => ({
-                    value: city.toLowerCase(),
-                    label: city
-                })) || []
-            };
-        }) || [];
-        return result;
-    }, [countries]);
-
     const onSubmit = async (data: FormData) => {
         console.log(data);
         notify.loading(t('loading.signup.ongoing'));
         const final_data = {
             ...data,
-            role: USER_ROLE as "USER" | "SUPER_ADMIN" | "ADMIN_USER"
+            socialRaison: "no reason", 
+            telephoneEntreprise: data?.phoneNumber, 
+            emailEnterprise: data?.email,
         }
         try {
             console.log('Form data:', final_data);
 
-            await createClient(final_data);
+            await signup(final_data);
             notify.dismiss();
             notify.success(t('loading.signup.success'));
             // Optionally, you can redirect the user or perform other actions here
             // Handle successful login, e.g., redirect to dashboard
             router.push('/dashboard');
-            onClose?.();
         } catch (error: unknown) {
             notify.success(t('loading.signup.error'));
             if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'data' in error.response && error.response.data && typeof error.response.data === 'object' && 'message' in error.response.data) {
@@ -161,7 +107,7 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
     };
 
     return (
-        <div className='max-h-[80vh] overflow-y-auto overflow-x-hidden'>
+        <div>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
                 <div className='flex justify-around flex-row gap-3 w-full '>
                     <div className='flex flex-col gap-2 w-full'>
@@ -226,65 +172,6 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
                         )}
                     />
                 </div>
-                
-                <FormSection title="Location Details">
-                    <Controller
-                        name="country"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: 'Country is required' }}
-                        render={({ field }) => (
-                            <CountrySelect
-                                label="Select Country"
-                                value={field.value}
-                                // onChange={field.onChange}
-                                onChange={(value) => {
-                                    field.onChange(value);  // Update form value
-                                    setSelectedCountry(value);  // Update selected country for city filtering
-                                }}
-                                options={formattedCountries}
-                                placeHolder="Choose a country"
-                                placeHolderSearch="Type to search countries..."
-                                error={errors.country?.message} // Include error for country
-                            />
-                        )}
-                    />
-                    <Controller
-                        name="city"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <CountrySelect
-                                label="Select City"
-                                value={field.value}
-                                onChange={field.onChange}
-                                options={availableCities}
-                                placeHolder="Choose a city"
-                                placeHolderSearch="Type to search cities..."
-                                error={errors.city?.message}
-                                disabled={!selectedCountry}
-                            />
-                        )}
-                    />
-                </FormSection>
-
-                <div className='flex flex-col gap-2 w-full'>
-                    
-                    <Controller
-                        name="address"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                label="Address"
-                                placeholder="Enter address"
-                                error={errors.address?.message}
-                                className="border-primaryAppearance"
-                            />
-                        )}
-                    />
-                </div>
-
                 <div className='flex flex-col gap-2 w-full'>
                     <Controller
                         name="password"
@@ -366,7 +253,11 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
                     <FormButton className='bg-primaryAppearance h-[56px]' type="submit">{ isLoading ? (
                         <LoadingUI />
                     ) : "Submit" }</FormButton>
-                    
+                    <div className='flex items-center justify-center'>
+                        <p className='text-center w-full'>
+                            {t('register.loginPrompt')} <Link href={"/login"} className='text-primaryAppearance'>{t('register.login')}</Link> 
+                        </p>
+                    </div>
                     {error && (
                         <div className="text-red-500 text-sm text-center">
                             {error.message}
@@ -378,4 +269,4 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
     )
 }
 
-export default CreateClientForm
+export default SignUpForm

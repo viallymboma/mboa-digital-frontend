@@ -6,7 +6,7 @@ import { ClientService } from '@/services/client.service';
 import { useClientStore } from '@/stores/clients.store';
 import {
   ClientResponseType,
-  CreateClientRequestType,
+  CreateClientUserRequest,
   UpdateClientRequestType,
 } from '@/types/client';
 
@@ -59,10 +59,10 @@ export function useClients() {
 
     // Create client mutation
     const { trigger: createClientTrigger, isMutating: isCreating } = useSWRMutation(
-        '/api/v1/auth/register',
-        async (url, { arg }: { arg: CreateClientRequestType }) => {
+        `/api/v1/enterprise/adduser-enterprise/${getLocalStorage("user")?.enterprise?.id}`,
+        async (url, { arg }: { arg: CreateClientUserRequest }) => {
             const service = ClientService.getInstance();
-            return service.createClient(arg);
+            return service.createClientUser(getLocalStorage("user")?.enterprise?.id, arg);
         },
         {
             onSuccess: (data) => {
@@ -97,7 +97,7 @@ export function useClients() {
         }
     );
 
-    const createClient = async (data: CreateClientRequestType) => {
+    const createClient = async (data: CreateClientUserRequest) => {
         return createClientTrigger(data);
     };
 

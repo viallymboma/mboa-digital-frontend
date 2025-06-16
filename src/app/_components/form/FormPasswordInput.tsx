@@ -32,7 +32,7 @@ const FormPasswordInput = React.forwardRef<HTMLInputElement, FormPasswordInputPr
 
   return (
     <div className="space-y-2 w-full">
-      {label && <label className="block text-[18px] font-medium text-gray-700">{label}</label>}
+      {label && <label className="block text-[14px] font-medium text-gray-700">{label}</label>}
       <div className="relative">
         <Input
           // ref={ref}

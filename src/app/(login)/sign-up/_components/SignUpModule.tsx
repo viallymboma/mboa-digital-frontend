@@ -16,7 +16,7 @@ const SignUpModule = () => {
                 <div className='mt-[3rem] w-[75%]'>
                     <SvgIconsLogo />
                 </div>
-                <div className='flex flex-col gap-4 w-[75%]'>
+                <div className='flex flex-col gap-4 w-[75%] overflow-y-auto'>
                     <div className='mb-4'>
                         <h1 className='font-bold text-[36px]'>{ t('register.title') }</h1>
                     </div>

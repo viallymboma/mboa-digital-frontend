@@ -106,7 +106,7 @@ export function NavProfile({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             {
-              getLocalStorage("user")?.role === "ADMIN" ? 
+              getLocalStorage("user")?.role === "SUPER_ADMIN" ? 
                 <>
                   <DropdownMenuGroup>
                     <DropdownMenuItem>

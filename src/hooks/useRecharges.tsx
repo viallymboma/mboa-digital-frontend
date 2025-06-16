@@ -12,6 +12,11 @@ import {
   RechargeListContentType,
   UpdateRechargeRequestType,
 } from '@/types/recharges';
+import {
+  ADMIN_ROLE,
+  ADMIN_USER_ROLE,
+  USER_ROLE,
+} from '@/utils/constants';
 
 import useGetLocalStorage from './useGetLocalStorage';
 
@@ -63,21 +68,21 @@ export function useRecharges() {
     // );
     // Main recharges fetch
     const { data, error, isLoading, mutate } = useSWR<RechargeListContentType[]>(
-        `${ getLocalStorage("user")?.role === 'ADMIN' ? "/api/v1/recharge/all" : `/api/v1/recharge/${ getLocalStorage("user")?.enterprise?.id }/enterprise` }`,
+        `${ getLocalStorage("user")?.role === ADMIN_ROLE ? "/api/v1/recharge/all" : `/api/v1/recharge/${ getLocalStorage("user")?.enterprise?.id }/enterprise` }`,
         async () => {
             const service = RechargeService.getInstance();
             const user = getLocalStorage("user");
             // console.log('User in useRecharges hook:', user);
-            const userRole = user?.role || 'USER'; // Default to 'USER' if not found
+            const userRole = user?.role || USER_ROLE; // Default to 'USER' if not found
             const enterpriseId = user?.enterprise?.id;
 
             let response;
-            
+
             // Check user role and call appropriate endpoint
-            if (userRole === 'ADMIN' || userRole === 'SUPER_ADMIN') {
+            if (userRole === ADMIN_ROLE) {
                 response = await service.getAllRecharges();
                 console.log('Fetched all recharges in useRecharges hook:', response);
-            } else if (userRole === 'USER' || userRole === 'CLIENT') {
+            } else if (userRole === ADMIN_USER_ROLE) {
                 if (!enterpriseId) {
                     throw new Error('Enterprise ID not found');
                 }

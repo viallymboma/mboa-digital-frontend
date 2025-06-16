@@ -1,6 +1,7 @@
 import {
   ClientResponseType,
   CreateClientRequestType,
+  CreateClientUserRequest,
   UpdateClientRequestType,
 } from '@/types/client';
 
@@ -30,6 +31,13 @@ export class ClientService {
 
     async createClient(data: CreateClientRequestType): Promise<ClientResponseType> {
         return this.apiService.post<ClientResponseType, CreateClientRequestType>('/api/v1/auth/register', data);
+    }
+
+    async createClientUser(enterpriseId: string, data: CreateClientUserRequest): Promise<ClientResponseType> {
+        return this.apiService.post<ClientResponseType, CreateClientUserRequest>(
+            `/api/v1/enterprise/adduser-enterprise/${enterpriseId}`,
+            data
+        );
     }
 
     async updateClient(id: string, data: UpdateClientRequestType): Promise<ClientResponseType> {

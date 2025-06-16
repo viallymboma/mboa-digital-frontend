@@ -27,6 +27,19 @@ export type CreateClientRequestType = {
     user: string;
 };
 
+// Add this interface at the top or in your types file
+interface CreateClientUserRequest {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    country: string;
+    city: string;
+    address: string;
+    role?: 'SUPER_ADMIN' | 'ADMIN_USER' | 'USER' ;
+}
+
 export type UpdateClientRequestType = {
     socialRaison: string;
     email: string;
