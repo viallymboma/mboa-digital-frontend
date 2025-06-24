@@ -1059,13 +1059,13 @@ export const ProfilMoreAccountSvgIcon: React.FC <SvgIconProp> = ({ color }) => {
 
 
 
-export const SvgIconsLogo = () => {
+export const SvgIconsLogo = ({ height, width }: { height?: string, width?: string }) => {
     const { theme } = useTheme(); 
     return (
         <div style={{
             color: theme === "dark" ? "white" : "#7B18CC"
         }}>
-            <svg width="198" height="57" viewBox="0 0 198 57" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <svg width={ width ? width : "198"} height={ height ? height : "57"} viewBox="0 0 198 57" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                 <rect x="0.502441" y="0.10199" width="196.842" height="55" transform="rotate(0.523452 0.502441 0.10199)"  fill="url(#pattern0_572_617)"/>
                 <defs>
                 <pattern id="pattern0_572_617" patternContentUnits="objectBoundingBox" width="1" height="1">
