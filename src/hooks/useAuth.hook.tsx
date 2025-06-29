@@ -123,8 +123,8 @@ export function useLogin() {
                 localStorage.setItem('user', JSON.stringify({
                     id: data.id,
                     email: data.email,
-                    firstname: data.firstname,
-                    lastname: data.lastname,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
                     role: data.role, 
                     enterprise: data.userEnterprise
                 }));

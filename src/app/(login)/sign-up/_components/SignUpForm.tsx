@@ -39,7 +39,7 @@ const schema = z.object({
     country: z.string().min(1, { message: 'Country is required' }),
     city: z.string().min(1, { message: 'City is required' }),
     address: z.string().min(1, { message: 'Address is required' }),
-    smsESenderId: z.string().min(1, { message: 'SMS sender ID is required' }),
+    smsESenderId: z.string().min(1, { message: 'SMS sender ID is required' }).max(11, { message: 'SMS sender ID must not be more than 11 characters' }),
     password: z.string()
         .min(8, { message: 'Password must be at least 8 characters' })
         .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
@@ -539,19 +539,7 @@ const SignUpForm = () => {
                                 />
                             )}
                         />
-                        {/* <Controller
-                            name="enterpriseCountryId"
-                            control={control}
-                            render={({ field }) => (
-                                <FormInput 
-                                    {...field}
-                                    label="Enterprise Country"
-                                    placeholder="Select enterprise country"
-                                    error={errors.enterpriseCountryId?.message}
-                                    className="border-primaryAppearance"
-                                />
-                            )}
-                        /> */}
+
                         <Controller
                             name="villeEntreprise"
                             control={control}
@@ -569,19 +557,7 @@ const SignUpForm = () => {
                                 />
                             )}
                         />
-                        {/* <Controller
-                            name="villeEntreprise"
-                            control={control}
-                            render={({ field }) => (
-                                <FormInput 
-                                    {...field}
-                                    label="Enterprise City"
-                                    placeholder="Enter enterprise city"
-                                    error={errors.villeEntreprise?.message}
-                                    className="border-primaryAppearance"
-                                />
-                            )}
-                        /> */}
+
                         <Controller
                             name="adresseEnterprise"
                             control={control}
@@ -635,14 +611,6 @@ const SignUpForm = () => {
                         )}
                     />
                 </FormSection>
-
-                {/* <FormButton 
-                    type="submit" 
-                    className="w-full bg-primaryAppearance text-white py-3 rounded-lg"
-                    disabled={isLoading}
-                >
-                    {isLoading ? <LoadingUI /> : 'Create Client'}
-                </FormButton> */}
 
                 <div className='flex flex-col gap-4'>
                     <FormButton className='bg-primaryAppearance h-[56px]' type="submit">{ isLoading ? (

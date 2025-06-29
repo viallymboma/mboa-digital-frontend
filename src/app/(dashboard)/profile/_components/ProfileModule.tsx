@@ -24,6 +24,7 @@ import {
   Card,
   CardContent,
 } from '@/components/ui/card';
+import { useUser } from '@/hooks/useAuth.hook';
 
 interface StatItemProps {
   value: string;
@@ -54,6 +55,9 @@ function ProfileItem({ icon: Icon, text }: ProfileItemProps) {
 }
 
 const ProfileModule = () => {
+  const { userNow, isLoading, error } = useUser();
+  // const { getLocalStorage } = useGetLocalStorage();
+  console.log('ProfileModule user:', userNow, isLoading, error);
   return (
     <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       {/* Stats Grid */}

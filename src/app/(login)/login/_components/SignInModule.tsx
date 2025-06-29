@@ -25,7 +25,8 @@ const SignInModule = () => {
                     <SignInForm />
                 </div>
             </section>
-            <section className='flex-1 bg-primaryAppearanceDim w-full h-screen'>
+            <section className='flex-1 flex justify-center items-center bg-primaryAppearanceDim w-full h-screen'>
+                <SvgIconsLogo height='180' width='400' />
             </section>
         </div>
     )

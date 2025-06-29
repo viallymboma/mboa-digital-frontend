@@ -170,8 +170,8 @@ export type LoginResponse = {
     token: string;
     refreshToken: string;
     expirationTime: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     phoneNumber: string;
     country: string;

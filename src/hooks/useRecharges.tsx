@@ -68,7 +68,7 @@ export function useRecharges() {
     // );
     // Main recharges fetch
     const { data, error, isLoading, mutate } = useSWR<RechargeListContentType[]>(
-        `${ getLocalStorage("user")?.role === ADMIN_ROLE ? "/api/v1/recharge/all" : `/api/v1/recharge/${ getLocalStorage("user")?.enterprise?.id }/enterprise` }`,
+        `${ getLocalStorage("user")?.role === ADMIN_ROLE ? "/api/v1/recharge/all" : `/api/v1/recharge/${ getLocalStorage("user")?.enterprise?.id }/all` }`,
         async () => {
             const service = RechargeService.getInstance();
             const user = getLocalStorage("user");
