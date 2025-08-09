@@ -18,7 +18,7 @@ const UsersPageHeader = () => {
         //     </>,
         // },
         {
-            label: 'Creer nouveau client',
+            label: 'Creer nouvel utilisateur',
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[625px]", 
             buttonBg: "bg-black", 

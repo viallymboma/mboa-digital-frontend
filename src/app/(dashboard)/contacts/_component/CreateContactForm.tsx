@@ -105,8 +105,8 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            label=""
-                            placeholder={t('contact.contactForm.fullNamePlaceHolder')}
+                            label={t('contact.contactForm.firstName')}
+                            placeholder={t('contact.contactForm.firstNamePlaceHolder')}
                             error={errors.firstName?.message}
                         />
                     )}
@@ -119,8 +119,8 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            label=""
-                            placeholder={t('contact.contactForm.fullNamePlaceHolder')}
+                            label={t('contact.contactForm.lastName')}
+                            placeholder={t('contact.contactForm.lastNamePlaceHolder')}
                             error={errors.lastName?.message}
                         />
                     )}
@@ -134,7 +134,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             className='border-primaryAppearance' 
                             type="number"
-                            label=""
+                            label={t('contact.contactForm.phoneNumber')}
                             placeholder={t('contact.contactForm.phoneNumberPlaceHolder')}
                             error={errors.phoneNumber?.message}
                         />

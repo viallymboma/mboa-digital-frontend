@@ -1,0 +1,22 @@
+{
+    "firstName": "Napoleon",
+    "lastName": "Bonapart",
+    "socialRaison": "ConcquerCorp",
+    "activityDomain": "Armor",
+    "contribuableNumber": "537380942849248",
+    "email": "napoleon@gmail.com",
+    "emailEnterprise": "concquer.corp@gmail.com",
+    "phoneNumber": "655023453",
+    "telephoneEntreprise": "2235432318",
+    "country": "bdb7ddee-5ccd-4332-9920-04a0a853c6e1",
+    "city": "yaoundé",
+    "address": "Elig Efa",
+    "smsESenderId": "NapNapCorp",
+    "password": "Tatylove@123",
+    "villeEntreprise": "yaoundé",
+    "numeroCommerce": "537380942849248",
+    "adresseEnterprise": "Elig Efa",
+    "enterpriseCountryId": "bdb7ddee-5ccd-4332-9920-04a0a853c6e1",
+    "urlImage": "",
+    "urlSiteweb": ""
+}

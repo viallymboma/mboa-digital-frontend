@@ -1,8 +1,12 @@
+'use client';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { notify } from '@/components/utilities/helper';
+import { CompanyService } from '@/services/CompanyService';
 import { ContactService } from '@/services/contact.serivce';
+// import { CompanyService } from '@/services/company.service';
+// import { ContactService } from '@/services/contact.service';
 import { ApiService } from '@/services/data.service';
 import { useContactStore } from '@/stores/contacts.store';
 import {
@@ -11,194 +15,387 @@ import {
   UpdateContactRequestType,
 } from '@/types/contact';
 
-// import { useUser } from './useAuth.hook';
 import useGetLocalStorage from './useGetLocalStorage';
 
 async function createContactFetcher(url: string, { arg }: { arg: CreateContactRequestType }) {
-    const apiService = ApiService.getInstance();
-    return apiService.post<EnterpriseContactResponseType, CreateContactRequestType>(url, arg);
+  const apiService = ApiService.getInstance();
+  return apiService.post<EnterpriseContactResponseType, CreateContactRequestType>(url, arg);
 }
 
 async function updateContactFetcher(url: string, { arg }: { arg: UpdateContactRequestType }) {
-    const apiService = ApiService.getInstance();
-    return apiService.put<EnterpriseContactResponseType, UpdateContactRequestType>(`${url}/${arg.id}`, arg);
+  const apiService = ApiService.getInstance();
+  return apiService.put<EnterpriseContactResponseType, UpdateContactRequestType>(`${url}/${arg.id}`, arg);
 }
 
 async function deleteContactFetcher(url: string, { arg }: { arg: string }) {
-    const apiService = ApiService.getInstance();
-    return apiService.delete(`${url}/${arg}`);
+  const apiService = ApiService.getInstance();
+  return apiService.delete(`${url}/${arg}`);
 }
 
-export function useContacts() {
+async function getCompanyContactsFetcher(_: string, { arg }: { arg: { enterpriseId: string } }) {
+  const companyService = CompanyService.getInstance();
+  return companyService.getCompanyContacts(arg.enterpriseId);
+}
 
-    const { getLocalStorage } = useGetLocalStorage();
-    const { setContacts, addContact, updateContact, removeContact } = useContactStore();
+export function useContacts(enterpriseId?: string) {
+  const { getLocalStorage } = useGetLocalStorage();
+  const { setContacts, addContact, updateContact, removeContact } = useContactStore();
+  const user = getLocalStorage('user');
+  const isSuperAdmin = user?.role === 'SUPER_ADMIN';
 
-    // GET CONTACTS MUTATION
-    const { data, error, isLoading, mutate } = useSWR<EnterpriseContactResponseType[]>(
-        'contacts',
-        async () => {
-            const service = ContactService.getInstance();
-            const contacts = await service.getContactsByCompanyPaginated(getLocalStorage("user")?.enterprise?.id);
-            console.log('Fetched contacts:', contacts);
-            setContacts(contacts);
-            return contacts;
+  // Determine the endpoint based on user role and enterpriseId
+  const key = isSuperAdmin && enterpriseId ? `contacts/${enterpriseId}` : `contacts/${user?.enterprise?.id || ''}`;
+
+  // GET CONTACTS MUTATION
+  const { data, error, isLoading, mutate } = useSWR<EnterpriseContactResponseType[]>(
+    enterpriseId || user?.enterprise?.id ? key : null,
+    () => getCompanyContactsFetcher(key, { arg: { enterpriseId: enterpriseId || user?.enterprise?.id || '' } }),
+    {
+      onSuccess: (contacts) => {
+        setContacts(contacts || []);
+      },
+    }
+  );
+
+  // CREATE CONTACT MUTATION
+  const { trigger, isMutating, error: createContactError } = useSWRMutation(
+    '/api/v1/contact',
+    createContactFetcher,
+    {
+      onSuccess: (data: EnterpriseContactResponseType) => {
+        console.log('Contact created successfully:', data);
+        if (data) {
+          addContact(data);
         }
-    );
+        const user = getLocalStorage('user');
+        if (user) {
+          localStorage.setItem('user', JSON.stringify({
+            ...user,
+            enterprise: data?.enterprise,
+          }));
+        }
+      },
+    }
+  );
 
-    // CREATE CONTACT MUTATION
-    const { trigger, isMutating, error: createContactError } = useSWRMutation(
-        '/api/v1/contact',
-        createContactFetcher,
-        {
-            onSuccess: (data: EnterpriseContactResponseType) => {
-                // Add the new contact to the Zustand store
-                console.log('Contact created successfully:', data);
-                if (data) {
-                    addContact(data);
-                }
+  // UPDATE CONTACT MUTATION
+  const { trigger: updateTrigger, isMutating: isUpdating, error: updateError } = useSWRMutation(
+    '/api/v1/contact',
+    updateContactFetcher,
+    {
+      onSuccess: (data: EnterpriseContactResponseType) => {
+        if (data) {
+          updateContact(data);
+          notify.success('Contact updated successfully');
+        }
+      },
+    }
+  );
+
+  // DELETE CONTACT MUTATION
+  const { trigger: deleteTrigger, isMutating: isDeleting, error: deleteError } = useSWRMutation(
+    '/api/v1/contact',
+    deleteContactFetcher,
+    {
+      onSuccess: (_, contactId) => {
+        removeContact(contactId);
+        notify.success('Contact deleted successfully');
+      },
+    }
+  );
+
+  const createContact = async (data: CreateContactRequestType) => {
+    try {
+      await trigger(data);
+    } catch (err) {
+      console.error('Create contact failed:', err);
+      notify.error('Failed to create contact');
+      throw err;
+    }
+  };
+
+  const editContact = async (data: UpdateContactRequestType) => {
+    try {
+      await updateTrigger(data);
+      await refetchEnterpriseContactsInStore();
+    } catch (err) {
+      console.error('Update contact failed:', err);
+      notify.error('Failed to update contact');
+      throw err;
+    }
+  };
+
+  const deleteContact = async (contactId: string) => {
+    try {
+      await deleteTrigger(contactId);
+      await refetchEnterpriseContactsInStore();
+    } catch (err) {
+      console.error('Delete contact failed:', err);
+      notify.error('Failed to delete contact');
+      throw err;
+    }
+  };
+
+  const importContacts = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const service = ContactService.getInstance();
+      const response = await service.importContacts(formData);
+      notify.success('Contacts imported successfully');
+      await refetchEnterpriseContactsInStore();
+      return response;
+    } catch (error) {
+      console.error('Import failed:', error);
+      notify.error('Failed to import contacts');
+      throw error;
+    }
+  };
+
+  const downloadTemplate = async () => {
+    try {
+      const service = ContactService.getInstance();
+      const blob = await service.downloadTemplate();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'contact_import_template.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Download failed:', error);
+      notify.error('Failed to download template');
+      throw error;
+    }
+  };
+
+  const refetchEnterpriseContactsInStore = async () => {
+    await mutate();
+  };
+
+  return {
+    contacts: data || [],
+    isLoading,
+    error,
+    createContactError,
+    isMutating,
+    createContact,
+    mutate,
+    refetchEnterpriseContactsInStore,
+    editContact,
+    deleteContact,
+    importContacts,
+    downloadTemplate,
+    isUpdating,
+    isDeleting,
+    updateError,
+    deleteError,
+  };
+}
+
+// import useSWR from 'swr';
+// import useSWRMutation from 'swr/mutation';
+
+// import { notify } from '@/components/utilities/helper';
+// import { ContactService } from '@/services/contact.serivce';
+// import { ApiService } from '@/services/data.service';
+// import { useContactStore } from '@/stores/contacts.store';
+// import {
+//   CreateContactRequestType,
+//   EnterpriseContactResponseType,
+//   UpdateContactRequestType,
+// } from '@/types/contact';
+
+// // import { useUser } from './useAuth.hook';
+// import useGetLocalStorage from './useGetLocalStorage';
+
+// async function createContactFetcher(url: string, { arg }: { arg: CreateContactRequestType }) {
+//     const apiService = ApiService.getInstance();
+//     return apiService.post<EnterpriseContactResponseType, CreateContactRequestType>(url, arg);
+// }
+
+// async function updateContactFetcher(url: string, { arg }: { arg: UpdateContactRequestType }) {
+//     const apiService = ApiService.getInstance();
+//     return apiService.put<EnterpriseContactResponseType, UpdateContactRequestType>(`${url}/${arg.id}`, arg);
+// }
+
+// async function deleteContactFetcher(url: string, { arg }: { arg: string }) {
+//     const apiService = ApiService.getInstance();
+//     return apiService.delete(`${url}/${arg}`);
+// }
+
+// export function useContacts() {
+
+//     const { getLocalStorage } = useGetLocalStorage();
+//     const { setContacts, addContact, updateContact, removeContact } = useContactStore();
+
+//     // GET CONTACTS MUTATION
+//     const { data, error, isLoading, mutate } = useSWR<EnterpriseContactResponseType[]>(
+//         'contacts',
+//         async () => {
+//             const service = ContactService.getInstance();
+//             const contacts = await service.getContactsByCompanyPaginated(getLocalStorage("user")?.enterprise?.id);
+//             console.log('Fetched contacts:', contacts);
+//             setContacts(contacts);
+//             return contacts;
+//         }
+//     );
+
+//     // CREATE CONTACT MUTATION
+//     const { trigger, isMutating, error: createContactError } = useSWRMutation(
+//         '/api/v1/contact',
+//         createContactFetcher,
+//         {
+//             onSuccess: (data: EnterpriseContactResponseType) => {
+//                 // Add the new contact to the Zustand store
+//                 console.log('Contact created successfully:', data);
+//                 if (data) {
+//                     addContact(data);
+//                 }
                 
-                // Update localStorage if needed
-                const user = getLocalStorage("user");
-                if (user) {
-                    localStorage.setItem('user', JSON.stringify({
-                        ...user,
-                        enterprise: data?.enterprise
-                    }));
-                }
-            },
-        }
-    );
+//                 // Update localStorage if needed
+//                 const user = getLocalStorage("user");
+//                 if (user) {
+//                     localStorage.setItem('user', JSON.stringify({
+//                         ...user,
+//                         enterprise: data?.enterprise
+//                     }));
+//                 }
+//             },
+//         }
+//     );
 
-    // Update mutation
-    const { trigger: updateTrigger, isMutating: isUpdating, error: updateError } = useSWRMutation(
-        `/api/v1/contact/${ getLocalStorage("user").id }`,
-        updateContactFetcher,
-        {
-            onSuccess: (data: EnterpriseContactResponseType) => {
-                if (data) {
-                    updateContact(data);
-                    notify.success('Contact updated successfully');
-                }
-            },
-        }
-    );
+//     // Update mutation
+//     const { trigger: updateTrigger, isMutating: isUpdating, error: updateError } = useSWRMutation(
+//         `/api/v1/contact/${ getLocalStorage("user").id }`,
+//         updateContactFetcher,
+//         {
+//             onSuccess: (data: EnterpriseContactResponseType) => {
+//                 if (data) {
+//                     updateContact(data);
+//                     notify.success('Contact updated successfully');
+//                 }
+//             },
+//         }
+//     );
 
-    // Delete mutation
-    const { trigger: deleteTrigger, isMutating: isDeleting, error: deleteError } = useSWRMutation(
-        `/api/v1/contact`,
-        deleteContactFetcher,
-        {
-            onSuccess: (_, contactId) => {
-                removeContact(contactId);
-                notify.success('Contact deleted successfully');
-            },
-        }
-    );
+//     // Delete mutation
+//     const { trigger: deleteTrigger, isMutating: isDeleting, error: deleteError } = useSWRMutation(
+//         `/api/v1/contact`,
+//         deleteContactFetcher,
+//         {
+//             onSuccess: (_, contactId) => {
+//                 removeContact(contactId);
+//                 notify.success('Contact deleted successfully');
+//             },
+//         }
+//     );
 
-    // Function to create a new contact and trigger the mutation
-    const createContact = async (data: CreateContactRequestType) => {
-        try {
-            await trigger(data);
-        } catch (err) {
-            console.error('Login failed:', err);
-            notify.error('Failed to create contact');
-            throw err;
-        }
-    };
+//     // Function to create a new contact and trigger the mutation
+//     const createContact = async (data: CreateContactRequestType) => {
+//         try {
+//             await trigger(data);
+//         } catch (err) {
+//             console.error('Login failed:', err);
+//             notify.error('Failed to create contact');
+//             throw err;
+//         }
+//     };
 
-    const editContact = async (data: UpdateContactRequestType) => {
-        try {
-            await updateTrigger(data); 
-            // refetchEnterpriseContactsInStore ()
-        } catch (err) {
-            console.error('Update contact failed:', err);
-            notify.error('Failed to update contact');
-            throw err;
-        }
-    };
+//     const editContact = async (data: UpdateContactRequestType) => {
+//         try {
+//             await updateTrigger(data); 
+//             // refetchEnterpriseContactsInStore ()
+//         } catch (err) {
+//             console.error('Update contact failed:', err);
+//             notify.error('Failed to update contact');
+//             throw err;
+//         }
+//     };
 
-    const deleteContact = async (contactId: string) => {
-        try {
-            await deleteTrigger(contactId); 
-            refetchEnterpriseContactsInStore ()
-        } catch (err) {
-            console.error('Delete contact failed:', err);
-            notify.error('Failed to delete contact');
-            throw err;
-        }
-    };
+//     const deleteContact = async (contactId: string) => {
+//         try {
+//             await deleteTrigger(contactId); 
+//             refetchEnterpriseContactsInStore ()
+//         } catch (err) {
+//             console.error('Delete contact failed:', err);
+//             notify.error('Failed to delete contact');
+//             throw err;
+//         }
+//     };
 
-    const importContacts = async (file: File) => {
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
-            // formData.append('enterpriseId', getLocalStorage("user")?.enterprise?.id);
+//     const importContacts = async (file: File) => {
+//         try {
+//             const formData = new FormData();
+//             formData.append('file', file);
+//             // formData.append('enterpriseId', getLocalStorage("user")?.enterprise?.id);
 
-            const service = ContactService.getInstance();
-            const response = await service.importContacts(formData);
+//             const service = ContactService.getInstance();
+//             const response = await service.importContacts(formData);
 
-            console.log('Import response:', response);
-            notify.success(response); 
-            // Optionally, you can refetch the contacts after import
-            await refetchEnterpriseContactsInStore();
+//             console.log('Import response:', response);
+//             notify.success(response); 
+//             // Optionally, you can refetch the contacts after import
+//             await refetchEnterpriseContactsInStore();
             
-            // if (response.importedCount > 0) {
-            //     notify.success(`Successfully imported ${response.importedCount} contacts`);
-            //     await refetchEnterpriseContactsInStore();
-            // }
+//             // if (response.importedCount > 0) {
+//             //     notify.success(`Successfully imported ${response.importedCount} contacts`);
+//             //     await refetchEnterpriseContactsInStore();
+//             // }
 
-            // if (response.failedCount > 0) {
-            //     notify.warning(`Failed to import ${response.failedCount} contacts`);
-            // }
+//             // if (response.failedCount > 0) {
+//             //     notify.warning(`Failed to import ${response.failedCount} contacts`);
+//             // }
 
-            return response;
-        } catch (error) {
-            console.error('Import failed:', error);
-            notify.error('Failed to import contacts');
-            throw error;
-        }
-    };
+//             return response;
+//         } catch (error) {
+//             console.error('Import failed:', error);
+//             notify.error('Failed to import contacts');
+//             throw error;
+//         }
+//     };
 
-    const downloadTemplate = async () => {
-        try {
-            const service = ContactService.getInstance();
-            const blob = await service.downloadTemplate();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'contact_import_template.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-        } catch (error) {
-            console.error('Download failed:', error);
-            notify.error('Failed to download template');
-            throw error;
-        }
-    };
+//     const downloadTemplate = async () => {
+//         try {
+//             const service = ContactService.getInstance();
+//             const blob = await service.downloadTemplate();
+//             const url = window.URL.createObjectURL(blob);
+//             const a = document.createElement('a');
+//             a.href = url;
+//             a.download = 'contact_import_template.xlsx';
+//             document.body.appendChild(a);
+//             a.click();
+//             window.URL.revokeObjectURL(url);
+//             document.body.removeChild(a);
+//         } catch (error) {
+//             console.error('Download failed:', error);
+//             notify.error('Failed to download template');
+//             throw error;
+//         }
+//     };
 
-    const refetchEnterpriseContactsInStore = async () => {
-        await mutate(); // Revalidates the SWR cache
-    };
+//     const refetchEnterpriseContactsInStore = async () => {
+//         await mutate(); // Revalidates the SWR cache
+//     };
 
-    return {
-        contacts: data,
-        isLoading,
-        error, 
-        createContactError, 
-        isMutating, 
-        createContact,
-        mutate, 
-        refetchEnterpriseContactsInStore, 
-        editContact,
-        deleteContact,
-        importContacts, 
-        downloadTemplate, 
-        isUpdating,
-        isDeleting,
-        updateError,
-        deleteError,
-    };
-}
+//     return {
+//         contacts: data,
+//         isLoading,
+//         error, 
+//         createContactError, 
+//         isMutating, 
+//         createContact,
+//         mutate, 
+//         refetchEnterpriseContactsInStore, 
+//         editContact,
+//         deleteContact,
+//         importContacts, 
+//         downloadTemplate, 
+//         isUpdating,
+//         isDeleting,
+//         updateError,
+//         deleteError,
+//     };
+// }

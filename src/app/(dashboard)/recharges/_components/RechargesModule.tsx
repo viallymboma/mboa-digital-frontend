@@ -63,7 +63,6 @@ const RechargesModule = () => {
     return (
         <>
             <RechargesTableModule />
-            
         </>
     );
 }

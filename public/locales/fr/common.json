@@ -1,122 +1,170 @@
 {
     "message": {
-        "characterCount": "Total characters: {{count}}",
-        "specialCharacters": "Special characters: {{count}} (counts as {{weight}})"
+        "characterCount": "Nombre de caractères: {{count}}",
+        "specialCharacters": "Nombre de caractères speciaux: {{count}} (counts as {{weight}})"
     }, 
     "loading": {
         "logout": {
-            "ongoing": "Déconnexion en cours...",
-            "success": "Déconnexion réussie",
-            "error": "Échec de la déconnexion"
-        },
+            "ongoing": "Logging out...",
+            "success": "Logout successful",
+            "error": "Logout failed"
+        }, 
         "login": {
-            "ongoing": "Connexion en cours...",
-            "success": "Connexion réussie",
-            "error": "Échec de la connexion"
+            "ongoing": "Logging in...",
+            "success": "Login successful",
+            "error": "Login failed"
         }, 
         "signup": {
-            "ongoing": "Enregistrement en cour...",
-            "success": "Enregistrement réussie",
-            "error": "Enregistrement échoué"
+            "ongoing": "Signing up...",
+            "success": "Sign up successful",
+            "error": "Sign up failed"
         }
     },
     "register": {
-        "title": "Créer un compte",
-        "firstName": "Prénom",
-        "firstNamePlaceHolder": "Entrez votre prénom",
-        "lastName": "Nom de famille",
-        "lastNamePlaceHolder": "Entrez votre nom de famille", 
+        "title": "Create an account",
+        "firstName": "First name",
+        "firstNamePlaceHolder": "Enter your first name",
+        "lastName": "Last name",
+        "lastNamePlaceHolder": "Enter your last name",
         "email": "Email",
-        "emailPlaceHolder": "Entrez votre addresse email", 
-        "password": "Mot de passe",
-        "passwordPlaceHolder": "Entrez un mot de passe",
-        "confirmPassword": "Confirmer le mot de passe",
-        "confirmPasswordPlaceHolder": "Confirmez votre mot passe",
-        "submit": "S'inscrire",
-        "loginPrompt": "Vous avez déjà un compte?",
-        "signupPrompt": "Vous n'avez pas encore de compte?", 
-        "login": "Connexion", 
-        "signup": "S'inscrire", 
-        "whoAreYou": "Qu'est-ce que tu es?",
-        "searchLang": "Rechercher", 
-        "remainingSMS": "Restants", 
+        "emailPlaceHolder": "Enter your email address",
+        "password": "Password",
+        "passwordPlaceHolder": "Enter a password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceHolder": "Confirm your password",
+        "submit": "Register",
+        "loginPrompt": "Already have an account?", 
+        "signupPrompt": "You don't have an account yet?", 
+        "login": "Login", 
+        "signup": "Sign up", 
+        "whoAreYou": "What are you?", 
+        "searchLang": "Search", 
+        "remainingSMS": "Remaining", 
         "passwordValidation": {
-            "minLength": "Au moins 8 caractères",
-            "hasUppercase": "Une lettre majuscule",
-            "hasLowercase": "Une lettre minuscule",
-            "hasNumber": "Un chiffre",
-            "hasSpecial": "Un caractère spécial"
+            "minLength": "At least 8 characters",
+            "hasUppercase": "One uppercase letter",
+            "hasLowercase": "One lowercase letter",
+            "hasNumber": "One number",
+            "hasSpecial": "One special character"
         }, 
-        "passwordMismatch": "Les mots de passe ne correspondent pas", 
-        "passwordMatch": "Les mots de passe correspondent"
+        "passwordMismatch": "Passwords do not match", 
+        "passwordMatch": "Passwords match"
     }, 
     "contact": {
         "contactForm": {
-            "fullName": "Nom", 
-            "phoneNumber": "Numéro de Téléphone", 
-            "city": "Ville", 
-            "fullNamePlaceHolder": "Entrez votre Nom", 
-            "phoneNumberPlaceHolder": "Entrez votre Numéro de Téléphone", 
-            "cityPlaceHolder": "Entrez votre Ville",
-            "buttonLabel": "Ajouter le contact"
+            "fullName": "Full Name", 
+            "phoneNumber": "Phone Number", 
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "firstNamePlaceHolder": "Enter your First Name",
+            "lastNamePlaceHolder": "Enter your Last Name",
+            "city": "City", 
+            "fullNamePlaceHolder": "Enter your Full Name", 
+            "phoneNumberPlaceHolder": "Enter your Phone Number", 
+            "cityPlaceHolder": "Enter your City",
+            "buttonLabel": "Add Contact"
         }, 
         "importContactForm": {
-            "modalTitle": "Gestionnaire d’importation", 
-            "downloadItem": "Telecharger le fichier de contact a remplir", 
-            "downloaItemDescription": "Cliquez ici pour Télécharger et remplir le fichier suivant le format adéquat", 
-            "uploadItem": "Deposer votre fichier ici", 
-            "uploadItemDescription": "Une fois le fichier remplit, cliquez ici pour uploader votre fichier"
+            "modalTitle": "Import Manager", 
+            "downloadItem": "Download the contact file to fill", 
+            "downloaItemDescription": "Click here to download and fill the file according to the correct format", 
+            "uploadItem": "Upload your file here", 
+            "uploadItemDescription": "Once the file is filled, click here to upload your file"
         }, 
         "emptyUI": {
-            "mainTitle": "Pas d’informations disponible pour le moment", 
-            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
-            "newContact": "Nouveau Contact", 
-            "importContact": "Gestionnaire d’importation"
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "newContact": "New Contact", 
+            "importContact": "Import Manager"
         }, 
         "addNewContactForm": {
-            "title": "Ajouter un contact"
+            "title": "Add a Contact"
         }, 
-        "importContactsBtn": "Importer des Contacts", 
-        "newMessageBtn": "Nouveau Message",
-        "sendMessageFormBtn": "Envoyer"
-    }, 
+        "importContactsBtn": "Import Contacts", 
+        "newMessageBtn": "New Message", 
+        "sendMessageFormBtn": "Send"
+    },
     "group": {
         "emptyUI": {
-            "mainTitle": "Pas de contacts disponible pour le moment", 
-            "secondTitle": "Essayer de créer des groupe pour les afficher ici.", 
-            "newGroup": "Nouveau groupe"
+            "mainTitle": "No contacts available at the moment", 
+            "secondTitle": "Try creating groups to display them here.", 
+            "newGroup": "New Group"
         }, 
         "addNewGroupForm": {
-            "title": "Ajouter un groupe"
+            "title": "Add a Group"
         },
-        "newGroupBtn": "Nouveau groupe",
-        "addNewGroupFormBtn": "Ajouter un contact",
-        "groupMessage": "Message de groupe"
-        
+        "newGroupBtn": "New Group",
+        "addNewGroupFormBtn": "Add Group",
+        "groupMessage": "Group Message"
     }, 
     "histories": {
         "emptyUI" : {
-            "mainTitle": "Pas d’Historique disponible pour le moment", 
-            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici"
+            "mainTitle": "No history available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here"
         }
     }, 
     "recharges": {
         "emptyUI" : {
-            "mainTitle": "Pas d’informations disponible pour le moment", 
-            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
-            "actionButtonLabel": "Faire une Recharge"
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "actionButtonLabel": "Make a Recharge"
         }
     }, 
     "payments": {
-        "pageTitle": "Paiements", 
         "emptyUI" : {
-            "mainTitle": "Pas d’informations disponible pour le moment", 
-            "secondTitle": "Essayer d’ajouter ou d’importer des contacts pour les afficher ici", 
-            "actionButtonLabel": "Faire un payement"
+            "mainTitle": "No information available at the moment", 
+            "secondTitle": "Try adding or importing contacts to display them here", 
+            "actionButtonLabel": "Make a Payment"
         }
     }, 
     "profile" : {
-        "pageTitle": "Profile", 
-        "editProfileButton": "Editer le profile"
+        "pageTitle": "Profil", 
+        "editProfileButton": "Edit profile"
+    }, 
+    "company": {
+        "pageTitle": "Entreprises",
+        "emptyUI": {
+            "mainTitle": "Aucune entreprise disponible pour le moment",
+            "secondTitle": "Essayez de créer une entreprise pour l’afficher ici",
+            "newCompany": "Nouvelle entreprise"
+        },
+        "addNewCompanyForm": {
+            "title": "Ajouter une entreprise",
+            "socialRaison": "Raison sociale",
+            "socialRaisonPlaceHolder": "Entrez la raison sociale",
+            "numeroCommerce": "Numéro de commerce",
+            "numeroCommercePlaceHolder": "Entrez le numéro de commerce",
+            "urlImage": "URL de l’image",
+            "urlImagePlaceHolder": "Entrez l’URL de l’image",
+            "urlSiteweb": "URL du site web",
+            "urlSitewebPlaceHolder": "Entrez l’URL du site web",
+            "telephoneEnterprise": "Téléphone de l’entreprise",
+            "telephoneEnterprisePlaceHolder": "Entrez le téléphone de l’entreprise",
+            "emailEnterprise": "Email de l’entreprise",
+            "emailEnterprisePlaceHolder": "Entrez l’email de l’entreprise",
+            "villeEnterprise": "Ville de l’entreprise",
+            "villeEnterprisePlaceHolder": "Entrez la ville de l’entreprise",
+            "adresseEnterprise": "Adresse de l’entreprise",
+            "adresseEnterprisePlaceHolder": "Entrez l’adresse de l’entreprise",
+            "smsESenderId": "ID d’expéditeur SMS",
+            "smsESenderIdPlaceHolder": "Entrez l’ID d’expéditeur SMS",
+            "smsCredit": "Crédit SMS",
+            "smsCreditPlaceHolder": "Entrez le crédit SMS",
+            "activityDomain": "Domaine d’activité",
+            "activityDomainPlaceHolder": "Entrez le domaine d’activité",
+            "contribuableNumber": "Numéro de contribuable",
+            "contribuableNumberPlaceHolder": "Entrez le numéro de contribuable",
+            "pays": "Pays",
+            "paysPlaceHolder": "Entrez l’ID du pays",
+            "buttonLabel": "Ajouter l’entreprise"
+        },
+        "newCompanyBtn": "Nouvelle entreprise",
+        "users": {
+            "pageTitle": "Utilisateurs de l’entreprise",
+            "emptyUI": {
+                "mainTitle": "Aucun utilisateur disponible pour le moment",
+                "secondTitle": "Essayez d’ajouter des utilisateurs à cette entreprise"
+            }
+        }
     }
 }

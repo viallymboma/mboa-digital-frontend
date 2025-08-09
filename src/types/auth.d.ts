@@ -145,6 +145,8 @@ export type UserType = {
     country: string;
     city: string;
     address: string;
+    firstName?: string;
+    lastName?: string;
     role: Role;
     userEnterprise: EnterpriseType;
     recharges: RechargeType [];
