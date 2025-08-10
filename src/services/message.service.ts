@@ -32,7 +32,7 @@ export class MessageService {
 
     async getMessages(enterpriseId: string, page: number, size: number) {
         return this.apiService.get<GetMessageResponseType>(
-            `/api/v1/message/${enterpriseId}/enterprise`,
+            `/api/v1/message/${enterpriseId}/all`,
             { page, size }
         );
     }

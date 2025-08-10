@@ -1,32 +1,35 @@
 import React from 'react';
 
-import GenericTable from '@/app/_components/tables/GenericTable';
+import { Loader2 } from 'lucide-react';
 
-import { dummyHistoriesData } from './dummyData';
-// import { contactColumns } from './ContactTableElements';
-// import { dummyDataReal } from './dummyData';
+import GenericTable from '@/app/_components/tables/GenericTable';
+import { useHistories } from '@/hooks/useHistories';
+
 import { historiesColumns } from './HistoriesTableElements';
 
-// import { dummyHistoriesData } from './dummyData';
-
 const HistoriesTable = () => {
+  const { histories, isLoading, error } = useHistories();
 
-  const [data, setData] = React.useState(dummyHistoriesData);
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
-  const handleReorder = (reorderedData: typeof dummyHistoriesData) => {
-    setData(reorderedData); // Update the data state
-  };
+  if (error) {
+    return <div className="text-center text-red-600">Erreur lors du chargement de l’historique</div>;
+  }
 
   return (
     <GenericTable
-      data={data}
+      data={histories}
       columns={historiesColumns}
       title="Listes des Historiques"
       description="Liste de toutes les catégories disponibles"
       defaultPageSize={7}
-      // onEdit={(row) => console.log('Edit:', row)}
-      // onDelete={(row) => console.log('Delete:', row)}
-      onReorder={handleReorder} // Pass the reorder handler
+      onReorder={(reorderedData) => reorderedData}
     />
   );
 };

@@ -22,7 +22,6 @@ import {
   HomeSvgIcon,
   MessagingSvgIcon,
   NotificationSvgIcon,
-  PaymentsSvgIcon,
   RechargesSvgIcon,
   SchoolsSvgIcon,
   SvgIconsLogo,
@@ -133,11 +132,6 @@ const data = {
       icon: RechargesSvgIcon,
     },
     {
-      name: "Payments",
-      url: "/payments",
-      icon: PaymentsSvgIcon,
-    },
-    {
       name: "Utilisateurs",
       url: "/clients",
       icon: SchoolsSvgIcon,
@@ -155,10 +149,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
   const { userNow } = useUser();
   const isSuperAdmin = userNow?.role === 'SUPER_ADMIN';
+  const isAdmin = userNow?.role === 'ADMIN_USER';
 
   // Filter projects to hide Companies for non-SUPER_ADMIN users
   const filteredProjects = data.projects.filter((project) =>
-    project.url === '/companies' ? isSuperAdmin : true
+    (project.url === '/companies' ? isSuperAdmin : true) && (project?.url === '/clients' ? isSuperAdmin || isAdmin : true )
   );
 
   return (

@@ -54,6 +54,8 @@ export function usePricingPlan() {
         }
     );
 
+    // console.log(allPlans, "Fetched all plans data");
+
     // GET ACTIVE PLANS MUTATION
     const { data: activePlans, error: activeError, isLoading: isLoadingActive, mutate: mutateActivePlans } = useSWR(
         'active-pricing-plans',
@@ -110,16 +112,6 @@ export function usePricingPlan() {
         };
     };
 
-    // const getApplicablePlan = (qteMessage: number): PricingPlanType | null => {
-    //     if (!activePlans?.length) return null;
-
-    //     console.log('Active Plans:', activePlans);
-
-    //     return activePlans.find(
-    //         (plan: PricingPlanType) => qteMessage >= plan.minSMS && qteMessage <= plan.maxSMS
-    //     ) || null;
-    // };
-
     return {
         plans: allPlans,
         activePlans: activePlans,
@@ -130,88 +122,3 @@ export function usePricingPlan() {
         getApplicablePlan
     };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useCallback } from 'react';
-// import { PricingPlanService } from '@/services/pricingPlan.service';
-// import { usePricingPlanStore } from '@/stores/pricingPlan.store';
-// import { PricingPlanType } from '@/types/pricing';
-
-// export function usePricingPlan() {
-//     const {
-//         plans,
-//         activePlans,
-//         isLoading,
-//         error,
-//         setPlans,
-//         setActivePlans,
-//         setIsLoading,
-//         setError
-//     } = usePricingPlanStore();
-
-//     const fetchAllPlans = useCallback(async () => {
-//         try {
-//             setIsLoading(true);
-//             const service = PricingPlanService.getInstance();
-//             const response = await service.getAllPlans();
-//             setPlans(response);
-//             return response;
-//         } catch (error: any) {
-//             const message = error?.response?.data?.message || 'Failed to fetch pricing plans';
-//             setError(message);
-//             throw error;
-//         } finally {
-//             setIsLoading(false);
-//         }
-//     }, [setPlans, setIsLoading, setError]);
-
-//     const fetchActivePlans = useCallback(async () => {
-//         try {
-//             setIsLoading(true);
-//             const service = PricingPlanService.getInstance();
-//             const response = await service.getActivePlans();
-//             setActivePlans(response);
-//             return response;
-//         } catch (error: unknown) {
-//             const message = error?.response?.data?.message || 'Failed to fetch active pricing plans';
-//             setError(message);
-//             throw error;
-//         } finally {
-//             setIsLoading(false);
-//         }
-//     }, [setActivePlans, setIsLoading, setError]);
-
-//     const calculatePrice = useCallback((qteMessage: number): number => {
-//         if (!activePlans.length) return 0;
-
-//         const applicablePlan = activePlans.find(
-//             (plan: PricingPlanType) => qteMessage >= plan.minSMS && qteMessage <= plan.maxSMS
-//         );
-
-//         return applicablePlan ? qteMessage * applicablePlan.smsUnitPrice : 0;
-//     }, [activePlans]);
-
-//     return {
-//         plans,
-//         activePlans,
-//         isLoading,
-//         error,
-//         fetchAllPlans,
-//         fetchActivePlans,
-//         calculatePrice
-//     };
-// }

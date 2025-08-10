@@ -24,7 +24,7 @@ export function useMessages(page = 0, size = 10) {
     const enterpriseId = user?.enterprise?.id;
 
     const { data, error, isLoading, mutate } = useSWR(
-        enterpriseId ? `/api/v1/message/${enterpriseId}/enterprise?page=${page}&size=${size}` : null,
+        enterpriseId ? `/api/v1/message/${enterpriseId}/all?page=${page}&size=${size}` : null,
         async () => {
             try {
                 const response = await messageService.getMessages(enterpriseId!, page, size);
@@ -39,6 +39,8 @@ export function useMessages(page = 0, size = 10) {
             }
         }
     );
+
+    console.log(data, "Fetched messages data");
 
     const sendMessage = useCallback(async (message: string, contacts: string[]) => {
         try {

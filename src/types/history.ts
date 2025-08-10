@@ -1,0 +1,142 @@
+export interface MessageHistoryType {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  version: number;
+  message: string;
+  enterprise: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    version: number;
+    socialRaison: string;
+    numeroCommerce: string;
+    urlImage: string;
+    urlSiteweb: string;
+    telephoneEnterprise: string;
+    emailEnterprise: string;
+    villeEnterprise: string;
+    adresseEnterprise: string;
+    smsESenderId: string;
+    smsCredit: number;
+    activityDomain: string;
+    contribuableNumber: string | null;
+    pays: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      version: number;
+      code: string;
+      nom: string;
+      continent: string;
+      imageUrl: string;
+      archived: boolean;
+    } | null;
+    user: Array<{
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      version: number;
+      firstName: string;
+      lastName: string;
+      email: string;
+      phoneNumber: string;
+      country: string;
+      city: string;
+      gender: 'MALE' | 'FEMALE' | 'OTHER';
+      role: 'USER' | 'SUPER_ADMIN' | string;
+      enterpriseId: string;
+      archived: boolean;
+    }> | null;
+    enterpriseContacts: Array<{
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      version: number;
+      firstname: string;
+      lastname: string;
+      email: string;
+      phoneNumber: string;
+      country: string;
+      city: string;
+      gender: 'MALE' | 'FEMALE' | 'OTHER';
+      archived: boolean;
+    }> | null;
+    groupes: Array<{
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      version: number;
+      name: string;
+      code: string;
+      enterprise: string;
+      enterpriseContacts: Array<{
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        version: number;
+        firstname: string;
+        lastname: string;
+        email: string;
+        phoneNumber: string;
+        country: string;
+        city: string;
+        gender: 'MALE' | 'FEMALE' | 'OTHER';
+        archived: boolean;
+      }> | null;
+      archived: boolean;
+    }> | null;
+    recharges: Array<{
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      version: number;
+      qteMessage: number;
+      messagePriceUnit: number;
+      status: 'DEMANDE' | 'APPROVED' | 'REJECTED' | string;
+      enterprise: string;
+      paymentMethod: 'CASH' | 'MOMO' | 'OM' | 'BANK';
+      debitPhoneNumber: string;
+      debitBankAccountNumber: string;
+      couponCode: string | null;
+      pricingPlan: {
+        id: string;
+        createdAt: string;
+        updatedAt: string;
+        version: number;
+        planNameFr: string;
+        planNameEn: string;
+        descriptionEn: string;
+        descriptionFr: string;
+        minSMS: number;
+        maxSMS: number;
+        nbDaysToExpired: number;
+        smsUnitPrice: number;
+        active: boolean;
+        planCode: string;
+        illustrationImgUrl: string;
+        archived: boolean;
+      } | null;
+      archived: boolean;
+    }> | null;
+    archived: boolean;
+  };
+  status: 'ACCEPTED' | 'SENT' | 'FAILED' | 'PENDING' | 'DELIVERED' | 'DRAFT' | string;
+  sender: string;
+  ticket: string | null;
+  smsCount: number;
+  msisdn: string;
+  code: string;
+  type: string;
+  archived: boolean;
+}
+
+export interface HistoriesType {
+  id: string;
+  content: string;
+  receivers: string[];
+  date: string;
+  smsUsedCount: number;
+  cost: number;
+  status: string;
+}

@@ -11,20 +11,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { HistoriesType } from '@/types/history';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 import { ColumnDef } from '@tanstack/react-table';
 
 import MessageDetailsCard from '../MessageDetailsCard';
-import { HistoriesType } from './dummyData';
 
-// Handle action button click
 export const handleAction = (contact: HistoriesType) => {
   console.log('Action clicked for:', contact);
 };
 
-// Define the columns
 export const historiesColumns: ColumnDef<HistoriesType>[] = [
-  // Add a select column for row selection
   {
     id: 'select',
     header: ({ table }) => (
@@ -56,9 +53,7 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
     header: 'Receivers',
     enableSorting: true,
     cell: ({ row }) => {
-      const receivers = row.getValue('receivers') as string[]; 
-      const smsUsedCount = row.getValue('smsUsedCount') as string[];
-      console.log(smsUsedCount, "okoiiiiiiiiiiiiiiiiiiiiii")
+      const receivers = row.getValue('receivers') as string[];
       return (
         <TooltipProvider>
           <Tooltip>
@@ -67,10 +62,10 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
                 {receivers.map((receiver, index) => (
                   <span key={index} className="text-sm">
                     {receiver}
+                    {index < receivers.length - 1 ? ', ' : ''}
                   </span>
                 ))}
               </div>
-
             </TooltipTrigger>
             <TooltipContent>
               <div className="flex flex-col">
@@ -82,7 +77,6 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
               </div>
             </TooltipContent>
           </Tooltip>
-
         </TooltipProvider>
       );
     },
@@ -101,6 +95,10 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
     accessorKey: 'cost',
     header: 'Cost',
     enableSorting: true,
+    cell: ({ row }) => {
+      const cost = row.getValue('cost') as number;
+      return <span>{cost.toLocaleString('fr-FR')} FCFA</span>;
+    },
   },
   {
     accessorKey: 'status',
@@ -109,8 +107,10 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string;
       let statusColor = '';
-
       switch (status) {
+        case 'Delivered':
+          statusColor = 'bg-blue-100 text-blue-800';
+          break;
         case 'Sent':
           statusColor = 'bg-green-100 text-green-800';
           break;
@@ -120,20 +120,14 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
         case 'Pending':
           statusColor = 'bg-yellow-100 text-yellow-800';
           break;
-        case 'Delivered':
-          statusColor = 'bg-blue-100 text-blue-800';
-          break;
         case 'Draft':
           statusColor = 'bg-gray-100 text-gray-800';
           break;
         default:
           statusColor = 'bg-gray-100 text-gray-800';
       }
-
       return (
-        <span
-          className={`px-2 py-1 text-sm font-medium rounded-full ${statusColor}`}
-        >
+        <span className={`px-2 py-1 text-sm font-medium rounded-full ${statusColor}`}>
           {status}
         </span>
       );
@@ -144,7 +138,6 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
     header: 'Actions',
     cell: ({ row }) => {
       const rowData = row.original;
-  
       return (
         <div className="flex gap-4 justify-between">
           <Dialog>
@@ -174,6 +167,5 @@ export const historiesColumns: ColumnDef<HistoriesType>[] = [
       );
     },
     enableSorting: false,
-  }
-  
+  },
 ];
