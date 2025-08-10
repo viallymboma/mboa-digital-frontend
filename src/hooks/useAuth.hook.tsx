@@ -36,28 +36,6 @@ export interface LoginRequest {
     password: string;
 }
 
-// export interface LoginResponse {
-//     statusCode: 200,
-//     error: null,
-//     message: string,
-//     id: string,
-//     createdAt: string,
-//     updatedAt: string,
-//     version: number,
-//     token: string,
-//     refreshToken: string,
-//     expirationTime: string,
-//     firstname: string,
-//     lastname: string,
-//     email: string,
-//     phoneNumber: string,
-//     country: string,
-//     city: string,
-//     gender: string,
-//     role: string,
-//     archived: boolean
-// }
-
 async function signupFetcher(url: string, { arg }: { arg: SignUpRequest }) {
     const apiService = ApiService.getInstance();
     return apiService.post<AuthResponse, SignUpRequest>(url, arg);
@@ -74,24 +52,6 @@ export function useSignup() {
                 localStorage.setItem('token', data.token);
                 router.push('/login');
             },
-            // onError: (error: unknown) => {
-            //     let message = 'Failed to fetch recharges';
-            //     if (
-            //         error &&
-            //         typeof error === 'object' &&
-            //         'response' in error &&
-            //         (error as { response?: unknown }).response &&
-            //         typeof (error as { response?: unknown }).response === 'object' &&
-            //         'data' in (error as { response: { data?: unknown } }).response &&
-            //         (error as { response: { data?: unknown } }).response.data &&
-            //         typeof (error as { response: { data?: unknown } }).response.data === 'object' &&
-            //         'message' in (error as { response: { data: { message?: string } } }).response.data
-            //     ) {
-            //         // @ts-expect-error: dynamic error shape
-            //         message = error.response.data.message || message;
-            //     }
-            //     notify.error(message);
-            // }
         }
     );
 

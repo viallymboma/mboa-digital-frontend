@@ -15,11 +15,7 @@ import CreateClientForm from './form/CreateClientForm';
 import ClientTableModule from './table/ClientTableModule';
 
 const UsersModule = () => {
-        const { clients, isLoading, error } = useClients();
-    // const { selectedContactsData } = useContactStore();
-    // console.log(selectedContactsData, "selectedContactsData in contact module");
-    console.log(clients, "clients+++++++++++__________");
-
+    const { clients, isLoading, error } = useClients();
     const buttons = [
         {
             label: 'contact.emptyUI.newContact',
