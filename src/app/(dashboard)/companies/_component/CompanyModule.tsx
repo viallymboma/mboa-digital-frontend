@@ -15,9 +15,6 @@ import { useCompanies } from '@/hooks/useCompanies';
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import CompanyTableModule from './CompanyTableModule';
 
-// import CompanyTableModule from './CompanyTableModule';
-// import CreateCompanyForm from './CreateCompanyForm';
-
 const CompanyModule = () => {
   const { companies, isLoading, error } = useCompanies();
 

@@ -11,11 +11,6 @@ import {
   TransformedCompanyType,
 } from './CompanyTableElements';
 
-// import {
-//   companyColumns,
-//   TransformedCompanyType,
-// } from './CompanyTableElements';
-
 export type CompanyTableProps = {
   companies?: EnterpriseType[];
 };

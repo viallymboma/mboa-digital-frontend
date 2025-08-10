@@ -15,6 +15,7 @@ export type ContactTableModuleProps = {
 };
 
 const ContactTableModule: React.FC <ContactTableModuleProps> = ({ contacts }) => {
+  
   return (
     <div className=' w-[100%]'>
 

@@ -4,9 +4,6 @@ import React from 'react';
 import CompanyModule from './_component/CompanyModule';
 import CompanyPageHeader from './_component/CompanyPageHeader';
 
-// import CompanyModule from './_component/CompanyModule';
-// import CompanyPageHeader from './_component/CompanyPageHeader';
-
 const CompanyPage = () => {
   return (
     <div className="flex flex-col">

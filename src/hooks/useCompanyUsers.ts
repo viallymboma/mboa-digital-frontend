@@ -1,6 +1,5 @@
 'use client';
 import { useCompanyStore } from '@/stores/useContactStore';
-// import { useCompanyStore } from '@/stores/companies.store';
 import { UserType } from '@/types/company';
 
 import useGetLocalStorage from './useGetLocalStorage';

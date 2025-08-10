@@ -7,13 +7,6 @@ import {
 
 import { ApiService } from './data.service';
 
-// import { ApiService } from './api.service';
-// import { 
-//     CreateClientRequestType, 
-//     UpdateClientRequestType, 
-//     ClientResponseType 
-// } from '@/types/clients';
-
 export class ClientService {
     private static instance: ClientService;
     private apiService: ApiService;

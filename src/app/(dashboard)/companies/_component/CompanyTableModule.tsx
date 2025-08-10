@@ -7,8 +7,6 @@ import { EnterpriseType } from '@/types/company';
 
 import CompanyTable from './CompanyTable';
 
-// import CompanyTable from './CompanyTable';
-
 export type CompanyTableModuleProps = {
   companies?: EnterpriseType[];
 };

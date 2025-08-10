@@ -4,7 +4,6 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-// import EmptyStateUI from '@/app/_components/_global/EmptyStateUI';
 import {
   ContactEmptyUISvgIcon,
   SvgLogoIcon,
@@ -14,8 +13,6 @@ import { useCompanyUsers } from '@/hooks/useCompanyUsers';
 import EmptyStateUI from '../../../_components/_global/EmptyStateUI';
 import CompanyUsersPageHeader from './_component/CompanyUsersPageHeader';
 import UserTableModule from './_component/UserTableModule';
-
-// import UserTableModule from './_component/UserTableModule';
 
 const CompanyUsersPage = () => {
   const { t } = useTranslation();

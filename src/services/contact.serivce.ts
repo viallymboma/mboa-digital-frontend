@@ -42,14 +42,6 @@ export class ContactService {
                     'Content-Type': undefined,
                 },
             }
-            // formData as unknown as Record<string, unknown>, 
-            // {
-            //     file: formData, 
-            //     headers: {
-            //         // Remove Content-Type header to let browser set it with boundary
-            //         'Content-Type': undefined,
-            //     },
-            // }
         );
     }
 

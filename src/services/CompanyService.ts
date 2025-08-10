@@ -69,8 +69,10 @@ export class CompanyService {
     }
   }
 
-  async getCompanyContacts(enterpriseId: string): Promise<EnterpriseContactResponseType[]> {
+
+  async getCompanyContacts(enterpriseId: string, role: string): Promise<EnterpriseContactResponseType[]> {
     try {
+      console.log('Fetching company contacts for enterpriseId:', enterpriseId, 'with role:', role);
       return await this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/all/${enterpriseId}`);
     } catch (error) {
       console.error('Failed to fetch company contacts:', error);
@@ -96,90 +98,3 @@ export class CompanyService {
     }
   }
 }
-
-// import {
-//   AddUserToEnterpriseRequestType,
-//   CreateCompanyRequestType,
-//   EnterpriseType,
-//   PaginatedCompaniesResponseType,
-// } from '@/types/company';
-// import {
-//   EnterpriseContactResponseType,
-//   UserType,
-// } from '@/types/contact';
-
-// // services/company.service.ts
-// import { ApiService } from './data.service';
-
-// export class CompanyService {
-//   private static instance: CompanyService;
-//   private apiService: ApiService;
-
-//   private constructor() {
-//     this.apiService = ApiService.getInstance();
-//   }
-
-//   public static getInstance(): CompanyService {
-//     if (!CompanyService.instance) {
-//       CompanyService.instance = new CompanyService();
-//     }
-//     return CompanyService.instance;
-//   }
-
-//   // Fetch all companies (for SUPER_ADMIN) or user's company (for ADMIN_USER/USER)
-//   async getCompanies(): Promise<EnterpriseType[]> {
-//     try {
-//       const response = await this.apiService.get<EnterpriseType[]>('/api/v1/enterprise/all');
-//       return response;
-//     } catch (error) {
-//       console.error('Failed to fetch companies:', error);
-//       throw new Error('Unable to retrieve companies');
-//     }
-//   }
-
-//   // Fetch paginated companies
-//   async getCompaniesPaginated(page: number = 0, size: number = 10): Promise<PaginatedCompaniesResponseType> {
-//     try {
-//       return await this.apiService.get<PaginatedCompaniesResponseType>('/api/v1/enterprise/all', {
-//         page,
-//         size,
-//       });
-//     } catch (error) {
-//       console.error('Failed to fetch paginated companies:', error);
-//       throw new Error('Unable to retrieve paginated companies');
-//     }
-//   }
-
-//   // Create a new company
-//   async createCompany(company: CreateCompanyRequestType): Promise<EnterpriseType> {
-//     try {
-//       return await this.apiService.post<EnterpriseType>('/api/v1/enterprise', company);
-//     } catch (error) {
-//       console.error('Failed to create company:', error);
-//       throw new Error('Failed to create company');
-//     }
-//   }
-
-//   // Add user to an enterprise
-//   async addUserToEnterprise(enterpriseId: string, user: AddUserToEnterpriseRequestType): Promise<UserType> {
-//     try {
-//       return await this.apiService.post<UserType>(
-//         `/api/v1/enterprise/adduser-enterprise/${enterpriseId}`,
-//         user
-//       );
-//     } catch (error) {
-//       console.error('Failed to add user to enterprise:', error);
-//       throw new Error('Failed to add user to enterprise');
-//     }
-//   }
-
-//     // Fetch contacts for a specific company
-//   async getCompanyContacts(enterpriseId: string): Promise<EnterpriseContactResponseType[]> {
-//     try {
-//       return await this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/all/${enterpriseId}`);
-//     } catch (error) {
-//       console.error('Failed to fetch company contacts:', error);
-//       throw new Error('Unable to retrieve company contacts');
-//     }
-//   }
-// }

@@ -50,10 +50,6 @@ const schema = z.object({
     numeroCommerce: z.string().min(1, { message: 'Commerce number is required' }),
     adresseEnterprise: z.string().min(1, { message: 'Enterprise address is required' }),
     enterpriseCountryId: z.string().min(1, { message: 'Enterprise country is required' }),
-    // villeEntreprise: z.string().optional(),
-    // numeroCommerce: z.string().optional(),
-    // adresseEnterprise: z.string().optional(),
-    // enterpriseCountryId: z.string().optional(),
     urlImage: z.string().optional(),
     urlSiteweb: z.string().optional(),
 });
@@ -62,33 +58,11 @@ type FormData = z.infer<typeof schema>;
 
 const SignUpForm = () => {
     const { t } = useTranslation();
-    // const { createClient, isLoading } = useClients();
     // Add state for cities
     const [selectedCountry, setSelectedCountry] = React.useState<string>('');
     const [availableCities, setAvailableCities] = React.useState<Array<{ value: string; label: string }>>([]);
-    // const [availableCitiesEnt, setAvailableCitiesEnt] = React.useState<Array<{ value: string; label: string }>>([]);
-
     const { signup, isLoading, error } = useSignup();
-
     const { countries } = useCountries (); 
-
-    // console.log('Countries:', countries);
-
-    const countriesData = countriesAndCities
-
-    console.log(countriesData, "Countries data and cities")
-
-    // // Transform the countries data to include flags
-    // const formattedCountries = React.useMemo(() => {
-    //     const result = countries.map(country => ({
-    //         // value: country.code.toLowerCase(),
-    //         value: country.id ?? country.code.toLowerCase() ?? "", // Ensure value is always a string
-    //         label: `${country.nom} - ${country.code.toLowerCase()}`,
-    //         flag: getCountryFlag(country.code)
-    //     })) || [];
-    //     console.log('Formatted Countries:', result);
-    //     return result
-    // }, [countries]);
 
     // Transform the countries data to include flags and cities
     const formattedCountries = React.useMemo(() => {
@@ -169,7 +143,6 @@ const SignUpForm = () => {
             urlSiteweb: '', // Assuming you will handle website URL separately
         }
         console.log('Form data:', finalData);
-        // return
         try {
             notify.loading('Creating client...');
             await signup({

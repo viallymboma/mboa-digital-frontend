@@ -10,7 +10,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { notify } from '@/components/utilities/helper';
@@ -22,9 +21,10 @@ import {
 
 interface EditCompanyFormProps {
   company: EnterpriseType;
+  onClose: () => void;
 }
 
-const EditCompanyForm: React.FC<EditCompanyFormProps> = ({ company }) => {
+const EditCompanyForm: React.FC<EditCompanyFormProps> = ({ company, onClose }) => {
   const { t } = useTranslation();
   const { updateCompany } = useCompanies();
   const { register, handleSubmit, formState: { errors } } = useForm<CreateCompanyRequestType>({
@@ -47,39 +47,17 @@ const EditCompanyForm: React.FC<EditCompanyFormProps> = ({ company }) => {
 
   const onSubmit = async (data: CreateCompanyRequestType) => {
     try {
-      await updateCompany({
-          ...data, id: company.id,
-          company: {
-              socialRaison: '',
-              numeroCommerce: '',
-              urlImage: '',
-              urlSiteweb: '',
-              telephoneEnterprise: '',
-              emailEnterprise: '',
-              villeEnterprise: '',
-              adresseEnterprise: '',
-              smsESenderId: '',
-              smsCredit: 0,
-              activityDomain: '',
-              contribuableNumber: '',
-              pays: ''
-          }
-      });
+      await updateCompany({ id: company.id, company: data });
       notify.success(t('company.addNewCompanyForm.success', { defaultValue: 'Company updated successfully' }));
-    //   document.querySelector("button[aria-label='Close']")?.click();
+      onClose();
     } catch (error) {
       console.error('Failed to update company:', error);
       notify.error(t('company.addNewCompanyForm.error', { defaultValue: 'Failed to update company' }));
     }
-  }; 
+  };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button id={`edit-company-${company.id}`} className="hidden">
-          {t('company.editCompany', { defaultValue: 'Edit Company' })}
-        </Button>
-      </DialogTrigger>
+    <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{t('company.addNewCompanyForm.title')}</DialogTitle>

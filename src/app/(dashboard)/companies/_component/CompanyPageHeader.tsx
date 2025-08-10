@@ -4,8 +4,6 @@ import React from 'react';
 
 import SignUpForm from '@/app/(login)/sign-up/_components/SignUpForm';
 import { AddNewContactSvgIcon } from '@/app/svg_components/SvgIcons';
-// import GenericPageHeader from '@/app/_components/_global/GenericPageHeader';
-// import CreateCompanyForm from './CreateCompanyForm';
 import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';

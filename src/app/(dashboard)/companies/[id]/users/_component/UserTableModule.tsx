@@ -8,8 +8,6 @@ import { UserType } from '@/types/company';
 
 import UserTable from './UserTable';
 
-// import UserTable from './UserTable';
-
 export type UserTableModuleProps = {
   users?: UserType[];
 };
