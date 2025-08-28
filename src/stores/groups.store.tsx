@@ -8,6 +8,8 @@ interface GroupState {
     selectedGroups: string[];
     selectedGroupsData: GroupType[];
     isLoading: boolean;
+    isAddContactToGroupModalOpen?: boolean;
+    isCreateGroupModalOpen?: boolean;
     error: Error | null;
     setGroups: (groups: GroupType[]) => void;
     addGroup: (group: GroupType) => void;
@@ -20,6 +22,8 @@ interface GroupState {
     addSelectedGroup: (group: GroupType) => void;
     removeSelectedGroup: (groupId: string) => void;
     toggleMultipleGroups: (groups: GroupType[]) => void;
+    toggleAddContactToGroupModal: (isOpen: boolean | undefined) => void;
+    toggleCreateGroupModal: (isOpen: boolean | undefined) => void;
 }
 
 export const useGroupStore = create<GroupState>((set) => ({
@@ -28,6 +32,8 @@ export const useGroupStore = create<GroupState>((set) => ({
     selectedGroups: [],
     selectedGroupsData: [],
     isLoading: false,
+    isAddContactToGroupModalOpen: undefined as unknown as boolean,
+    isCreateGroupModalOpen: undefined as unknown as boolean,
     error: null,
 
     setGroups: (groups) => set({ groups }),
@@ -91,4 +97,6 @@ export const useGroupStore = create<GroupState>((set) => ({
             selectedGroups: [...currentIds, ...groupsToAdd.map(g => g.id)]
         };
     }),
+    toggleAddContactToGroupModal: (isOpen) => set({ isAddContactToGroupModalOpen: isOpen }),
+    toggleCreateGroupModal: (isOpen) => set({ isCreateGroupModalOpen: isOpen }),
 }));

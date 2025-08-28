@@ -10,6 +10,7 @@ interface ContactState {
     selectedContacts: string[];
     selectedContactsData: EnterpriseContactResponseType[]; // New state for selected contacts data
     isLoading: boolean;
+    isModalOpend: boolean;
     error: Error | null;
     setContacts: (contacts: EnterpriseContactResponseType[]) => void;
     addContact: (contact: EnterpriseContactResponseType) => void;
@@ -17,6 +18,7 @@ interface ContactState {
     removeContact: (contactId: string) => void;
     toggleContact: (contactId: string) => void;
     clearSelectedContacts: () => void;
+    toggleModal: (isOpen: boolean) => void;
     // New methods
     setSelectedContactsData: (contacts: EnterpriseContactResponseType[]) => void;
     addSelectedContact: (contact: EnterpriseContactResponseType) => void;
@@ -31,6 +33,7 @@ export const useContactStore = create<ContactState>((set) => ({
     selectedContacts: [],
     selectedContactsData: [], // Initialize empty array
     isLoading: false,
+    isModalOpend: undefined as unknown as boolean,
     error: null,
     setContacts: (contacts) => set({ contacts }),
     addContact: (contact) => set((state) => ({
@@ -64,6 +67,7 @@ export const useContactStore = create<ContactState>((set) => ({
         selectedContacts: [],
         selectedContactsData: []
     }),
+    toggleModal: (isOpen) => set({ isModalOpend: isOpen }),
 
     // New methods implementation
     setSelectedContactsData: (contacts) => set({ selectedContactsData: contacts }),

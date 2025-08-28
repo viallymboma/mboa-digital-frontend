@@ -19,6 +19,7 @@ type ButtonsListProps = {
         buttonBg?: string;
         label: string;
         onClick?: () => void;
+        isModalOpend?: boolean;
         icon?: ElementType; 
         // React.FC<{ color?: string; height?: number; width?: number }>;
         dialogContent?: React.ReactNode;
@@ -27,10 +28,13 @@ type ButtonsListProps = {
 
 const ButtonList: React.FC<ButtonsListProps> = ({ buttons }) => {
     const { t } = useTranslation();
+    // const { isModalOpend } = useContactStore();
+    // console.log('isModalOpend in ButtonList:', buttons?.isModalOpend);
     return (
         <div className='mt-5 flex flex-row gap-4'>
             {buttons.map((button, index) => (
-                <Dialog key={index}>
+                <Dialog key={index} >
+                    {/* open={button?.isModalOpend} */}
                     <DialogTrigger asChild>
                         <Button className={`${ button?.buttonBg ? button?.buttonBg : "bg-primaryAppearance" } p-[1.2rem]`} onClick={button.onClick}>
                             {button.icon && <button.icon />}

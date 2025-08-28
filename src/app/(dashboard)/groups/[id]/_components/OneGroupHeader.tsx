@@ -10,6 +10,7 @@ import {
   AddMessageSvgIcon,
   AddNewContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useContactStore } from '@/stores/contacts.store';
 import { GroupType } from '@/types/groups';
 
 import AddContactsToGroupForm
@@ -21,6 +22,7 @@ type OneGroupHeaderType = {
 
 const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
     const [isAddContactsModalOpen, setIsAddContactsModalOpen] = React.useState(false);
+    const { toggleModal } = useContactStore ();
     console.log('Current Group in isAddContactsModalOpen:', isAddContactsModalOpen);
     const buttons = [
         {
@@ -39,9 +41,10 @@ const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
             buttonBg: "bg-black", 
             // dialogContent: <CreateGroupForm />,
             dialogContent: <AddContactsToGroupForm
-                            group={currentGroup as GroupType} 
-                            onClose={() => setIsAddContactsModalOpen(false)} 
-                        />
+                group={currentGroup as GroupType} 
+                onClose={() => setIsAddContactsModalOpen(false)} 
+            />, 
+            onclick: () => toggleModal(true),
         },
     ];
 

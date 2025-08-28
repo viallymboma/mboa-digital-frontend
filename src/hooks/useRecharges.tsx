@@ -82,7 +82,7 @@ export function useRecharges() {
             if (userRole === ADMIN_ROLE) {
                 response = await service.getAllRecharges();
                 console.log('Fetched all recharges in useRecharges hook:', response);
-            } else if (userRole === ADMIN_USER_ROLE) {
+            } else if (userRole === ADMIN_USER_ROLE || userRole === USER_ROLE) {
                 if (!enterpriseId) {
                     throw new Error('Enterprise ID not found');
                 }

@@ -12,6 +12,7 @@ import { FormInput } from '@/app/_components/form/FormInput';
 import { notify } from '@/components/utilities/helper';
 import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 import { useGroups } from '@/hooks/useGroupOps';
+import { useContactStore } from '@/stores/contacts.store';
 import { CreateGroupType } from '@/types/groups';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -29,13 +30,15 @@ interface CreateGroupFormProps {
 const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
     const { createGroup } = useGroups();
     const { getLocalStorage } = useGetLocalStorage();
+    const { toggleModal } = useContactStore ();
     const user = getLocalStorage("user");
     const router = useRouter();
 
     const {
         control,
         handleSubmit,
-        formState: { errors, isSubmitting }
+        formState: { errors, isSubmitting },
+        reset,
     } = useForm<GroupFormData>({
         resolver: zodResolver(groupSchema),
         defaultValues: {
@@ -56,6 +59,9 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
             notify.success('Group created successfully');
             router.push(`/groups/${response.id}`);
             onClose?.();
+            reset();
+            toggleModal(false);
+            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {
             notify.error('Failed to create group');
             console.error('Error creating group:', error);

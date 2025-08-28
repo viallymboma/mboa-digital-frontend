@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { notify } from '@/components/utilities/helper';
 import { usePricingPlan } from '@/hooks/usePricingPlan';
 import { useRecharges } from '@/hooks/useRecharges';
+import { useContactStore } from '@/stores/contacts.store';
 import { RechargeListContentType } from '@/types/recharges';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -38,6 +39,7 @@ interface EditRechargeFormProps {
 const EditRechargeForm = ({ recharge, onClose }: EditRechargeFormProps) => {
     const { updateRecharge, isLoading } = useRecharges();
     const { isLoading: isLoadingPlans, calculatePrice, getApplicablePlan } = usePricingPlan();
+    const { toggleModal } = useContactStore();
 
     const paymentOptions = [
         { value: 'CASH', label: 'Cash' },
@@ -52,7 +54,8 @@ const EditRechargeForm = ({ recharge, onClose }: EditRechargeFormProps) => {
         watch,
         setError,
         clearErrors,
-        formState: { errors }
+        formState: { errors }, 
+        reset,
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -110,6 +113,9 @@ const EditRechargeForm = ({ recharge, onClose }: EditRechargeFormProps) => {
                 debitBankAccountNumber: ''
             });
             notify.success('Recharge mise à jour avec succès');
+            reset();
+            toggleModal(false);
+            toggleModal(undefined as unknown as boolean); // Close the modal
             onClose?.();
         } catch (error: unknown) {
             console.error('Failed to update recharge:', error);

@@ -6,6 +6,7 @@ import {
   AddNewContactSvgIcon,
   ImporterContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useContactStore } from '@/stores/contacts.store';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
 import CreateContactForm from './CreateContactForm';
@@ -13,6 +14,7 @@ import ImportModule from './ImportModule';
 import MessageComponent from './MessageComponent';
 
 const ContactPageHeader = () => {
+    const { toggleModal, isModalOpend } = useContactStore ();
 
     const buttons = [
         {
@@ -30,6 +32,8 @@ const ContactPageHeader = () => {
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
             dialogContent: <CreateContactForm />,
+            isModalOpend,
+            onClick: () => toggleModal(undefined as unknown as boolean),
         },
         {
             label: 'contact.importContactsBtn',

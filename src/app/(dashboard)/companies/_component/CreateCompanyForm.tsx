@@ -7,16 +7,21 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCompanies } from '@/hooks/useCompanies';
+import { useContactStore } from '@/stores/contacts.store';
 import { CreateCompanyRequestType } from '@/types/company';
 
 const CreateCompanyForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const { createCompany } = useCompanies();
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateCompanyRequestType>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateCompanyRequestType>();
+  const { toggleModal } = useContactStore();
 
   const onSubmit = async (data: CreateCompanyRequestType) => {
     try {
       await createCompany(data);
       onClose?.();
+      reset();
+      toggleModal(false);
+      toggleModal(undefined as unknown as boolean); // Close the modal
     } catch (error) {
       console.error('Failed to create company:', error);
     }

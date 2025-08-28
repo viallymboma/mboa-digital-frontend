@@ -5,6 +5,7 @@ import {
   AddMessageSvgIcon,
   AddNewContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useGroupStore } from '@/stores/groups.store';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
 // import CreateContactForm from '../../contacts/_component/CreateContactForm';
@@ -12,6 +13,7 @@ import MessageComponent from '../../contacts/_component/MessageComponent';
 import CreateGroupForm from './forms/CreateGroupForm';
 
 const GroupHeader = () => {
+    const { isCreateGroupModalOpen, toggleCreateGroupModal } = useGroupStore ();
     const buttons = [
         {
             label: 'group.groupMessage',
@@ -28,6 +30,8 @@ const GroupHeader = () => {
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
             dialogContent: <CreateGroupForm />,
+            isModalOpend: isCreateGroupModalOpen,
+            onclick: () => toggleCreateGroupModal(undefined as unknown as boolean),
         },
     ];
 

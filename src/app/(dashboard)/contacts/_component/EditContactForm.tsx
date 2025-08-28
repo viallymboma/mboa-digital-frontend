@@ -16,6 +16,7 @@ import {
 import { notify } from '@/components/utilities/helper';
 import { useContacts } from '@/hooks/useContacts';
 import { useCountries } from '@/hooks/useCountry';
+import { useContactStore } from '@/stores/contacts.store';
 import { UpdateContactRequestType } from '@/types/contact';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -46,6 +47,7 @@ const getCountryFlag = (countryCode: string): string => {
 const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) => {
     const { t } = useTranslation();
     const { countries } = useCountries();
+    const { toggleModal } = useContactStore();
     const { editContact, isUpdating, refetchEnterpriseContactsInStore } = useContacts();
 
     const formattedCountries = React.useMemo(() => {
@@ -60,6 +62,7 @@ const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) =
         handleSubmit,
         control,
         formState: { errors },
+        reset,
     } = useForm<EditFormData>({
         resolver: zodResolver(editSchema),
         defaultValues: {
@@ -90,7 +93,10 @@ const EditContactForm: React.FC<EditContactFormProps> = ({ contact, onClose }) =
             });
             notify.success("Contact updated successfully");
             refetchEnterpriseContactsInStore();
+            reset ();
             onClose?.();
+            toggleModal(false);
+            toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {
             console.error('Error updating contact:', error);
             notify.error("Error updating contact");

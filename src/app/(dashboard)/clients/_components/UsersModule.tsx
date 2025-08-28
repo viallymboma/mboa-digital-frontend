@@ -1,13 +1,18 @@
 "use client";
 import React from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import {
   AddNewContactSvgIcon,
   ContactEmptyUISvgIcon,
   ImporterContactSvgIcon,
   SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
+import { notify } from '@/components/utilities/helper';
 import { useClients } from '@/hooks/useClients';
+import useGetLocalStorage from '@/hooks/useGetLocalStorage';
+import { USER_ROLE } from '@/utils/constants';
 
 import EmptyStateUI from '../../_components/_global/EmptyStateUI';
 import ImportModule from '../../contacts/_component/ImportModule';
@@ -16,6 +21,10 @@ import ClientTableModule from './table/ClientTableModule';
 
 const UsersModule = () => {
     const { clients, isLoading, error } = useClients();
+    const { getLocalStorage } = useGetLocalStorage(); 
+    const user = getLocalStorage("user");
+    const userRole = user?.role || USER_ROLE; // Default to 'USER' if not found
+    const router = useRouter();
     const buttons = [
         {
             label: 'contact.emptyUI.newContact',
@@ -36,6 +45,13 @@ const UsersModule = () => {
             ),
         },
     ];
+
+    if (userRole === USER_ROLE) {
+        // buttons.splice(0, 1); // Remove the first button
+        router.push('/dashboard');
+        notify.error("Vous n'avez pas la permission d'accéder à la liste des utilisateur.");
+        return null; // Prevent rendering
+    }
 
     if (isLoading) {
         return (<div className='relative flex items-center justify-center w-full h-screen'>

@@ -22,6 +22,7 @@ import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
 import { useClients } from '@/hooks/useClients';
 import { useCountries } from '@/hooks/useCountry';
+import { useContactStore } from '@/stores/contacts.store';
 import { USER_ROLE } from '@/utils/constants';
 import { countriesAndCities } from '@/utils/countriesAndCities';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -52,6 +53,8 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
 
     const { t } = useTranslation();
 
+    const { toggleModal } = useContactStore();
+
     const [selectedCountry, setSelectedCountry] = React.useState<string>('');
         const [availableCities, setAvailableCities] = React.useState<Array<{ value: string; label: string }>>([]);
 
@@ -69,6 +72,7 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
         control,
         watch,
         formState: { errors },
+        reset,
     } = useForm<FormData>({
         resolver: zodResolver(schema),
     });
@@ -147,6 +151,9 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
             // Optionally, you can redirect the user or perform other actions here
             // Handle successful login, e.g., redirect to dashboard
             router.push('/dashboard');
+            reset();
+            toggleModal(false);
+            toggleModal(undefined as unknown as boolean); // Close the modal
             onClose?.();
         } catch (error: unknown) {
             notify.success(t('loading.signup.error'));

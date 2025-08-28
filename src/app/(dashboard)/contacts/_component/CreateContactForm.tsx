@@ -17,6 +17,7 @@ import { notify } from '@/components/utilities/helper';
 import { useContacts } from '@/hooks/useContacts';
 import { useCountries } from '@/hooks/useCountry';
 import useGetLocalStorage from '@/hooks/useGetLocalStorage';
+import { useGroupStore } from '@/stores/groups.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // Add this helper function at the top of your file
@@ -47,6 +48,8 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
     const { t } = useTranslation();
 
     const { getLocalStorage } = useGetLocalStorage();
+    const { toggleCreateGroupModal } = useGroupStore ();
+    
 
     const { countries } = useCountries (); 
     const { createContact, isMutating, refetchEnterpriseContactsInStore } = useContacts();
@@ -68,6 +71,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
         handleSubmit,
         control,
         formState: { errors },
+        reset,
     } = useForm<FormData>({
         resolver: zodResolver(schema),
     });
@@ -85,6 +89,9 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
             notify.success("Contact created successfully");
             refetchEnterpriseContactsInStore ()
             onClose?.();
+            reset ();
+            toggleCreateGroupModal(false);
+            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error: unknown) {
             console.error('Error creating contact:', error);
             notify.dismiss();

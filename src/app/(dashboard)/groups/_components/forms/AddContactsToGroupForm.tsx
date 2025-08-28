@@ -18,7 +18,9 @@ interface AddContactsToGroupFormProps {
 
 const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, onClose }) => {
     const { addContactsToGroup } = useGroups();
-    const { selectedContactsData } = useContactStore();
+    // const { toggleAddContactToGroupModal } = useGroupStore();
+    
+    const { selectedContactsData, toggleModal } = useContactStore();
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -36,6 +38,8 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
             const filteredContactIds = contactIds.filter(id => !removeAlreadySelectedContacts.includes(id));
             await addContactsToGroup(group.id, filteredContactIds);
             onClose();
+            toggleModal(false);
+            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {
             console.error('Error adding contacts to group:', error);
         } finally {
@@ -44,7 +48,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 flex flex-col gap-3">
+        <form onSubmit={(e) => handleSubmit (e)} className="space-y-4 flex flex-col gap-3">
             <h3 className="text-lg font-semibold">Add Contacts to {group.name}</h3>
             <Separator />
             <RecipientsSection />

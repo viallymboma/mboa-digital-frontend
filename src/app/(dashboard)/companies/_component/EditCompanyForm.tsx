@@ -14,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { notify } from '@/components/utilities/helper';
 import { useCompanies } from '@/hooks/useCompanies';
+import { useContactStore } from '@/stores/contacts.store';
 import {
   CreateCompanyRequestType,
   EnterpriseType,
@@ -27,7 +28,8 @@ interface EditCompanyFormProps {
 const EditCompanyForm: React.FC<EditCompanyFormProps> = ({ company, onClose }) => {
   const { t } = useTranslation();
   const { updateCompany } = useCompanies();
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateCompanyRequestType>({
+  const { toggleModal } = useContactStore();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateCompanyRequestType>({
     defaultValues: {
       socialRaison: company.socialRaison,
       numeroCommerce: company.numeroCommerce,
@@ -50,6 +52,9 @@ const EditCompanyForm: React.FC<EditCompanyFormProps> = ({ company, onClose }) =
       await updateCompany({ id: company.id, company: data });
       notify.success(t('company.addNewCompanyForm.success', { defaultValue: 'Company updated successfully' }));
       onClose();
+      reset();
+      toggleModal(false);
+      toggleModal(undefined as unknown as boolean); // Close the modal
     } catch (error) {
       console.error('Failed to update company:', error);
       notify.error(t('company.addNewCompanyForm.error', { defaultValue: 'Failed to update company' }));
