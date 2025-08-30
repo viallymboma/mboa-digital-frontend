@@ -1,9 +1,10 @@
 "use client";
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import GenericTable from '@/app/_components/tables/GenericTable';
 
-// import { useContacts } from '@/hooks/useContacts';
 import {
   contactColumns,
   TransformedContactType,
@@ -11,8 +12,8 @@ import {
 import { ContactTableModuleProps } from './ContactTableModule';
 
 const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
+  const t = useTranslations('contact');
 
-  // Transform the contacts data to match dummy data structure
   const transformedData = React.useMemo(() => 
     contacts?.map((contact) => ({
       id: contact.id,
@@ -28,15 +29,14 @@ const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
       smsSenderId: contact.smsSenderId || '', 
       activityDomain: contact.activityDomain || '', 
       villeEntreprise: contact.villeEntreprise || '', 
-      user: contact.user || null, // Pass the full user object or null
+      user: contact.user || null,
       pays: contact?.pays || '',
-      archived: contact.archived // Add archived property to match TransformedContactType
+      archived: contact.archived
     })), [contacts]
   );
 
   const [data, setData] = React.useState(transformedData || []);
 
-  // Update data when contacts prop changes
   React.useEffect(() => {
     setData(transformedData || []);
   }, [transformedData]);
@@ -49,10 +49,10 @@ const ContactTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
     <GenericTable
       data={data}
       columns={contactColumns as TransformedContactType []}
-      title="Listes des Contacts"
-      description="Liste de tout les contacts disponibles"
+      title={t('table.title')}
+      description={t('table.description')}
       defaultPageSize={7}
-      onReorder={handleReorder} // Pass the reorder handler
+      onReorder={handleReorder}
     />
   );
 };

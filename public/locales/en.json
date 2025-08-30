@@ -1,7 +1,34 @@
 {
   "message": {
-    "characterCount": "Total characters: {{count}}",
-    "specialCharacters": "Special characters: {{count}} (counts as {{weight}})"
+    "characterCount": "Total characters: ",
+    "specialCharacters": "Special characters: ",
+    "smsCount": "SMS: ",
+    "success": "Message sent successfully",
+    "validation": {
+      "messageRequired": "Message is required",
+      "noRecipients": "Please select at least one recipient"
+    },
+    "form": {
+      "label": "Message",
+      "placeholder": "Enter your message",
+      "submitting": "Sending..."
+    },
+    "recipients": {
+      "toLabel": "To:",
+      "noRecipients": "No recipients selected",
+      "addRecipients": "Add Recipients",
+      "phoneInputPlaceholder": "Enter phone number and press Enter",
+      "phoneInputError": "Invalid phone number. Use 10-15 digits, optionally starting with +.",
+      "selectContactsTitle": "Select Contacts",
+      "searchPlaceholder": "Search contacts...",
+      "selectedContacts": "Selected Contacts ({{count}})",
+      "remove": "Remove",
+      "select": "Select",
+      "selectAll": "Select All Filtered",
+      "deselectAll": "Deselect All Filtered",
+      "cancel": "Cancel",
+      "validate": "Validate Selection"
+    }
   },
   "loading": {
     "logout": {
@@ -82,6 +109,8 @@
     }
   },
   "contact": {
+    "pageTitle": "Contacts",
+    "error": "error",
     "contactForm": {
       "fullName": "Full Name",
       "firstName": "First Name",
@@ -100,7 +129,14 @@
       "downloadItem": "Download the contact file to fill out",
       "downloaItemDescription": "Click here to download and complete the file in the correct format",
       "uploadItem": "Upload your file here",
-      "uploadItemDescription": "Once the file is filled out, click here to upload it"
+      "uploadItemDescription": "Once the file is filled out, click here to upload it",
+      "dropHere": "Drop your file here",
+      "downloadSuccess": "Downloaded successfully",
+      "downloadError": "Failed to download template file",
+      "previewButton": "Preview",
+      "importButton": "Import",
+      "previewTitle": "Preview Data",
+      "previewRows": "Showing first 10 rows of {{count}} total rows"
     },
     "emptyUI": {
       "mainTitle": "No information available at the moment",
@@ -113,7 +149,27 @@
     },
     "importContactsBtn": "Import Contacts",
     "newMessageBtn": "New Message",
-    "sendMessageFormBtn": "Send"
+    "sendMessageFormBtn": "Send",
+    "statsCard": {
+      "totalContacts": "Total Contacts",
+      "activeContacts": "Active Contacts",
+      "inactiveContacts": "Inactive Contacts"
+    },
+    "table": {
+      "title": "List of Contacts",
+      "description": "List of all available contacts"
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "phoneNumberInvalid": "Phone number must be at least 7 digits",
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required"
+    },
+    "breadcrumb": {
+      "dashboard": "Dashboard",
+      "contact": "Contact"
+    }
   },
   "group": {
     "emptyUI": {
@@ -231,9 +287,19 @@
       "users": "Users",
       "companies": "Companies",
       "logout": "Log out"
+    }, 
+    "table": {
+      "loading": "Loading table...",
+      "searchPlaceholder": "Search",
+      "columnsDropdown": "Table Columns",
+      "columnsLabel": "Select Columns",
+      "rowsPerPage": "Rows per page:",
+      "showRows": "Show {{size}}",
+      "of": "of",
+      "page": "Page {{current}} of {{total}}"
     }
   }, 
-    "dashboard": {
+  "dashboard": {
     "sectionCards": {
       "sentSMS": {
         "title": "Sent SMS",

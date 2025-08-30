@@ -1,11 +1,11 @@
 "use client";
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
 import {
   Controller,
   useForm,
 } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { FormButton } from '@/app/_components/form/FormButton';
@@ -20,7 +20,6 @@ import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 import { useGroupStore } from '@/stores/groups.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// Add this helper function at the top of your file
 export const getCountryFlag = (countryCode: string): string => {
     const codePoints = countryCode
         .toUpperCase()
@@ -29,13 +28,12 @@ export const getCountryFlag = (countryCode: string): string => {
     return String.fromCodePoint(...codePoints);
 };
 
-// Define schema validation using Zod
 const schema = z.object({
-    firstName: z.string().min(1, { message: 'First name is required' }),
-    lastName: z.string().min(1, { message: 'Last name is required' }),
-    phoneNumber: z.string().min(7, { message: 'Phone number must be at least 10 digits' }),
-    country: z.string().min(1, { message: 'Country is required' }),
-    city: z.string().min(1, { message: 'City is required' }), 
+    firstName: z.string().min(1, { message: 'contact.validation.firstNameRequired' }),
+    lastName: z.string().min(1, { message: 'contact.validation.lastNameRequired' }),
+    phoneNumber: z.string().min(7, { message: 'contact.validation.phoneNumberInvalid' }),
+    country: z.string().min(1, { message: 'contact.validation.countryRequired' }),
+    city: z.string().min(1, { message: 'contact.validation.cityRequired' }), 
 });
 
 type FormData = z.infer<typeof schema>;
@@ -45,28 +43,23 @@ interface CreateContactFormProps {
 }
 
 const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('contact');
 
     const { getLocalStorage } = useGetLocalStorage();
-    const { toggleCreateGroupModal } = useGroupStore ();
-    
+    const { toggleCreateGroupModal } = useGroupStore();
 
-    const { countries } = useCountries (); 
+    const { countries } = useCountries(); 
     const { createContact, isMutating, refetchEnterpriseContactsInStore } = useContacts();
-    console.log('Countries:', countries);
 
-    // Transform the countries data to include flags
     const formattedCountries = React.useMemo(() => {
         const result = countries.map(country => ({
             value: country.code.toLowerCase(),
             label: country.nom,
             flag: getCountryFlag(country.code)
         })) || [];
-        console.log('Formatted Countries:', result);
         return result
     }, [countries]);
 
-    // Initialize react-hook-form with resolver
     const {
         handleSubmit,
         control,
@@ -77,25 +70,23 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
     });
 
     const onSubmit = async (data: FormData) => {
-        notify.loading("Loading...");
+        notify.loading(t('loading.ongoing'));
         const data_new = {
             ...data,
             email: getLocalStorage("user").email, 
             enterpriseId: getLocalStorage("user")?.enterprise?.id,
         }
         try {
-            console.log('New Contact:', data);
             await createContact(data_new);
-            notify.success("Contact created successfully");
-            refetchEnterpriseContactsInStore ()
+            notify.success(t('loading.success'));
+            refetchEnterpriseContactsInStore();
             onClose?.();
-            reset ();
+            reset();
             toggleCreateGroupModal(false);
-            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error: unknown) {
             console.error('Error creating contact:', error);
             notify.dismiss();
-            notify.error("Error creating contact");
+            notify.error(t('loading.error'));
             return;
         } finally {
             notify.dismiss();
@@ -112,9 +103,9 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            label={t('contact.contactForm.firstName')}
-                            placeholder={t('contact.contactForm.firstNamePlaceHolder')}
-                            error={errors.firstName?.message}
+                            label={t('contactForm.firstName')}
+                            placeholder={t('contactForm.firstNamePlaceHolder')}
+                            error={errors.firstName?.message ? t(errors.firstName.message) : undefined}
                         />
                     )}
                 />
@@ -126,9 +117,9 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                         <FormInput 
                             {...field}
                             className='border-primaryAppearance'
-                            label={t('contact.contactForm.lastName')}
-                            placeholder={t('contact.contactForm.lastNamePlaceHolder')}
-                            error={errors.lastName?.message}
+                            label={t('contactForm.lastName')}
+                            placeholder={t('contactForm.lastNamePlaceHolder')}
+                            error={errors.lastName?.message ? t(errors.lastName.message) : undefined}
                         />
                     )}
                 />
@@ -141,9 +132,9 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             className='border-primaryAppearance' 
                             type="number"
-                            label={t('contact.contactForm.phoneNumber')}
-                            placeholder={t('contact.contactForm.phoneNumberPlaceHolder')}
-                            error={errors.phoneNumber?.message}
+                            label={t('contactForm.phoneNumber')}
+                            placeholder={t('contactForm.phoneNumberPlaceHolder')}
+                            error={errors.phoneNumber?.message ? t(errors.phoneNumber.message) : undefined}
                         />
                     )}
                 />
@@ -159,7 +150,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             options={formattedCountries}
                             value={field.value}
                             onChange={field.onChange}
-                            error={errors.country?.message} // Include error for country
+                            error={errors.country?.message ? t(errors.country.message) : undefined}
                         />
                     )}
                 />
@@ -172,14 +163,14 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             className='border-primaryAppearance' 
                             label=""
-                            placeholder={t('contact.contactForm.cityPlaceHolder')}
-                            error={errors.city?.message}
+                            placeholder={t('contactForm.cityPlaceHolder')}
+                            error={errors.city?.message ? t(errors.city.message) : undefined}
                         />
                     )}
                 />
 
                 <div className='flex flex-col gap-4'>
-                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isMutating ? "Loading..." : "Submit" }</FormButton>
+                    <FormButton className='bg-primaryAppearance h-[56px] text-white' type="submit">{ isMutating ? t('loading.ongoing') : t('contactForm.submit') }</FormButton>
                 </div>
             </form>
         </div>
@@ -187,7 +178,3 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
 };
 
 export default CreateContactForm;
-
-
-
-

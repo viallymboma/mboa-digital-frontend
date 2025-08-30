@@ -4,13 +4,13 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import { useTranslation } from 'react-i18next';
 
 import { SearchInputV2 } from '@/app/_components/form/SearchInput';
 import {
@@ -36,8 +36,6 @@ interface GenericTableProps<TData> {
   title: string;
   description?: string;
   defaultPageSize?: number;
-  // onEdit?: (row: TData) => void;
-  // onDelete?: (row: TData) => void;
   onReorder?: (reorderedData: TData[]) => void;
 }
 
@@ -47,54 +45,41 @@ const GenericTable = <TData extends { id?: string }>({
   title,
   description,
   defaultPageSize = 7,
-  // onEdit,
-  // onDelete,
   onReorder,
 }: GenericTableProps<TData>) => {
-  const { t } = useTranslation();
+  const t = useTranslations('general');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [localData, setLocalData] = React.useState(data);
 
-  // console.log(onEdit, onDelete)
-
-  // const { table, setGlobalFilter, startIndex, endIndex } = useTable({ data: localData, columns, defaultPageSize });
-
-  // Initialize table with proper error handling
   const { table, setGlobalFilter, startIndex, endIndex } = useTable({ 
     data: localData || [], 
     columns, 
     defaultPageSize 
   });
 
-  
-
-  // Handle drag-and-drop reordering
   const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) return; // Dropped outside the list
+    if (!result.destination) return;
 
     const items = Array.from(localData);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setLocalData(items); // Update local data
-    onReorder?.(items); // Notify parent component of reorder
+    setLocalData(items);
+    onReorder?.(items);
   };
 
-  // Sync localData with parent data
   React.useEffect(() => {
     setLocalData(data);
   }, [data]);
 
-  // Add loading state check
   if (!table) {
     return (
       <div className="p-4 flex items-center justify-center border-primaryAppearance border rounded-[12px]">
-        <span>Loading table...</span>
+        <span>{t('loading')}</span>
       </div>
     );
   }
 
-  // Filter columns based on the search query
   const filteredOptions = table.getAllColumns().filter(option =>
     typeof option.columnDef.header === 'string' &&
     option.columnDef.header.toLowerCase().includes(searchQuery.toLowerCase())
@@ -102,7 +87,6 @@ const GenericTable = <TData extends { id?: string }>({
 
   return (
     <div className="p-4 flex flex-col gap-4 border-primaryAppearance border rounded-[12px]">
-      {/* Filter input */}
       <div className="flex flex-row items-center justify-between">
         <div className='flex flex-row gap-4 items-center'>
           <Button className='h-fit bg-transparent p-4'>
@@ -117,7 +101,7 @@ const GenericTable = <TData extends { id?: string }>({
           <SearchInputV2
             className='w-fit h-[50px]'
             onChange={(e) => setGlobalFilter(e.target.value)}
-            placeholder={t('register.searchLang')}
+            placeholder={t('table.searchPlaceholder')}
             leftIcon={<SearchSvgIcon />}
           />
           <Button className='bg-black p-4 h-fit'>
@@ -128,28 +112,23 @@ const GenericTable = <TData extends { id?: string }>({
 
       <Separator />
 
-      {/* Column visibility controls */}
       <div className="w-full flex flex-row items-center justify-end">
         <DropdownMenu>
           <DropdownMenuTrigger className="p-2 border rounded-lg cursor-pointer bg-gray-100 hover:bg-gray-200">
-            <span>Colomnes du tableau</span>
+            <span>{t('table.columnsDropdown')}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-64 p-3 bg-white shadow-md rounded-lg">
-            <DropdownMenuLabel className="text-lg font-semibold text-gray-800">Select Columns</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-lg font-semibold text-gray-800">{t('table.columnsLabel')}</DropdownMenuLabel>
             <DropdownMenuSeparator className="my-2" />
-
-            {/* Search Input */}
             <div className="p-2 bg-white sticky top-0 z-10">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder={t('table.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-
-            {/* Scrollable Checkbox List */}
             <div className="max-h-[200px] overflow-y-auto p-2">
               {filteredOptions.map((option) => (
                 <label key={option.id} className="flex items-center space-x-2 py-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer">
@@ -167,10 +146,8 @@ const GenericTable = <TData extends { id?: string }>({
         </DropdownMenu>
       </div>
 
-      {/* Table */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="table-body">
-          {/* {renderDraggableTable} */}
           {(provided) => (
             <div
               {...provided.droppableProps}
@@ -230,11 +207,9 @@ const GenericTable = <TData extends { id?: string }>({
         </Droppable>
       </DragDropContext>
 
-      {/* Pagination controls */}
       <div className="flex items-center justify-center gap-4 mt-4">
-        {/* Page size selector */}
         <div className='flex flex-row items-center gap-2'>
-          <h1 className='text-[14px]'>Lignes par pages :</h1>
+          <h1 className='text-[14px]'>{t('table.rowsPerPage')}</h1>
           <select
             value={table.getState().pagination.pageSize}
             onChange={(e) => {
@@ -244,17 +219,14 @@ const GenericTable = <TData extends { id?: string }>({
           >
             {[5, 7, 10, 20].map((size) => (
               <option key={size} value={size}>
-                Show {size}
+                {t('table.showRows', { size })}
               </option>
             ))}
           </select>
         </div>
-
-        {/* Current page range and total items */}
         <span className="text-sm">
-          {startIndex}-{endIndex} of {localData?.length}
+          {startIndex}-{endIndex} {t('table.of')} {localData?.length}
         </span>
-
         <div className="flex items-center gap-2">
           <button
             onClick={() => table?.previousPage()}
@@ -269,20 +241,12 @@ const GenericTable = <TData extends { id?: string }>({
             <ChevronRight />
           </button>
         </div>
-
-        {/* Total number of pages */}
         <span className="text-sm">
-          Page {table?.getState().pagination.pageIndex + 1} of {table?.getPageCount()}
+          {t('table.page', { current: table?.getState().pagination.pageIndex + 1, total: table?.getPageCount() })}
         </span>
       </div>
-
     </div>
   );
 };
 
-export default GenericTable; 
-
-
-
-
-
+export default GenericTable;

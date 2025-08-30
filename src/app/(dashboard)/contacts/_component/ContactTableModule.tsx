@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import {
   ContactStatisticsSvgIcon,
   UnavailableContactSvgIcon,
@@ -11,44 +13,39 @@ import ContactTable from './ContactTable';
 import StatsCard from './StatsCard';
 
 export type ContactTableModuleProps = {
-  contacts?: EnterpriseContactResponseType[]; // Adjust the type as per your data structure
+  contacts?: EnterpriseContactResponseType[];
 };
 
 const ContactTableModule: React.FC <ContactTableModuleProps> = ({ contacts }) => {
+  const t = useTranslations('contact.statsCard');
   
   return (
     <div className=' w-[100%]'>
-
       <div className='flex items-center gap-4 py-4'>
         <StatsCard
-          // value="25k"
-          value={ contacts?.length || "0" } // Assuming contacts are available
-          label="Total de contacts"
+          value={ contacts?.length || "0" }
+          label={t('totalContacts')}
           icon={<ContactStatisticsSvgIcon />}
           color="black"
           borderColor="border-primaryAppearance"
           trend={{ value: '+ 5.5%', isPositive: true }}
         />
         <StatsCard
-          value={ contacts?.filter((contact) => !contact.archived).length || "0" } // Assuming archived contacts are unavailable
-          // "2200"
-          label="Total de contacts"
+          value={ contacts?.filter((contact) => !contact.archived).length || "0" }
+          label={t('activeContacts')}
           icon={<WorkingContactSvgIcon />}
           color={"#0E8345"}
           borderColor="border-borderGreen"
         />
         <StatsCard
-          value={ contacts?.filter((contact) => contact.archived).length || "0" } // Assuming archived contacts are unavailable
-          // value="300"
-          label="Total de contacts"
+          value={ contacts?.filter((contact) => contact.archived).length || "0" }
+          label={t('inactiveContacts')}
           icon={<UnavailableContactSvgIcon />}
           color="#DE1135"
           borderColor="border-borderRed"
         />
       </div>
-
       <ContactTable contacts={ contacts } />
-
     </div>
   )
 }

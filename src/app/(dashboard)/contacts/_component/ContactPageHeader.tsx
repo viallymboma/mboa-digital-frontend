@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import {
   AddMessageSvgIcon,
   AddNewContactSvgIcon,
@@ -15,12 +17,13 @@ import ImportModule from './ImportModule';
 import MessageComponent from './MessageComponent';
 
 const ContactPageHeader = () => {
-    const { toggleModal, isModalOpend } = useContactStore ();
+    const t = useTranslations('contact');
+    const { toggleModal, isModalOpend } = useContactStore();
     const { contacts } = useContacts();
 
     const buttons = [
         {
-            label: 'contact.newMessageBtn',
+            label: t('newMessageBtn'),
             icon: AddMessageSvgIcon, 
             dialoContentStyle: "sm:max-w-[500px]", 
             buttonBg: "bg-primaryAppearance", 
@@ -29,7 +32,7 @@ const ContactPageHeader = () => {
             </>,
         },
         {
-            label: 'contact.emptyUI.newContact',
+            label: t('emptyUI.newContact'),
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
@@ -38,7 +41,7 @@ const ContactPageHeader = () => {
             onClick: () => toggleModal(undefined as unknown as boolean),
         },
         {
-            label: 'contact.importContactsBtn',
+            label: t('importContactsBtn'),
             icon: ImporterContactSvgIcon,
             dialoContentStyle: "sm:max-w-[571px] sm:h-[520px]", 
             buttonBg: "bg-black", 
@@ -47,16 +50,15 @@ const ContactPageHeader = () => {
     ];
 
     const breadcrumbLinks = [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Contact' },
+        { label: t('breadcrumb.dashboard'), href: '/dashboard' },
+        { label: t('breadcrumb.contact') },
     ];
 
     return (
         <>
-            <GenericPageHeader data={contacts} buttons={buttons} title='Contacts' breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader data={contacts} buttons={buttons} title={t('pageTitle')} breadcrumbLinks={breadcrumbLinks} />
         </>
     )
-
 }
 
 export default ContactPageHeader

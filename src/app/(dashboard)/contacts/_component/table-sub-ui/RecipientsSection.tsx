@@ -6,6 +6,7 @@ import {
   Plus,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +15,7 @@ import { useContactStore } from '@/stores/contacts.store';
 import BulkContactSelectionModal from './BulkContactSelectionModal';
 
 const RecipientsSection = () => {
+    const t = useTranslations('message.recipients');
     const { selectedContactsData, addSelectedContact, removeSelectedContact } = useContactStore();
     const [isSelectionModalOpen, setIsSelectionModalOpen] = React.useState(false);
     const [phoneInput, setPhoneInput] = React.useState('');
@@ -24,13 +26,12 @@ const RecipientsSection = () => {
             e.preventDefault();
             const phoneRegex = /^\+?\d{6,15}$/;
             if (!phoneRegex.test(phoneInput.trim())) {
-                setInputError('Invalid phone number. Use 10-15 digits, optionally starting with +.');
+                setInputError(t('phoneInputError'));
                 return;
             }
             setInputError(null);
-            // Create a temporary contact object for the manual phone number
             const tempContact: any = {
-                id: `manual-${phoneInput.trim()}-${Date.now()}`, // Unique ID for manual entry
+                id: `manual-${phoneInput.trim()}-${Date.now()}`,
                 phoneNumber: phoneInput.trim(),
                 firstname: 'Manual',
                 lastname: 'Entry',
@@ -41,7 +42,6 @@ const RecipientsSection = () => {
                 updatedAt: new Date().toISOString(),
                 version: 0,
                 gender: undefined,
-                // user: any,
                 enterprise: { id: '', socialRaison: '', numeroCommerce: '', telephoneEnterprise: '', emailEnterprise: '', villeEnterprise: '', adresseEnterprise: '', smsESenderId: '', smsCredit: 0, activityDomain: '', pays: { id: '', code: '', enterprises: '' as string, nom: '', continent: '', archived: false, deleted: false, createdAt: '', updatedAt: '', version: 0, imageUrl: "" }, user: [], enterpriseContacts: [], groupes: [], recharges: [], archived: false, deleted: false, createdAt: '', updatedAt: '', version: 0, urlImage: '', urlSiteweb: '', contribuableNumber: "" },
                 group: undefined,
                 archived: false,
@@ -54,13 +54,12 @@ const RecipientsSection = () => {
 
     return (
         <div className="flex flex-col gap-2 p-4">
-            {/* Recipients Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <span className="text-gray-500 text-sm">À:</span>
+                    <span className="text-gray-500 text-sm">{t('toLabel')}</span>
                     {selectedContactsData.length === 0 && (
                         <span className="text-gray-400 text-sm italic">
-                            No recipients selected
+                            {t('noRecipients')}
                         </span>
                     )}
                 </div>
@@ -72,15 +71,14 @@ const RecipientsSection = () => {
                     className="text-gray-600 hover:text-gray-900"
                 >
                     <Plus className="h-4 w-4 mr-1" />
-                    Add Recipients
+                    {t('addRecipients')}
                 </Button>
             </div>
 
-            {/* Phone Number Input */}
             <div className="relative">
                 <Input
                     type="text"
-                    placeholder="Enter phone number and press Enter"
+                    placeholder={t('phoneInputPlaceholder')}
                     value={phoneInput}
                     onChange={(e) => {
                         setPhoneInput(e.target.value);
@@ -94,7 +92,6 @@ const RecipientsSection = () => {
                 )}
             </div>
 
-            {/* Selected Recipients Chips */}
             {selectedContactsData.length > 0 && (
                 <div className="flex justify-start flex-wrap gap-2">
                     {selectedContactsData.map((contact) => (
@@ -120,7 +117,6 @@ const RecipientsSection = () => {
                 </div>
             )}
 
-            {/* Selection Modal */}
             <BulkContactSelectionModal 
                 isOpen={isSelectionModalOpen}
                 onClose={() => setIsSelectionModalOpen(false)}
@@ -130,4 +126,3 @@ const RecipientsSection = () => {
 }
 
 export default RecipientsSection
-

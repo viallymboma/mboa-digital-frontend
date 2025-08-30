@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import {
   AddContactSvgIcon,
   ContactEmptyUISvgIcon,
@@ -15,18 +17,18 @@ import CreateContactForm from './CreateContactForm';
 import ImportModule from './ImportModule';
 
 const ContactModule = () => {
+    const t = useTranslations('contact');
     const { contacts, isLoading, error } = useContacts();
     const buttons = [
         {
-            label: 'contact.emptyUI.newContact',
-            // icon: AddNewContactSvgIcon, 
+            label: t('emptyUI.newContact'),
             icon: () => <AddContactSvgIcon />,
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-primaryAppearance", 
             dialogContent: <CreateContactForm onClose={() => (document.querySelector("button[aria-label='Close']") as HTMLButtonElement)?.click()} />,
         },
         {
-            label: 'contact.importContactsBtn',
+            label: t('importContactsBtn'),
             icon: ImporterContactSvgIcon,
             dialoContentStyle: "sm:max-w-[571px] sm:h-[520px]", 
             buttonBg: "bg-black", 
@@ -51,7 +53,7 @@ const ContactModule = () => {
     if (error) {
         return (<div className='flex items-center justify-center w-full h-screen bg-white'>
                 <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
-                    error
+                    {t('error')}
                 </div>
             </div>)
     }
@@ -59,8 +61,8 @@ const ContactModule = () => {
     if (Array.isArray(contacts) && contacts.length === 0) {
         return (<EmptyStateUI
             SvgIcon={ContactEmptyUISvgIcon}
-            mainTitle="contact.emptyUI.mainTitle"
-            secondTitle="contact.emptyUI.secondTitle"
+            mainTitle={t('emptyUI.mainTitle')}
+            secondTitle={t('emptyUI.secondTitle')}
             buttons={buttons}
         />)
     }

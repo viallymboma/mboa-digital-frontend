@@ -1,7 +1,34 @@
 {
   "message": {
-    "characterCount": "Nombre total de caractères : {{count}}",
-    "specialCharacters": "Caractères spéciaux : {{count}} (compte pour {{weight}})"
+    "characterCount": "Nombre total de caractères : ",
+    "specialCharacters": "Caractères spéciaux : ",
+    "smsCount": "SMS : ",
+    "success": "Message envoyé avec succès",
+    "validation": {
+      "messageRequired": "Le message est requis",
+      "noRecipients": "Veuillez sélectionner au moins un destinataire"
+    },
+    "form": {
+      "label": "Message",
+      "placeholder": "Entrez votre message",
+      "submitting": "Envoi en cours..."
+    },
+    "recipients": {
+      "toLabel": "À :",
+      "noRecipients": "Aucun destinataire sélectionné",
+      "addRecipients": "Ajouter des destinataires",
+      "phoneInputPlaceholder": "Entrez le numéro de téléphone et appuyez sur Entrée",
+      "phoneInputError": "Numéro de téléphone invalide. Utilisez 10 à 15 chiffres, commençant éventuellement par +.",
+      "selectContactsTitle": "Sélectionner des contacts",
+      "searchPlaceholder": "Rechercher des contacts...",
+      "selectedContacts": "Contacts sélectionnés ({{count}})",
+      "remove": "Supprimer",
+      "select": "Sélectionner",
+      "selectAll": "Sélectionner tous les filtrés",
+      "deselectAll": "Désélectionner tous les filtrés",
+      "cancel": "Annuler",
+      "validate": "Valider la sélection"
+    }
   },
   "loading": {
     "logout": {
@@ -82,6 +109,8 @@
     }
   },
   "contact": {
+    "pageTitle": "Contacts",
+    "error": "erreur",
     "contactForm": {
       "fullName": "Nom complet",
       "firstName": "Prénom",
@@ -100,7 +129,14 @@
       "downloadItem": "Téléchargez le fichier de contact à remplir",
       "downloaItemDescription": "Cliquez ici pour télécharger et remplir le fichier selon le format requis",
       "uploadItem": "Déposez votre fichier ici",
-      "uploadItemDescription": "Une fois le fichier rempli, cliquez ici pour le télécharger"
+      "uploadItemDescription": "Une fois le fichier rempli, cliquez ici pour le télécharger",
+      "dropHere": "Déposez votre fichier ici",
+      "downloadSuccess": "Téléchargé avec succès",
+      "downloadError": "Échec du téléchargement du fichier modèle",
+      "previewButton": "Prévisualiser",
+      "importButton": "Importer",
+      "previewTitle": "Aperçu des données",
+      "previewRows": "Affichage des 10 premières lignes sur {{count}} lignes totales"
     },
     "emptyUI": {
       "mainTitle": "Pas d’informations disponibles pour le moment",
@@ -113,7 +149,27 @@
     },
     "importContactsBtn": "Importer des contacts",
     "newMessageBtn": "Nouveau message",
-    "sendMessageFormBtn": "Envoyer"
+    "sendMessageFormBtn": "Envoyer",
+    "statsCard": {
+      "totalContacts": "Total des contacts",
+      "activeContacts": "Contacts actifs",
+      "inactiveContacts": "Contacts inactifs"
+    },
+    "table": {
+      "title": "Liste des contacts",
+      "description": "Liste de tous les contacts disponibles"
+    },
+    "validation": {
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom de famille est requis",
+      "phoneNumberInvalid": "Le numéro de téléphone doit comporter au moins 7 chiffres",
+      "countryRequired": "Le pays est requis",
+      "cityRequired": "La ville est requise"
+    },
+    "breadcrumb": {
+      "dashboard": "Tableau de bord",
+      "contact": "Contact"
+    }
   },
   "group": {
     "emptyUI": {
@@ -231,9 +287,18 @@
       "users": "Utilisateurs",
       "companies": "Entreprises",
       "logout": "Déconnexion"
+    }, 
+    "table": {
+      "searchPlaceholder": "Rechercher...",
+      "columnsDropdown": "Colonnes",
+      "columnsLabel": "Afficher/Cacher les colonnes",
+      "rowsPerPage": "Lignes par page :",
+      "showRows": "{{size}}",
+      "of": "de",
+      "page": "Page {{current}} sur {{total}}"
     }
   }, 
-    "dashboard": {
+  "dashboard": {
     "sectionCards": {
       "sentSMS": {
         "title": "SMS Envoyés",
