@@ -4,6 +4,7 @@ import React from 'react';
 
 import SignUpForm from '@/app/(login)/sign-up/_components/SignUpForm';
 import { AddNewContactSvgIcon } from '@/app/svg_components/SvgIcons';
+import { useCompanies } from '@/hooks/useCompanies';
 import useGetLocalStorage from '@/hooks/useGetLocalStorage';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
@@ -12,6 +13,7 @@ const CompanyPageHeader = () => {
   const { getLocalStorage } = useGetLocalStorage();
   const user = getLocalStorage('user');
   const isSuperAdmin = user?.role === 'SUPER_ADMIN';
+  const { companies } = useCompanies();
 
   const buttons = isSuperAdmin
     ? [
@@ -36,6 +38,7 @@ const CompanyPageHeader = () => {
 
   return (
     <GenericPageHeader
+      data={companies}
       buttons={buttons}
       title="Companies"
       breadcrumbLinks={breadcrumbLinks}

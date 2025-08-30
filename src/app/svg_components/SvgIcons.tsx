@@ -36,6 +36,30 @@ export const HomeSvgIcon = () => {
     )
 }
 
+export const AddContactSvgIcon = () => {
+    const { theme } = useTheme(); 
+    return (
+        <div
+        style={{
+            color: theme === "dark" ? "white" : "#7B18CC"
+        }}
+        >
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_7383_4674)">
+                    <path d="M14.5 14.252V22H4.5C4.49969 20.7789 4.77892 19.5739 5.3163 18.4774C5.85368 17.3809 6.63494 16.4219 7.60022 15.674C8.5655 14.9261 9.68918 14.4091 10.8852 14.1626C12.0811 13.9162 13.3177 13.9467 14.5 14.252ZM12.5 13C9.185 13 6.5 10.315 6.5 7C6.5 3.685 9.185 1 12.5 1C15.815 1 18.5 3.685 18.5 7C18.5 10.315 15.815 13 12.5 13ZM18.5 17V14H20.5V17H23.5V19H20.5V22H18.5V19H15.5V17H18.5Z" fill="white"/>
+                </g>
+                <defs>
+                    <clipPath id="clip0_7383_4674">
+                        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+
+    )
+}
+
+
 export const NotificationSvgIcon = () => {
     const { theme } = useTheme(); 
     return (

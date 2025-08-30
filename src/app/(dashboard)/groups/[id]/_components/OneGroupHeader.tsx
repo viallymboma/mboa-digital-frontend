@@ -57,7 +57,7 @@ const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
     return (
         <>
             {/* <GenericPageHeader buttons={buttons} title={`Group - ${ pathName?.split("/")[pathName?.split("/").length - 1] }`} breadcrumbLinks={breadcrumbLinks} /> */}
-            <GenericPageHeader buttons={buttons} title={`Group - ${ currentGroup?.name }`} breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader data={currentGroup?.enterpriseContacts} buttons={buttons} title={`Group - ${ currentGroup?.name }`} breadcrumbLinks={breadcrumbLinks} />
         </>
     )
 }

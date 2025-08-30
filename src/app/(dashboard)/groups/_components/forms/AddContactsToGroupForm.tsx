@@ -13,10 +13,11 @@ import { GroupType } from '@/types/groups';
 
 interface AddContactsToGroupFormProps {
     group: GroupType;
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, onClose }) => {
+    console.log('Group in AddContactsToGroupForm:', onClose);
     const { addContactsToGroup } = useGroups();
     // const { toggleAddContactToGroupModal } = useGroupStore();
     
@@ -37,7 +38,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
             const removeAlreadySelectedContacts = group.enterpriseContacts?.map(contact => contact.id) || [];
             const filteredContactIds = contactIds.filter(id => !removeAlreadySelectedContacts.includes(id));
             await addContactsToGroup(group.id, filteredContactIds);
-            onClose();
+            // onClose();
             toggleModal(false);
             // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {

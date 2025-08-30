@@ -5,6 +5,7 @@ import {
   AddMessageSvgIcon,
   AddNewContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useGroups } from '@/hooks/useGroupOps';
 import { useGroupStore } from '@/stores/groups.store';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
@@ -14,6 +15,7 @@ import CreateGroupForm from './forms/CreateGroupForm';
 
 const GroupHeader = () => {
     const { isCreateGroupModalOpen, toggleCreateGroupModal } = useGroupStore ();
+    const { groups } = useGroups();
     const buttons = [
         {
             label: 'group.groupMessage',
@@ -42,7 +44,7 @@ const GroupHeader = () => {
 
     return (
         <>
-            <GenericPageHeader buttons={buttons} title='Mes Groupes' breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader data={groups} buttons={buttons} title='Mes Groupes' breadcrumbLinks={breadcrumbLinks} />
         </>
     )
 }

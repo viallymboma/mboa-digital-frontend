@@ -4,13 +4,19 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 
 import EmptyStateUI from '@/app/(dashboard)/_components/_global/EmptyStateUI';
+// import MessageComponent
+//   from '@/app/(dashboard)/contacts/_component/MessageComponent';
 import {
+  AddNewContactSvgIcon,
   GroupEmptyUISvgIcon,
   SvgLogoIcon,
 } from '@/app/svg_components/SvgIcons';
 import { useGroups } from '@/hooks/useGroupOps';
 import { useContactStore } from '@/stores/contacts.store';
+import { GroupType } from '@/types/groups';
 
+import AddContactsToGroupForm
+  from '../../_components/forms/AddContactsToGroupForm';
 import OneGroupData from './OneGroupData';
 import OneGroupHeader from './OneGroupHeader';
 
@@ -24,6 +30,30 @@ const OneGroupModule = () => {
         [groups, id]
     );
     console.log('Current Group in OnGroupModule:', currentGroup, id);
+
+    const buttons = [
+            // {
+            //     label: 'group.groupMessage',
+            //     icon: AddMessageSvgIcon, 
+            //     dialoContentStyle: "sm:max-w-[500px]", 
+            //     buttonBg: "bg-primaryAppearance", 
+            //     dialogContent: <>
+            //         <MessageComponent />
+            //     </>,
+            // },
+            {
+                label: '',
+                icon: AddNewContactSvgIcon, 
+                dialoContentStyle: "sm:max-w-[425px]", 
+                buttonBg: "bg-black", 
+                // dialogContent: <CreateGroupForm />,
+                dialogContent: <AddContactsToGroupForm
+                    group={currentGroup as GroupType} 
+                    // onClose={() => setIsAddContactsModalOpen(false)} 
+                />, 
+                // onclick: () => toggleModal(true),
+            },
+        ];
 
     // Update selectedContactsData when currentGroup changes
     React.useEffect(() => {
@@ -74,7 +104,7 @@ const OneGroupModule = () => {
                             SvgIcon={GroupEmptyUISvgIcon}
                             mainTitle="group.emptyUI.mainTitle"
                             secondTitle="group.emptyUI.secondTitle"
-                            buttons={[]}
+                            buttons={buttons}
                     />
                 </div>
             </div>

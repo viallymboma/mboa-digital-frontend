@@ -16,10 +16,6 @@ type DashboardStats = {
 export const useDashboardStats = () => {
     const { recharges } = useRecharges();
     const { contacts } = useContacts(); 
-
-    console.log('Recharges:', recharges);
-    console.log('Contacts============))):', contacts);
-
     const calculateStats = (): DashboardStats | null => {
         if (!recharges || !contacts) return null;
 

@@ -72,7 +72,7 @@ export class CompanyService {
 
   async getCompanyContacts(enterpriseId: string, role: string): Promise<EnterpriseContactResponseType[]> {
     try {
-      console.log('Fetching company contacts for enterpriseId:', enterpriseId, 'with role:', role);
+      console.log('with role:', role);
       return await this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/contact/all/${enterpriseId}`);
     } catch (error) {
       console.error('Failed to fetch company contacts:', error);

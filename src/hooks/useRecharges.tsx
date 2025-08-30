@@ -48,24 +48,10 @@ async function creditAccountFetcher(url: string, { arg }: { arg: { enterpriseId:
 
 export function useRecharges() {
     const { getLocalStorage } = useGetLocalStorage(); 
-    // const { setRecharges  } = useRechargeStore();
     const { 
         setRecharges,
-        // setIsLoading,
-        // setError 
     } = useRechargeStore();
 
-    // // Main recharges fetch
-    // const { data, error, isLoading, mutate } = useSWR<RechargeListContentType[]>(
-    //     'recharges',
-    //     async () => {
-    //         const service = RechargeService.getInstance();
-    //         const response = await service.getAllRecharges();
-    //         console.log('Fetched recharges in hoooook:', response);
-    //         setRecharges(response);
-    //         return response.content || [];
-    //     }
-    // );
     // Main recharges fetch
     const { data, error, isLoading, mutate } = useSWR<RechargeListContentType[]>(
         `${ getLocalStorage("user")?.role === ADMIN_ROLE ? "/api/v1/recharge/all" : `/api/v1/recharge/${ getLocalStorage("user")?.enterprise?.id }/all` }`,
@@ -78,21 +64,27 @@ export function useRecharges() {
 
             let response;
 
-            // Check user role and call appropriate endpoint
-            if (userRole === ADMIN_ROLE) {
-                response = await service.getAllRecharges();
-                console.log('Fetched all recharges in useRecharges hook:', response);
-            } else if (userRole === ADMIN_USER_ROLE || userRole === USER_ROLE) {
-                if (!enterpriseId) {
-                    throw new Error('Enterprise ID not found');
+            try {
+                // Check user role and call appropriate endpoint
+                if (userRole === ADMIN_ROLE) {
+                    response = await service.getAllRecharges();
+                } else if (userRole === ADMIN_USER_ROLE || userRole === USER_ROLE) {
+                    if (!enterpriseId) {
+                        throw new Error('Enterprise ID not found');
+                    }
+                    response = await service.getRecharges(enterpriseId);
+                } else {
+                    throw new Error('Invalid user role');
                 }
-                response = await service.getRecharges(enterpriseId);
-            } else {
-                throw new Error('Invalid user role');
+    
+                setRecharges(response);
+                return response.content || response || [];
+            } catch (error) {
+                console.error('Error fetching recharges:', error);
+                notify.error('Failed to fetch recharges');
+                return [];
             }
 
-            setRecharges(response);
-            return response.content || response || [];
         }
     );
 
@@ -278,8 +270,6 @@ export function useRecharges() {
         const enterpriseId = getLocalStorage("user")?.enterprise?.id;
         return creditAccountTrigger({ enterpriseId, qteMessage });
     }, [creditAccountTrigger]);
-
-    // console.log("Recharges data in useRecharges hook +++++:", data);
 
     return {
         recharges: data || [], 

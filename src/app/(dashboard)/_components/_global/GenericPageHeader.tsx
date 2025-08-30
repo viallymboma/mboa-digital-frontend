@@ -28,9 +28,12 @@ type GenericPageHeaderProps = {
         icon?: React.ElementType;
         dialogContent?: React.ReactNode;
     }[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: any;
 };
 
-const GenericPageHeader: React.FC<GenericPageHeaderProps> = ({ title, breadcrumbLinks, buttons }) => {
+const GenericPageHeader: React.FC<GenericPageHeaderProps> = ({ title, data=[], breadcrumbLinks, buttons }) => {
+    console.log('data in GenericPageHeader:', data);
     return (
         <div className='flex flex-row justify-between gap-4'>
             <div>
@@ -54,7 +57,8 @@ const GenericPageHeader: React.FC<GenericPageHeaderProps> = ({ title, breadcrumb
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            {buttons && buttons.length > 0 && <ButtonList buttons={buttons} />}
+
+            {buttons && buttons.length > 0 && data && Array.isArray(data) && data.length !== 0 && <ButtonList buttons={buttons} />}
         </div>
     );
 };

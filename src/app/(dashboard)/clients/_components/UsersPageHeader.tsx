@@ -2,11 +2,13 @@
 import React from 'react';
 
 import { AddNewContactSvgIcon } from '@/app/svg_components/SvgIcons';
+import { useClients } from '@/hooks/useClients';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
 import CreateClientForm from './form/CreateClientForm';
 
 const UsersPageHeader = () => {
+    const { clients } = useClients();
     const buttons = [
         // {
         //     label: 'contact.newMessageBtn',
@@ -38,7 +40,7 @@ const UsersPageHeader = () => {
     ];
     return (
         <>
-            <GenericPageHeader buttons={buttons} title='Clients' breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader data={clients} buttons={buttons} title='Clients' breadcrumbLinks={breadcrumbLinks} />
         </>
     )
 }

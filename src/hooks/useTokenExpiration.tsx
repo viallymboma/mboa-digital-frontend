@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-function decodeJwtPayload(token: string) {
+export function decodeJwtPayload(token: string) {
     try {
         const base64Url = token.split('.')[1];
         if (!base64Url) throw new Error('Invalid token format');

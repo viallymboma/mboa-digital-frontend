@@ -12,7 +12,6 @@ import { z } from 'zod';
 
 import { FormButton } from '@/app/_components/form/FormButton';
 import { FormInput } from '@/app/_components/form/FormInput';
-// import FormInput from '@/app/_components/form/FormInput';
 import { FormPasswordInput } from '@/app/_components/form/FormPasswordInput';
 import LoadingUI from '@/components/loaders/LoadingUI';
 import { notify } from '@/components/utilities/helper';
@@ -41,8 +40,6 @@ const SignInForm = () => {
         resolver: zodResolver(schema),
     });
 
-    console.log('Login error: +++++++++++++++++++++++++++++++++++++++');
-
     const onSubmit = async (data: FormData) => {
         notify.loading(t('loading.login.ongoing'));
         try {
@@ -63,19 +60,6 @@ const SignInForm = () => {
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
                 <div className='flex flex-col gap-2 w-full'>
-                    {/* <Controller
-                        name="email"
-                        control={control}
-                        render={({ field }) => (
-                            <FormInput 
-                                {...field}
-                                className='border-primaryAppearance h-[56px] flex-1 w-full'
-                                label="Email" type={t('register.email')}
-                                placeholder={t('register.emailPlaceHolder')} 
-                                error={errors.email?.message}
-                            />
-                        )}
-                    /> */}
                     <Controller
                         name="email"
                         control={control}

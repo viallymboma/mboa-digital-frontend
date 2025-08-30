@@ -6,6 +6,7 @@ import {
   AddNewContactSvgIcon,
   ImporterContactSvgIcon,
 } from '@/app/svg_components/SvgIcons';
+import { useContacts } from '@/hooks/useContacts';
 import { useContactStore } from '@/stores/contacts.store';
 
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
@@ -15,6 +16,7 @@ import MessageComponent from './MessageComponent';
 
 const ContactPageHeader = () => {
     const { toggleModal, isModalOpend } = useContactStore ();
+    const { contacts } = useContacts();
 
     const buttons = [
         {
@@ -51,7 +53,7 @@ const ContactPageHeader = () => {
 
     return (
         <>
-            <GenericPageHeader buttons={buttons} title='Contacts' breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader data={contacts} buttons={buttons} title='Contacts' breadcrumbLinks={breadcrumbLinks} />
         </>
     )
 
