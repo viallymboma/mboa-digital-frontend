@@ -1,0 +1,274 @@
+{
+  "message": {
+    "characterCount": "Total characters: {{count}}",
+    "specialCharacters": "Special characters: {{count}} (counts as {{weight}})"
+  },
+  "loading": {
+    "logout": {
+      "ongoing": "Logging out...",
+      "success": "Logout successful",
+      "error": "Logout failed"
+    },
+    "login": {
+      "ongoing": "Logging in...",
+      "success": "Login successful",
+      "error": "Login failed"
+    },
+    "signup": {
+      "ongoing": "Creating client...",
+      "success": "Client created successfully",
+      "error": "Failed to create client"
+    }
+  },
+  "register": {
+    "title": "Create an Account",
+    "firstName": "First Name",
+    "firstNamePlaceHolder": "Enter your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceHolder": "Enter your last name",
+    "email": "Email",
+    "emailPlaceHolder": "Enter your email address",
+    "password": "Password",
+    "passwordPlaceHolder": "Enter a secure password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceHolder": "Confirm your password",
+    "submit": "Sign Up",
+    "loginPrompt": "Already have an account?",
+    "signupPrompt": "Don’t have an account yet?",
+    "login": "Login",
+    "signup": "Sign Up",
+    "whoAreYou": "Who are you?",
+    "searchLang": "Search",
+    "remainingSMS": "Remaining",
+    "passwordValidation": {
+      "minLength": "Password must be at least 8 characters",
+      "hasUppercase": "Password must contain at least one uppercase letter",
+      "hasLowercase": "Password must contain at least one lowercase letter",
+      "hasNumber": "Password must contain at least one number",
+      "hasSpecial": "Password must contain at least one special character"
+    },
+    "passwordMismatch": "Passwords do not match",
+    "passwordMatch": "Passwords match",
+    "personalInformation": "Personal Information",
+    "contactInformation": "Contact Information",
+    "locationDetails": "Location Details",
+    "smsConfiguration": "SMS Configuration",
+    "security": "Security",
+    "additionalInformation": "Additional Information",
+    "companyLogo": "Company Logo",
+    "contactForm": {
+      "fullName": "Full Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "firstNamePlaceHolder": "Enter your first name",
+      "lastNamePlaceHolder": "Enter your last name",
+      "phoneNumber": "Phone Number",
+      "city": "City",
+      "fullNamePlaceHolder": "Enter your full name",
+      "phoneNumberPlaceHolder": "Enter your phone number",
+      "cityPlaceHolder": "Enter your city",
+      "buttonLabel": "Add Contact",
+      "address": "Address",
+      "addressPlaceHolder": "Enter your address"
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "emailInvalid": "Invalid email address",
+      "phoneNumberRequired": "Phone number is required",
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required",
+      "addressRequired": "Address is required"
+    }
+  },
+  "contact": {
+    "contactForm": {
+      "fullName": "Full Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "firstNamePlaceHolder": "Enter your first name",
+      "lastNamePlaceHolder": "Enter your last name",
+      "phoneNumber": "Phone Number",
+      "city": "City",
+      "fullNamePlaceHolder": "Enter your full name",
+      "phoneNumberPlaceHolder": "Enter your phone number",
+      "cityPlaceHolder": "Enter your city",
+      "buttonLabel": "Add Contact"
+    },
+    "importContactForm": {
+      "modalTitle": "Import Manager",
+      "downloadItem": "Download the contact file to fill out",
+      "downloaItemDescription": "Click here to download and complete the file in the correct format",
+      "uploadItem": "Upload your file here",
+      "uploadItemDescription": "Once the file is filled out, click here to upload it"
+    },
+    "emptyUI": {
+      "mainTitle": "No information available at the moment",
+      "secondTitle": "Try adding or importing contacts to display them here",
+      "newContact": "New Contact",
+      "importContact": "Import Manager"
+    },
+    "addNewContactForm": {
+      "title": "Add a Contact"
+    },
+    "importContactsBtn": "Import Contacts",
+    "newMessageBtn": "New Message",
+    "sendMessageFormBtn": "Send"
+  },
+  "group": {
+    "emptyUI": {
+      "mainTitle": "No contacts available at the moment",
+      "secondTitle": "Try creating groups to display them here.",
+      "newGroup": "New Group"
+    },
+    "addNewGroupForm": {
+      "title": "Add a Group"
+    },
+    "newGroupBtn": "New Group",
+    "addNewGroupFormBtn": "Add a Contact",
+    "groupMessage": "Group Message"
+  },
+  "histories": {
+    "emptyUI": {
+      "mainTitle": "No history available at the moment",
+      "secondTitle": "Try adding or importing contacts to display them here"
+    }
+  },
+  "recharges": {
+    "emptyUI": {
+      "mainTitle": "No information available at the moment",
+      "secondTitle": "Try adding or importing contacts to display them here",
+      "actionButtonLabel": "Make a Recharge"
+    }
+  },
+  "payments": {
+    "pageTitle": "Payments",
+    "emptyUI": {
+      "mainTitle": "No information available at the moment",
+      "secondTitle": "Try adding or importing contacts to display them here",
+      "actionButtonLabel": "Make a Payment"
+    }
+  },
+  "profile": {
+    "pageTitle": "Profile",
+    "editProfileButton": "Edit Profile",
+    "account": "Account"
+  },
+  "company": {
+    "pageTitle": "Companies",
+    "emptyUI": {
+      "mainTitle": "No companies available at the moment",
+      "secondTitle": "Try creating a company to display it here",
+      "newCompany": "New Company"
+    },
+    "addNewCompanyForm": {
+      "title": "Add a Company",
+      "socialRaison": "Company Name",
+      "socialRaisonPlaceHolder": "Enter the company name",
+      "numeroCommerce": "Commerce Number",
+      "numeroCommercePlaceHolder": "Enter the commerce registration number",
+      "urlImage": "Image URL",
+      "urlImagePlaceHolder": "Enter the image URL",
+      "urlSiteweb": "Website URL",
+      "urlSitewebPlaceHolder": "Enter the website URL",
+      "telephoneEntreprise": "Company Phone",
+      "telephoneEntreprisePlaceHolder": "Enter the company phone",
+      "emailEnterprise": "Company Email",
+      "emailEnterprisePlaceHolder": "Enter the company email",
+      "villeEntreprise": "Company City",
+      "villeEntreprisePlaceHolder": "Enter the company city",
+      "adresseEnterprise": "Enterprise Address",
+      "adresseEnterprisePlaceHolder": "Enter the enterprise address",
+      "smsESenderId": "SMS Sender ID",
+      "smsESenderIdPlaceHolder": "Enter the SMS sender ID",
+      "smsCredit": "SMS Credit",
+      "smsCreditPlaceHolder": "Enter the SMS credit",
+      "activityDomain": "Business Sector",
+      "activityDomainPlaceHolder": "Enter the business sector",
+      "contribuableNumber": "Tax ID",
+      "contribuableNumberPlaceHolder": "Enter the tax ID number",
+      "pays": "Country",
+      "paysPlaceHolder": "Select enterprise country",
+      "enterpriseInformation": "Enterprise Information",
+      "enterpriseLocation": "Enterprise Location",
+      "validation": {
+        "socialRaisonRequired": "Social reason is required",
+        "activityDomainRequired": "Business sector is required",
+        "contribuableNumberRequired": "Tax ID is required",
+        "emailEnterpriseInvalid": "Invalid enterprise email",
+        "telephoneEntrepriseRequired": "Enterprise phone is required",
+        "villeEntrepriseRequired": "Enterprise city is required",
+        "numeroCommerceRequired": "Commerce number is required",
+        "adresseEnterpriseRequired": "Enterprise address is required",
+        "enterpriseCountryRequired": "Enterprise country is required",
+        "smsESenderIdRequired": "SMS sender ID is required",
+        "smsESenderIdMax": "SMS sender ID must not be more than 11 characters"
+      }
+    },
+    "newCompanyBtn": "New Company",
+    "users": {
+      "pageTitle": "Company Users",
+      "emptyUI": {
+        "mainTitle": "No users available at the moment",
+        "secondTitle": "Try adding users to this company"
+      },
+      "clients": "Clients"
+    }
+  },
+  "general": {
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "toggle": "Toggle Theme"
+    },
+    "navigation": {
+      "dashboard": "Dashboard",
+      "contacts": "Contacts",
+      "groups": "Groups",
+      "histories": "Histories",
+      "recharges": "Recharges",
+      "users": "Users",
+      "companies": "Companies",
+      "logout": "Log out"
+    }
+  }, 
+    "dashboard": {
+    "sectionCards": {
+      "sentSMS": {
+        "title": "Sent SMS",
+        "description": "Monthly SMS sending trend",
+        "footer": "Total SMS sent this month"
+      },
+      "smsCredits": {
+        "title": "SMS Credits",
+        "description": "SMS credit trend",
+        "footer": "Available SMS balance"
+      },
+      "totalContacts": {
+        "title": "Total Contacts",
+        "description": "Contact base trend",
+        "footer": "Total number of contacts"
+      },
+      "totalRecharges": {
+        "title": "Total Recharges",
+        "description": "Recharge trend",
+        "footer": "Total number of recharges"
+      }
+    },
+    "chartArea": {
+      "title": "Total Visitors",
+      "descriptionLong": "Total for the last 3 months",
+      "descriptionShort": "Last 3 months",
+      "visitors": "Visitors",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "timeRange": {
+        "90d": "Last 3 months",
+        "30d": "Last 30 days",
+        "7d": "Last 7 days"
+      },
+      "selectLabel": "Select time range"
+    }
+  }
+}

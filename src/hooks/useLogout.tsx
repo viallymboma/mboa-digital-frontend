@@ -19,7 +19,7 @@ export function useLogout() {
             console.error('Logout error:', error);
         } finally {
             // Always clear storage and redirect, even if API call fails
-            localStorage.clear();
+            // localStorage.clear();
             router.push('/login');
         }
     };

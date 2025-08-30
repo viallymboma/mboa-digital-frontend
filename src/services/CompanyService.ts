@@ -80,6 +80,15 @@ export class CompanyService {
     }
   }
 
+  async getUpdatedCompanyInfo(userId: string): Promise<EnterpriseContactResponseType[]> {
+    try {
+      return await this.apiService.get<EnterpriseContactResponseType[]>(`/api/v1/enterprise/${userId}`);
+    } catch (error) {
+      console.error('Failed to fetch company contacts:', error);
+      throw new Error('Unable to retrieve company contacts');
+    }
+  }
+
   async updateCompany(id: string, company: CreateCompanyRequestType): Promise<EnterpriseType> {
     try {
       return await this.apiService.put<EnterpriseType>(`/api/v1/enterprise/${id}`, company);

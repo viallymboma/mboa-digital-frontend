@@ -155,8 +155,6 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
     });
 
     const onSubmit = async (data: FormData) => {
-        // console.log('Form data:', data);
-
         const finalData = {
             ...data,
             adresseEnterprise: data.address,
@@ -166,8 +164,6 @@ const CreateClientForm = ({ onClose }: { onClose?: () => void }) => {
             urlImage: '', // Assuming you will handle image upload separately
             urlSiteweb: '', // Assuming you will handle website URL separately
         }
-        console.log('Form data:', finalData);
-        // return
         try {
             notify.loading('Creating client...');
             await signup({

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import localFont from 'next/font/local';
 
+import I18nProvider from '@/components/I18nProvider';
 import { ToastProvider } from '@/components/utilities/ToastProvider';
 
 const geistSans = localFont({
@@ -44,10 +45,12 @@ export default function RootLayout({
         suppressHydrationWarning // Add this attribute
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastProvider />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <I18nProvider>
+          <ToastProvider />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );

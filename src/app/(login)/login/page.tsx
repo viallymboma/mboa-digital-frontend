@@ -1,31 +1,65 @@
 "use client";
 import React from 'react';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { SvgIconsLogo } from '@/app/svg_components/SvgIcons';
 
 import SignInForm from './_components/SignInForm';
 
 const LoginPage = () => {
-  const { t } = useTranslation();
+  // Reference the 'register' namespace from your translation JSON
+  const t = useTranslations('register');
+
   return (
     <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100">
-      <section className='flex-1 w-full h-screen dark:bg-slate-900 items-center flex flex-col p-[3rem] gap-[2rem]'>
-          <div className='mt-[3rem] w-[75%]'>
-              <SvgIconsLogo />
+      <section className="flex-1 w-full h-screen dark:bg-slate-900 items-center flex flex-col p-[3rem] gap-[2rem]">
+        <div className="mt-[3rem] w-[75%]">
+          <SvgIconsLogo />
+        </div>
+        <div className="flex flex-col gap-4 w-[75%]">
+          <div className="mb-4">
+            {/* Use the 'login' key from the 'register' namespace */}
+            <h1 className="font-bold text-[36px]">{t('login')}</h1>
           </div>
-          <div className='flex flex-col gap-4 w-[75%]'>
-              <div className='mb-4'>
-                  <h1 className='font-bold text-[36px]'>{ t('register.login') }</h1>
-              </div>
-              <SignInForm />
-          </div>
+          <SignInForm />
+        </div>
       </section>
-      <section className='flex-1 bg-primaryAppearanceDim w-full h-screen'>
-      </section>
+      <section className="flex-1 bg-primaryAppearanceDim w-full h-screen"></section>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
+
+// "use client";
+// import React from 'react';
+
+// import { useTranslation } from 'react-i18next';
+
+// import { SvgIconsLogo } from '@/app/svg_components/SvgIcons';
+
+// import SignInForm from './_components/SignInForm';
+
+// const LoginPage = () => {
+//   const { t } = useTranslation();
+//   return (
+//     <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100">
+//       <section className='flex-1 w-full h-screen dark:bg-slate-900 items-center flex flex-col p-[3rem] gap-[2rem]'>
+//           <div className='mt-[3rem] w-[75%]'>
+//               <SvgIconsLogo />
+//           </div>
+//           <div className='flex flex-col gap-4 w-[75%]'>
+//               <div className='mb-4'>
+//                   <h1 className='font-bold text-[36px]'>{ t('register.login') }</h1>
+//               </div>
+//               <SignInForm />
+//           </div>
+//       </section>
+//       <section className='flex-1 bg-primaryAppearanceDim w-full h-screen'>
+//       </section>
+//     </div>
+//   )
+// }
+
+// export default LoginPage

@@ -28,6 +28,7 @@ export function useMessages(page = 0, size = 10) {
         async () => {
             try {
                 const response = await messageService.getMessages(enterpriseId!, page, size);
+                console.log('Fetched messages:', response);
                 setMessages(response.content);
                 setTotalPages(response.totalPages);
                 setCurrentPage(response.pageable.pageNumber);

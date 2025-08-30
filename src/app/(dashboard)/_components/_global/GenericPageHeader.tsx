@@ -33,7 +33,7 @@ type GenericPageHeaderProps = {
 };
 
 const GenericPageHeader: React.FC<GenericPageHeaderProps> = ({ title, data=[], breadcrumbLinks, buttons }) => {
-    console.log('data in GenericPageHeader:', data);
+    // console.log('data in GenericPageHeader:', data);
     return (
         <div className='flex flex-row justify-between gap-4'>
             <div>

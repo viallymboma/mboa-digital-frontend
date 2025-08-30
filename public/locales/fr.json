@@ -1,0 +1,274 @@
+{
+  "message": {
+    "characterCount": "Nombre total de caractères : {{count}}",
+    "specialCharacters": "Caractères spéciaux : {{count}} (compte pour {{weight}})"
+  },
+  "loading": {
+    "logout": {
+      "ongoing": "Déconnexion en cours...",
+      "success": "Déconnexion réussie",
+      "error": "Échec de la déconnexion"
+    },
+    "login": {
+      "ongoing": "Connexion en cours...",
+      "success": "Connexion réussie",
+      "error": "Échec de la connexion"
+    },
+    "signup": {
+      "ongoing": "Création du client...",
+      "success": "Client créé avec succès",
+      "error": "Échec de la création du client"
+    }
+  },
+  "register": {
+    "title": "Créer un compte",
+    "firstName": "Prénom",
+    "firstNamePlaceHolder": "Entrez votre prénom",
+    "lastName": "Nom de famille",
+    "lastNamePlaceHolder": "Entrez votre nom de famille",
+    "email": "Email",
+    "emailPlaceHolder": "Entrez votre adresse email",
+    "password": "Mot de passe",
+    "passwordPlaceHolder": "Entrez un mot de passe sécurisé",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceHolder": "Confirmez votre mot de passe",
+    "submit": "S'inscrire",
+    "loginPrompt": "Vous avez déjà un compte ?",
+    "signupPrompt": "Vous n'avez pas encore de compte ?",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "whoAreYou": "Qui êtes-vous ?",
+    "searchLang": "Rechercher",
+    "remainingSMS": "Restants",
+    "passwordValidation": {
+      "minLength": "Le mot de passe doit comporter au moins 8 caractères",
+      "hasUppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+      "hasLowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+      "hasNumber": "Le mot de passe doit contenir au moins un chiffre",
+      "hasSpecial": "Le mot de passe doit contenir au moins un caractère spécial"
+    },
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "passwordMatch": "Les mots de passe correspondent",
+    "personalInformation": "Informations personnelles",
+    "contactInformation": "Informations de contact",
+    "locationDetails": "Détails de localisation",
+    "smsConfiguration": "Configuration SMS",
+    "security": "Sécurité",
+    "additionalInformation": "Informations supplémentaires",
+    "companyLogo": "Logo de l’entreprise",
+    "contactForm": {
+      "fullName": "Nom complet",
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "firstNamePlaceHolder": "Entrez votre prénom",
+      "lastNamePlaceHolder": "Entrez votre nom de famille",
+      "phoneNumber": "Numéro de téléphone",
+      "city": "Ville",
+      "fullNamePlaceHolder": "Entrez votre nom complet",
+      "phoneNumberPlaceHolder": "Entrez votre numéro de téléphone",
+      "cityPlaceHolder": "Entrez votre ville",
+      "buttonLabel": "Ajouter le contact", 
+      "address": "Adresse",
+      "addressPlaceHolder": "Entrez votre adresse"
+    },
+    "validation": {
+      "firstNameRequired": "Le prénom est requis",
+      "lastNameRequired": "Le nom de famille est requis",
+      "emailInvalid": "Adresse email invalide",
+      "phoneNumberRequired": "Le numéro de téléphone est requis",
+      "countryRequired": "Le pays est requis",
+      "cityRequired": "La ville est requise",
+      "addressRequired": "L’adresse est requise"
+    }
+  },
+  "contact": {
+    "contactForm": {
+      "fullName": "Nom complet",
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "firstNamePlaceHolder": "Entrez votre prénom",
+      "lastNamePlaceHolder": "Entrez votre nom de famille",
+      "phoneNumber": "Numéro de téléphone",
+      "city": "Ville",
+      "fullNamePlaceHolder": "Entrez votre nom complet",
+      "phoneNumberPlaceHolder": "Entrez votre numéro de téléphone",
+      "cityPlaceHolder": "Entrez votre ville",
+      "buttonLabel": "Ajouter le contact"
+    },
+    "importContactForm": {
+      "modalTitle": "Gestionnaire d’importation",
+      "downloadItem": "Téléchargez le fichier de contact à remplir",
+      "downloaItemDescription": "Cliquez ici pour télécharger et remplir le fichier selon le format requis",
+      "uploadItem": "Déposez votre fichier ici",
+      "uploadItemDescription": "Une fois le fichier rempli, cliquez ici pour le télécharger"
+    },
+    "emptyUI": {
+      "mainTitle": "Pas d’informations disponibles pour le moment",
+      "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici",
+      "newContact": "Nouveau contact",
+      "importContact": "Gestionnaire d’importation"
+    },
+    "addNewContactForm": {
+      "title": "Ajouter un contact"
+    },
+    "importContactsBtn": "Importer des contacts",
+    "newMessageBtn": "Nouveau message",
+    "sendMessageFormBtn": "Envoyer"
+  },
+  "group": {
+    "emptyUI": {
+      "mainTitle": "Pas de contacts disponibles pour le moment",
+      "secondTitle": "Essayez de créer des groupes pour les afficher ici.",
+      "newGroup": "Nouveau groupe"
+    },
+    "addNewGroupForm": {
+      "title": "Ajouter un groupe"
+    },
+    "newGroupBtn": "Nouveau groupe",
+    "addNewGroupFormBtn": "Ajouter un contact",
+    "groupMessage": "Message de groupe"
+  },
+  "histories": {
+    "emptyUI": {
+      "mainTitle": "Pas d’historique disponible pour le moment",
+      "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici"
+    }
+  },
+  "recharges": {
+    "emptyUI": {
+      "mainTitle": "Pas d’informations disponibles pour le moment",
+      "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici",
+      "actionButtonLabel": "Faire une recharge"
+    }
+  },
+  "payments": {
+    "pageTitle": "Paiements",
+    "emptyUI": {
+      "mainTitle": "Pas d’informations disponibles pour le moment",
+      "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici",
+      "actionButtonLabel": "Effectuer un paiement"
+    }
+  },
+  "profile": {
+    "pageTitle": "Profil",
+    "editProfileButton": "Éditer le profil",
+    "account": "Compte"
+  },
+  "company": {
+    "pageTitle": "Entreprises",
+    "emptyUI": {
+      "mainTitle": "Aucune entreprise disponible pour le moment",
+      "secondTitle": "Essayez de créer une entreprise pour l’afficher ici",
+      "newCompany": "Nouvelle entreprise"
+    },
+    "addNewCompanyForm": {
+      "title": "Ajouter une entreprise",
+      "socialRaison": "Nom de l’entreprise",
+      "socialRaisonPlaceHolder": "Entrez le nom de l’entreprise",
+      "numeroCommerce": "Numéro de commerce",
+      "numeroCommercePlaceHolder": "Entrez le numéro d’enregistrement commercial",
+      "urlImage": "URL de l’image",
+      "urlImagePlaceHolder": "Entrez l’URL de l’image",
+      "urlSiteweb": "URL du site web",
+      "urlSitewebPlaceHolder": "Entrez l’URL du site web",
+      "telephoneEntreprise": "Téléphone de l’entreprise",
+      "telephoneEntreprisePlaceHolder": "Entrez le téléphone de l’entreprise",
+      "emailEnterprise": "Email de l’entreprise",
+      "emailEnterprisePlaceHolder": "Entrez l’email de l’entreprise",
+      "villeEntreprise": "Ville de l’entreprise",
+      "villeEntreprisePlaceHolder": "Entrez la ville de l’entreprise",
+      "adresseEnterprise": "Adresse de l’entreprise",
+      "adresseEnterprisePlaceHolder": "Entrez l’adresse de l’entreprise",
+      "smsESenderId": "ID d’expéditeur SMS",
+      "smsESenderIdPlaceHolder": "Entrez l’ID d’expéditeur SMS",
+      "smsCredit": "Crédit SMS",
+      "smsCreditPlaceHolder": "Entrez le crédit SMS",
+      "activityDomain": "Secteur d’activité",
+      "activityDomainPlaceHolder": "Entrez le secteur d’activité",
+      "contribuableNumber": "Numéro de contribuable",
+      "contribuableNumberPlaceHolder": "Entrez le numéro de contribuable",
+      "pays": "Pays",
+      "paysPlaceHolder": "Sélectionnez le pays de l’entreprise",
+      "enterpriseInformation": "Informations de l’entreprise",
+      "enterpriseLocation": "Localisation de l’entreprise",
+      "validation": {
+        "socialRaisonRequired": "Le nom de l’entreprise est requis",
+        "activityDomainRequired": "Le secteur d’activité est requis",
+        "contribuableNumberRequired": "Le numéro de contribuable est requis",
+        "emailEnterpriseInvalid": "Email de l’entreprise invalide",
+        "telephoneEntrepriseRequired": "Le téléphone de l’entreprise est requis",
+        "villeEntrepriseRequired": "La ville de l’entreprise est requise",
+        "numeroCommerceRequired": "Le numéro de commerce est requis",
+        "adresseEnterpriseRequired": "L’adresse de l’entreprise est requise",
+        "enterpriseCountryRequired": "Le pays de l’entreprise est requis",
+        "smsESenderIdRequired": "L’ID d’expéditeur SMS est requis",
+        "smsESenderIdMax": "L’ID d’expéditeur SMS ne doit pas dépasser 11 caractères"
+      }
+    },
+    "newCompanyBtn": "Nouvelle entreprise",
+    "users": {
+      "pageTitle": "Utilisateurs de l’entreprise",
+      "emptyUI": {
+        "mainTitle": "Aucun utilisateur disponible pour le moment",
+        "secondTitle": "Essayez d’ajouter des utilisateurs à cette entreprise"
+      },
+      "clients": "Clients"
+    }
+  },
+  "general": {
+    "theme": {
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système",
+      "toggle": "Changer le thème"
+    },
+    "navigation": {
+      "dashboard": "Tableau de bord",
+      "contacts": "Contacts",
+      "groups": "Groupes",
+      "histories": "Historiques",
+      "recharges": "Recharges",
+      "users": "Utilisateurs",
+      "companies": "Entreprises",
+      "logout": "Déconnexion"
+    }
+  }, 
+    "dashboard": {
+    "sectionCards": {
+      "sentSMS": {
+        "title": "SMS Envoyés",
+        "description": "Évolution mensuelle des envois",
+        "footer": "Total des SMS envoyés ce mois"
+      },
+      "smsCredits": {
+        "title": "Crédit SMS",
+        "description": "Évolution du crédit SMS",
+        "footer": "Solde SMS disponible"
+      },
+      "totalContacts": {
+        "title": "Total des Contacts",
+        "description": "Évolution de la base contacts",
+        "footer": "Nombre total de contacts"
+      },
+      "totalRecharges": {
+        "title": "Total des recharges",
+        "description": "Évolution des recharges",
+        "footer": "Nombre total de recharges"
+      }
+    },
+    "chartArea": {
+      "title": "Total des Visiteurs",
+      "descriptionLong": "Total pour les 3 derniers mois",
+      "descriptionShort": "3 derniers mois",
+      "visitors": "Visiteurs",
+      "desktop": "Bureau",
+      "mobile": "Mobile",
+      "timeRange": {
+        "90d": "3 derniers mois",
+        "30d": "30 derniers jours",
+        "7d": "7 derniers jours"
+      },
+      "selectLabel": "Sélectionner une période"
+    }
+  }
+}

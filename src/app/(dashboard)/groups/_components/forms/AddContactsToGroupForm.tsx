@@ -19,7 +19,6 @@ interface AddContactsToGroupFormProps {
 const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, onClose }) => {
     console.log('Group in AddContactsToGroupForm:', onClose);
     const { addContactsToGroup } = useGroups();
-    // const { toggleAddContactToGroupModal } = useGroupStore();
     
     const { selectedContactsData, toggleModal } = useContactStore();
     const [isSubmitting, setIsSubmitting] = React.useState(false);

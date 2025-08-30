@@ -36,11 +36,13 @@ const RechargesModule = () => {
     }
 
     if (error) {
-        return (<div className='flex items-center justify-center w-full h-screen bg-white'>
+        return (
+            <div className='flex items-center justify-center w-full h-screen bg-white'>
                 <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
                     error
                 </div>
-            </div>)
+            </div>
+        )
     }
 
     if (Array.isArray(recharges) && recharges.length === 0) {

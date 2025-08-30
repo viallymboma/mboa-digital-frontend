@@ -4,8 +4,6 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 
 import EmptyStateUI from '@/app/(dashboard)/_components/_global/EmptyStateUI';
-// import MessageComponent
-//   from '@/app/(dashboard)/contacts/_component/MessageComponent';
 import {
   AddNewContactSvgIcon,
   GroupEmptyUISvgIcon,
@@ -32,26 +30,16 @@ const OneGroupModule = () => {
     console.log('Current Group in OnGroupModule:', currentGroup, id);
 
     const buttons = [
-            // {
-            //     label: 'group.groupMessage',
-            //     icon: AddMessageSvgIcon, 
-            //     dialoContentStyle: "sm:max-w-[500px]", 
-            //     buttonBg: "bg-primaryAppearance", 
-            //     dialogContent: <>
-            //         <MessageComponent />
-            //     </>,
-            // },
             {
                 label: '',
                 icon: AddNewContactSvgIcon, 
                 dialoContentStyle: "sm:max-w-[425px]", 
                 buttonBg: "bg-black", 
-                // dialogContent: <CreateGroupForm />,
                 dialogContent: <AddContactsToGroupForm
                     group={currentGroup as GroupType} 
                     // onClose={() => setIsAddContactsModalOpen(false)} 
                 />, 
-                // onclick: () => toggleModal(true),
+                // onClick: () => toggleModal(true),
             },
         ];
 
@@ -83,7 +71,6 @@ const OneGroupModule = () => {
             <div>
                 <OneGroupHeader currentGroup={ currentGroup } />
                 <div className='h-full flex flex-col items-center justify-center'>
-                    {/* <OneGroupData /> */}
                     <div className='flex items-center justify-center w-full h-screen bg-white'>
                         <div className="w-20 h-20 animate-spin p-4 rounded-full border-[10px] border-t-[10px]  border-t-blue-500 border-white">
                             error
@@ -99,12 +86,11 @@ const OneGroupModule = () => {
             <div>
                 <OneGroupHeader currentGroup={ currentGroup } />
                 <div className='h-full flex flex-col items-center justify-center'>
-                    {/* <OneGroupData /> */}
                     <EmptyStateUI
-                            SvgIcon={GroupEmptyUISvgIcon}
-                            mainTitle="group.emptyUI.mainTitle"
-                            secondTitle="group.emptyUI.secondTitle"
-                            buttons={buttons}
+                        SvgIcon={GroupEmptyUISvgIcon}
+                        mainTitle="group.emptyUI.mainTitle"
+                        secondTitle="group.emptyUI.secondTitle"
+                        buttons={buttons}
                     />
                 </div>
             </div>

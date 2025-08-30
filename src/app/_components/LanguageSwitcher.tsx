@@ -1,9 +1,10 @@
 "use client";
 
+import React from 'react';
+
 import { GlobeIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-// import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +15,21 @@ import { useLanguageStore } from '@/stores/languageStore';
 
 const LanguageSwitcher = () => {
   const { language, changeLanguage } = useLanguageStore();
-//   const { t } = useTranslation();
+  const [ isHydrated, setIsHydrated ] = React.useState(false);
 
   const languages = [
     { code: "fr", label: "Français" },
     { code: "en", label: "English" },
     // { code: "es", label: "Español" },
   ];
+
+  React.useEffect(() => {
+      setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated) {
+      return null; // or a loading spinner
+  }
 
   return (
     <DropdownMenu>
