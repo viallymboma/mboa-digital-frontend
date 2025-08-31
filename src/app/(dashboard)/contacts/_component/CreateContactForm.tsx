@@ -1,6 +1,11 @@
 "use client";
 import React from 'react';
 
+import {
+  MapPin,
+  Phone,
+  User,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   Controller,
@@ -101,11 +106,12 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                     control={control}
                     render={({ field }) => (
                         <FormInput 
-                            {...field}
-                            className='border-primaryAppearance'
-                            label={t('contactForm.firstName')}
-                            placeholder={t('contactForm.firstNamePlaceHolder')}
-                            error={errors.firstName?.message ? t(errors.firstName.message) : undefined}
+                        {...field}
+                        icon={<User size={18} />} // 👈 icon
+                        className="border-primaryAppearance"
+                        label={t('contactForm.firstName')}
+                        placeholder={t('contactForm.firstNamePlaceHolder')}
+                        error={errors.firstName?.message ? t(errors.firstName.message) : undefined}
                         />
                     )}
                 />
@@ -115,11 +121,12 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                     control={control}
                     render={({ field }) => (
                         <FormInput 
-                            {...field}
-                            className='border-primaryAppearance'
-                            label={t('contactForm.lastName')}
-                            placeholder={t('contactForm.lastNamePlaceHolder')}
-                            error={errors.lastName?.message ? t(errors.lastName.message) : undefined}
+                        {...field}
+                        icon={<User size={18} />} // 👈 reuse icon
+                        className="border-primaryAppearance"
+                        label={t('contactForm.lastName')}
+                        placeholder={t('contactForm.lastNamePlaceHolder')}
+                        error={errors.lastName?.message ? t(errors.lastName.message) : undefined}
                         />
                     )}
                 />
@@ -129,16 +136,16 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                     control={control}
                     render={({ field }) => (
                         <FormInput 
-                            {...field}
-                            className='border-primaryAppearance' 
-                            type="number"
-                            label={t('contactForm.phoneNumber')}
-                            placeholder={t('contactForm.phoneNumberPlaceHolder')}
-                            error={errors.phoneNumber?.message ? t(errors.phoneNumber.message) : undefined}
+                        {...field}
+                        icon={<Phone size={18} />} // 👈 phone icon
+                        className="border-primaryAppearance"
+                        type="number"
+                        label={t('contactForm.phoneNumber')}
+                        placeholder={t('contactForm.phoneNumberPlaceHolder')}
+                        error={errors.phoneNumber?.message ? t(errors.phoneNumber.message) : undefined}
                         />
                     )}
                 />
-
                 <Controller
                     name="country"
                     control={control}
@@ -149,6 +156,7 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                             {...field}
                             options={formattedCountries}
                             value={field.value}
+                            label={t('contactForm.cityPlaceHolder')}
                             onChange={field.onChange}
                             error={errors.country?.message ? t(errors.country.message) : undefined}
                         />
@@ -160,11 +168,12 @@ const CreateContactForm: React.FC <CreateContactFormProps> = ({ onClose }) => {
                     control={control}
                     render={({ field }) => (
                         <FormInput 
-                            {...field}
-                            className='border-primaryAppearance' 
-                            label=""
-                            placeholder={t('contactForm.cityPlaceHolder')}
-                            error={errors.city?.message ? t(errors.city.message) : undefined}
+                        {...field}
+                        icon={<MapPin size={18} />} // 👈 location icon
+                        className="border-primaryAppearance" 
+                        label={t('contactForm.city')}
+                        placeholder={t('contactForm.cityPlaceHolder')}
+                        error={errors.city?.message ? t(errors.city.message) : undefined}
                         />
                     )}
                 />

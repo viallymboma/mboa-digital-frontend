@@ -81,18 +81,21 @@ const MessageComponent = () => {
                 <div className='flex flex-col gap-2'>
                     <div className='flex justify-between items-center'>
                         <span className='text-[16px] text-grayText'>
-                            {/* {t('message.characterCount', { count: charCount.total })} */}
+                            {/* {t('message.characterCount', { defaultValue:'Total characters: {{characterCount}}.', characterCount: `${charCount.total}` })} */}
                             {t('message.characterCount')}  { charCount.total }
                         </span>
                         <span className='text-sm text-gray-500'>
-                            {/* {t('message.smsCount', { count: Math.ceil(charCount.total / 160) })} */}
+                            {/* {t('message.smsCount', { smsCount: Math.ceil(charCount.total / 160) })} */}
                             {t('message.smsCount')} { Math.ceil(charCount.total / 160) }
                         </span>
                     </div>
                     <span className='text-[16px] text-grayText'>
-                        {/* {t('message.specialCharacters', { count: charCount.special, weight: charCount.specialCount })} */}
+                        {/* {t('message.specialCharacters', { specialCharacterCount: charCount.special, weight: charCount.specialCount })} */}
                         { t('message.specialCharacters') }  { charCount.special } {' => '} { charCount.specialCount }
                     </span>
+                    {/* "characterCount": "Total characters: {{characterCount}}.",
+                    "specialCharacters": "Special characters: {{specialCharacterCount}} (counts as {{weight}}).",
+                    "smsCount": "SMS: {{smsCount}}.", */}
                 </div>
                 <Separator />
                 <Controller

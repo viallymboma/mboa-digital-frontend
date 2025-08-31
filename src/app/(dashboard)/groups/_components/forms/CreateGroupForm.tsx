@@ -1,5 +1,10 @@
 import React from 'react';
 
+import {
+  Hash,
+  User,
+} from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import {
   Controller,
@@ -17,8 +22,8 @@ import { CreateGroupType } from '@/types/groups';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const groupSchema = z.object({
-    name: z.string().min(1, 'Group name is required'),
-    code: z.string().min(1, 'Group code is required'),
+    name: z.string().min(1, { message: 'group.form.nameRequired' }),
+    code: z.string().min(1, { message: 'group.form.codeRequired' }),
 });
 
 type GroupFormData = z.infer<typeof groupSchema>;
@@ -28,9 +33,10 @@ interface CreateGroupFormProps {
 }
 
 const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
+    const t = useTranslations('group');
     const { createGroup } = useGroups();
     const { getLocalStorage } = useGetLocalStorage();
-    const { toggleModal } = useContactStore ();
+    const { toggleModal } = useContactStore();
     const user = getLocalStorage("user");
     const router = useRouter();
 
@@ -56,14 +62,13 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
 
             const response = await createGroup(groupData);
             console.log('Group created:', response);
-            notify.success('Group created successfully');
+            notify.success(t('success'));
             router.push(`/groups/${response.id}`);
             onClose?.();
             reset();
             toggleModal(false);
-            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {
-            notify.error('Failed to create group');
+            notify.error(t('error'));
             console.error('Error creating group:', error);
         }
     };
@@ -77,10 +82,11 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
                     render={({ field }) => (
                         <FormInput 
                             {...field}
-                            label="Group Name"
-                            placeholder="Enter group name"
+                            label={t('form.nameLabel')}
+                            placeholder={t('form.namePlaceholder')}
                             className="border-primaryAppearance"
                             error={errors.name?.message}
+                            icon={<User className="h-4 w-4 text-gray-400" />}
                         />
                     )}
                 />
@@ -91,10 +97,11 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
                     render={({ field }) => (
                         <FormInput 
                             {...field}
-                            label="Group Code"
-                            placeholder="Enter group code"
+                            label={t('form.codeLabel')}
+                            placeholder={t('form.codePlaceholder')}
                             className="border-primaryAppearance"
                             error={errors.code?.message}
+                            icon={<Hash className="h-4 w-4 text-gray-400" />}
                         />
                     )}
                 />
@@ -105,7 +112,7 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
                         type="submit"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? "Creating..." : "Create Group"}
+                        {isSubmitting ? t('form.submitting') : t('form.submit')}
                     </FormButton>
                 </div>
             </form>
@@ -114,3 +121,120 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
 };
 
 export default CreateGroupForm;
+
+// import React from 'react';
+
+// import { useRouter } from 'next/navigation';
+// import {
+//   Controller,
+//   useForm,
+// } from 'react-hook-form';
+// import { z } from 'zod';
+
+// import { FormButton } from '@/app/_components/form/FormButton';
+// import { FormInput } from '@/app/_components/form/FormInput';
+// import { notify } from '@/components/utilities/helper';
+// import useGetLocalStorage from '@/hooks/useGetLocalStorage';
+// import { useGroups } from '@/hooks/useGroupOps';
+// import { useContactStore } from '@/stores/contacts.store';
+// import { CreateGroupType } from '@/types/groups';
+// import { zodResolver } from '@hookform/resolvers/zod';
+
+// const groupSchema = z.object({
+//     name: z.string().min(1, 'Group name is required'),
+//     code: z.string().min(1, 'Group code is required'),
+// });
+
+// type GroupFormData = z.infer<typeof groupSchema>;
+
+// interface CreateGroupFormProps {
+//     onClose?: () => void;
+// }
+
+// const CreateGroupForm: React.FC<CreateGroupFormProps> = ({ onClose }) => {
+//     const { createGroup } = useGroups();
+//     const { getLocalStorage } = useGetLocalStorage();
+//     const { toggleModal } = useContactStore ();
+//     const user = getLocalStorage("user");
+//     const router = useRouter();
+
+//     const {
+//         control,
+//         handleSubmit,
+//         formState: { errors, isSubmitting },
+//         reset,
+//     } = useForm<GroupFormData>({
+//         resolver: zodResolver(groupSchema),
+//         defaultValues: {
+//             name: '',
+//             code: ''
+//         }
+//     });
+
+//     const onSubmit = async (data: GroupFormData) => {
+//         try {
+//             const groupData: CreateGroupType = {
+//                 ...data,
+//                 enterpriseId: user?.enterprise?.id
+//             };
+
+//             const response = await createGroup(groupData);
+//             console.log('Group created:', response);
+//             notify.success('Group created successfully');
+//             router.push(`/groups/${response.id}`);
+//             onClose?.();
+//             reset();
+//             toggleModal(false);
+//             // toggleModal(undefined as unknown as boolean); // Close the modal
+//         } catch (error) {
+//             notify.error('Failed to create group');
+//             console.error('Error creating group:', error);
+//         }
+//     };
+
+//     return (
+//         <div className='max-h-[500px] overflow-y-auto p-2'>
+//             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col gap-3">
+//                 <Controller
+//                     name="name"
+//                     control={control}
+//                     render={({ field }) => (
+//                         <FormInput 
+//                             {...field}
+//                             label="Group Name"
+//                             placeholder="Enter group name"
+//                             className="border-primaryAppearance"
+//                             error={errors.name?.message}
+//                         />
+//                     )}
+//                 />
+
+//                 <Controller
+//                     name="code"
+//                     control={control}
+//                     render={({ field }) => (
+//                         <FormInput 
+//                             {...field}
+//                             label="Group Code"
+//                             placeholder="Enter group code"
+//                             className="border-primaryAppearance"
+//                             error={errors.code?.message}
+//                         />
+//                     )}
+//                 />
+
+//                 <div className='flex flex-col gap-4'>
+//                     <FormButton 
+//                         className='bg-primaryAppearance h-[56px] text-white' 
+//                         type="submit"
+//                         disabled={isSubmitting}
+//                     >
+//                         {isSubmitting ? "Creating..." : "Create Group"}
+//                     </FormButton>
+//                 </div>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default CreateGroupForm;

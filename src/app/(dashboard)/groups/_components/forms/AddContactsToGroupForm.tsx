@@ -1,9 +1,10 @@
 "use client"
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import RecipientsSection
   from '@/app/(dashboard)/contacts/_component/table-sub-ui/RecipientsSection';
-// import { RecipientsSection } from '@/app/(dashboard)/contacts/_component/table-sub-ui/RecipientsSection';
 import { FormButton } from '@/app/_components/form/FormButton';
 import { Separator } from '@/components/ui/separator';
 import { notify } from '@/components/utilities/helper';
@@ -17,6 +18,7 @@ interface AddContactsToGroupFormProps {
 }
 
 const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, onClose }) => {
+    const t = useTranslations('group');
     console.log('Group in AddContactsToGroupForm:', onClose);
     const { addContactsToGroup } = useGroups();
     
@@ -27,7 +29,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
         e.preventDefault();
 
         if (selectedContactsData.length === 0) {
-            notify.error('Please select at least one contact');
+            notify.error(t('noContactsSelected'));
             return;
         }
 
@@ -37,9 +39,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
             const removeAlreadySelectedContacts = group.enterpriseContacts?.map(contact => contact.id) || [];
             const filteredContactIds = contactIds.filter(id => !removeAlreadySelectedContacts.includes(id));
             await addContactsToGroup(group.id, filteredContactIds);
-            // onClose();
             toggleModal(false);
-            // toggleModal(undefined as unknown as boolean); // Close the modal
         } catch (error) {
             console.error('Error adding contacts to group:', error);
         } finally {
@@ -48,8 +48,10 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
     };
 
     return (
-        <form onSubmit={(e) => handleSubmit (e)} className="space-y-4 flex flex-col gap-3">
-            <h3 className="text-lg font-semibold">Add Contacts to {group.name}</h3>
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4 flex flex-col gap-3">
+            {/* <h3 className="text-lg font-semibold">{t('form.addContactsTitle', { name: group.name })}</h3> */}
+            {/* "addContactsTitle": "Add Contacts to {{name}}", */}
+            <h3 className="text-lg font-semibold">{t('form.addContactsTitle')} { group.name }</h3>
             <Separator />
             <RecipientsSection />
             <div className='flex flex-col gap-4'>
@@ -58,7 +60,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? 'Adding...' : 'Add Selected Contacts'}
+                    {isSubmitting ? t('submitting') : t('submit')}
                 </FormButton>
             </div>
         </form>

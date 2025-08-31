@@ -14,7 +14,7 @@
       "submitting": "Sending..."
     },
     "recipients": {
-      "toLabel": "To:",
+      "toLabel": "To: ",
       "noRecipients": "No recipients selected",
       "addRecipients": "Add Recipients",
       "phoneInputPlaceholder": "Enter phone number and press Enter",
@@ -118,6 +118,8 @@
       "firstNamePlaceHolder": "Enter your first name",
       "lastNamePlaceHolder": "Enter your last name",
       "phoneNumber": "Phone Number",
+      "country": "Coutry",
+      "countryPlaceHolder": "Select country",
       "city": "City",
       "fullNamePlaceHolder": "Enter your full name",
       "phoneNumberPlaceHolder": "Enter your phone number",
@@ -169,7 +171,19 @@
     "breadcrumb": {
       "dashboard": "Dashboard",
       "contact": "Contact"
-    }
+    },
+    "actionMenu": {
+      "open": "Open menu"
+    },
+    "editContact": "Edit Contact",
+    "sendMessage": "Send Message",
+    "deleteContact": "Delete Contact",
+    "editContactTitle": "Edit Profile",
+    "deleteConfirmTitle": "Are you sure?",
+    "deleteConfirmDescription": "This action cannot be undone. This will permanently delete the contact {{name}}.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "sendMessageTitle": "Send Message to {{name}}"
   },
   "group": {
     "emptyUI": {
@@ -182,7 +196,45 @@
     },
     "newGroupBtn": "New Group",
     "addNewGroupFormBtn": "Add a Contact",
-    "groupMessage": "Group Message"
+    "groupMessage": "Group Message", 
+    "grid": {
+      "searchPlaceholder": "Search by name or code...",
+      "hideArchived": "Hide Archived",
+      "showArchived": "Show Archived",
+      "listView": "List View",
+      "gridView": "Grid View",
+      "clearFilters": "Clear Filters",
+      "noGroupsFound": "No groups found."
+    },
+    "card": {
+      "contacts": "Contacts",
+      "code": "Code: ",
+      "createdAt": "Created: ",
+      "viewDetails": "View Details",
+      "addContacts": "Add Contacts",
+      "archiveGroup": "Archive Group"
+    },
+    "form": {
+      "addContactsTitle": "Add Contacts to ",
+      "noContactsSelected": "Please select at least one contact",
+      "nameLabel": "Group Name",
+      "namePlaceholder": "Enter group name",
+      "nameRequired": "Group name is required",
+      "codeLabel": "Group Code",
+      "codePlaceholder": "Enter group code",
+      "codeRequired": "Group code is required",
+      "submit": "Create Group",
+      "submitting": "Creating...",
+      "success": "Group created successfully",
+      "error": "Failed to create group"
+    },
+    "header": {
+      "title": "My Groups",
+      "breadcrumb": {
+        "dashboard": "Dashboard",
+        "group": "Group"
+      }
+    }
   },
   "histories": {
     "emptyUI": {

@@ -147,7 +147,7 @@ const ContactActionUI: React.FC<ContactActionUIType> = ({ rowData }) => {
           <AlertDialogHeader>
             <AlertDialogTitle>{t('contact.deleteConfirmTitle', { defaultValue: 'Are you sure?' })}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t('contact.deleteConfirmDescription', { defaultValue: 'This action cannot be undone. This will permanently delete the contact {name}.', name: `${rowData.firstname} ${rowData.lastname}` })}
+              {t('contact.deleteConfirmDescription', { defaultValue: 'This action cannot be undone. This will permanently delete the contact {{name}}.', name: `${rowData.firstname} ${rowData.lastname}` })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -166,7 +166,7 @@ const ContactActionUI: React.FC<ContactActionUIType> = ({ rowData }) => {
       <Dialog open={isMessageDialogOpen} onOpenChange={handleCloseMessageDialog}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t('contact.sendMessageTitle', { defaultValue: 'Send Message to {name}', name: `${rowData.firstname} ${rowData.lastname}` })}</DialogTitle>
+            <DialogTitle>{t('contact.sendMessageTitle', { defaultValue: 'Send Message to {{name}}', name: `${rowData.firstname} ${rowData.lastname}` })}</DialogTitle>
           </DialogHeader>
           <MessageComponent />
         </DialogContent>

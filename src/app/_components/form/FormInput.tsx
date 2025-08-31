@@ -16,13 +16,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { EnterpriseContactResponseType } from '@/types/contact';
 
-// Fixed FormInput component
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder?: string;
   type?: string;
   className?: string;
   error?: string;
+  icon?: React.ReactNode; // 👈 Add icon support
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
@@ -35,21 +35,35 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       error,
       value = '',
       onChange,
+      icon,
       ...restProps 
     } = props;
 
     return (
       <div className="space-y-2 w-full">
         {label && <label className="block text-[14px] font-medium dark:text-white text-gray-700">{label}</label>}
-        <Input
-          ref={ref}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          className={cn('w-full h-[56px]', className)}
-          {...restProps}
-        />
+        
+        <div className="relative">
+          {icon && (
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+              {icon}
+            </span>
+          )}
+          <Input
+            ref={ref}
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            className={cn(
+              'w-full h-[56px]',
+              icon && 'pl-10', // 👈 Add padding if icon exists
+              className
+            )}
+            {...restProps}
+          />
+        </div>
+
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
       </div>
     );

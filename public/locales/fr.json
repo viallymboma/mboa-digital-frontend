@@ -14,7 +14,7 @@
       "submitting": "Envoi en cours..."
     },
     "recipients": {
-      "toLabel": "À :",
+      "toLabel": "À : ",
       "noRecipients": "Aucun destinataire sélectionné",
       "addRecipients": "Ajouter des destinataires",
       "phoneInputPlaceholder": "Entrez le numéro de téléphone et appuyez sur Entrée",
@@ -90,6 +90,8 @@
       "firstNamePlaceHolder": "Entrez votre prénom",
       "lastNamePlaceHolder": "Entrez votre nom de famille",
       "phoneNumber": "Numéro de téléphone",
+      "country": "Pays",
+      "countryPlaceHolder": "Sélectionnez le pays",
       "city": "Ville",
       "fullNamePlaceHolder": "Entrez votre nom complet",
       "phoneNumberPlaceHolder": "Entrez votre numéro de téléphone",
@@ -169,7 +171,19 @@
     "breadcrumb": {
       "dashboard": "Tableau de bord",
       "contact": "Contact"
-    }
+    }, 
+    "actionMenu": {
+      "open": "Ouvrir le menu"
+    },
+    "editContact": "Modifier le contact",
+    "sendMessage": "Envoyer un message",
+    "deleteContact": "Supprimer le contact",
+    "editContactTitle": "Modifier le profil",
+    "deleteConfirmTitle": "Êtes-vous sûr ?",
+    "deleteConfirmDescription": "Cette action ne peut pas être annulée. Cela supprimera définitivement le contact {{name}}.",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "sendMessageTitle": "Envoyer un message à {{name}}"
   },
   "group": {
     "emptyUI": {
@@ -182,7 +196,45 @@
     },
     "newGroupBtn": "Nouveau groupe",
     "addNewGroupFormBtn": "Ajouter un contact",
-    "groupMessage": "Message de groupe"
+    "groupMessage": "Message de groupe", 
+    "grid": {
+      "searchPlaceholder": "Rechercher par nom ou code...",
+      "hideArchived": "Masquer les archivés",
+      "showArchived": "Afficher les archivés",
+      "listView": "Vue en liste",
+      "gridView": "Vue en grille",
+      "clearFilters": "Effacer les filtres",
+      "noGroupsFound": "Aucun groupe trouvé."
+    },
+    "card": {
+      "contacts": "Contacts",
+      "code": "Code : ",
+      "createdAt": "Créé : ",
+      "viewDetails": "Voir les détails",
+      "addContacts": "Ajouter des contacts",
+      "archiveGroup": "Archiver le groupe"
+    },
+    "form": {
+      "addContactsTitle": "Ajouter des contacts à ",
+      "noContactsSelected": "Veuillez sélectionner au moins un contact",
+      "nameLabel": "Nom du groupe",
+      "namePlaceholder": "Entrez le nom du groupe",
+      "nameRequired": "Le nom du groupe est requis",
+      "codeLabel": "Code du groupe",
+      "codePlaceholder": "Entrez le code du groupe",
+      "codeRequired": "Le code du groupe est requis",
+      "submit": "Créer le groupe",
+      "submitting": "Création en cours...",
+      "success": "Groupe créé avec succès",
+      "error": "Échec de la création du groupe"
+    },
+    "header": {
+      "title": "Mes Groupes",
+      "breadcrumb": {
+        "dashboard": "Tableau de bord",
+        "group": "Groupe"
+      }
+    }
   },
   "histories": {
     "emptyUI": {
