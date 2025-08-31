@@ -60,7 +60,7 @@ const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, 
                     type="submit"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? t('submitting') : t('submit')}
+                    {isSubmitting ? t('form.submitting') : t('form.submit')}
                 </FormButton>
             </div>
         </form>
