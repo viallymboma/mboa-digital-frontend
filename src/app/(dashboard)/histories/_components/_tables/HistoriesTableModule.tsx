@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import StatsCard from '@/app/(dashboard)/contacts/_component/StatsCard';
 import {
   DeliveredSMSSvgIcon,
@@ -11,6 +13,7 @@ import { useHistories } from '@/hooks/useHistories';
 import HistoriesTable from './HistoriesTable';
 
 const HistoriesTableModule = () => {
+  const t = useTranslations('histories');
   const { histories } = useHistories();
 
   const stats = React.useMemo(() => {
@@ -31,7 +34,7 @@ const HistoriesTableModule = () => {
       <div className="flex items-center gap-4 py-4">
         <StatsCard
           value={stats.sent.toLocaleString('fr-FR')}
-          label="Messages envoyés"
+          label={t('table.sentMessages')}
           icon={<SentSmsSvgIcon />}
           color="black"
           borderColor="border-primaryAppearance"
@@ -39,14 +42,14 @@ const HistoriesTableModule = () => {
         />
         <StatsCard
           value={stats.delivered.toLocaleString('fr-FR')}
-          label="Messages délivrés"
+          label={t('table.deliveredMessages')}
           icon={<DeliveredSMSSvgIcon />}
           color="#0E8345"
           borderColor="border-borderGreen"
         />
         <StatsCard
           value={stats.failed.toLocaleString('fr-FR')}
-          label="Messages échoués"
+          label={t('table.failedMessages')}
           icon={<FailedSMSSvgIcon />}
           color="#DE1135"
           borderColor="border-borderRed"

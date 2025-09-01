@@ -186,6 +186,16 @@
     "sendMessageTitle": "Envoyer un message à {{name}}"
   },
   "group": {
+    "module": {
+      "addContactsButton": "Ajouter des Contacts",
+      "error": "Erreur"
+    },
+    "table": {
+      "title": "Liste des Contacts",
+      "description": "Liste de toutes les catégories disponibles",
+      "active": "Actif",
+      "inactive": "Inactif"
+    },
     "emptyUI": {
       "mainTitle": "Pas de contacts disponibles pour le moment",
       "secondTitle": "Essayez de créer des groupes pour les afficher ici.",
@@ -228,6 +238,14 @@
       "success": "Groupe créé avec succès",
       "error": "Échec de la création du groupe"
     },
+    "headerGroupOne": {
+      "title": "Groupe - ",
+      "addContactsButton": "Ajouter des Contacts",
+      "breadcrumb": {
+        "groups": "Groupes",
+        "contact": "Contact"
+      }
+    },
     "header": {
       "title": "Mes Groupes",
       "breadcrumb": {
@@ -240,6 +258,29 @@
     "emptyUI": {
       "mainTitle": "Pas d’historique disponible pour le moment",
       "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici"
+    }, 
+        "header": {
+      "title": "Historiques",
+      "breadcrumb": {
+        "dashboard": "Tableau de bord",
+        "histories": "Historiques"
+      }
+    },
+    "module": {
+      "error": "Erreur"
+    },
+    "table": {
+      "title": "Liste des Historiques",
+      "description": "Liste de toutes les catégories disponibles",
+      "error": "Erreur lors du chargement de l’historique",
+      "sentMessages": "Messages envoyés",
+      "deliveredMessages": "Messages délivrés",
+      "failedMessages": "Messages échoués"
+    },
+    "messageDetails": {
+      "smsSending": "Envoi de SMS",
+      "smsUsedCount": "Nombre de SMS Utilisés",
+      "recipient": "Destinataire"
     }
   },
   "recharges": {
@@ -247,6 +288,60 @@
       "mainTitle": "Pas d’informations disponibles pour le moment",
       "secondTitle": "Essayez d’ajouter ou d’importer des contacts pour les afficher ici",
       "actionButtonLabel": "Faire une recharge"
+    }, 
+    "header": {
+      "title": "Recharges",
+      "rechargeButton": "Recharger",
+      "breadcrumb": {
+        "dashboard": "Tableau de bord",
+        "recharges": "Recharges"
+      }
+    },
+    "module": {
+      "error": "Erreur"
+    },
+    "table": {
+      "title": "Liste des Recharges",
+      "description": "Liste de toutes les catégories disponibles",
+      "totalRecharges": "Recharges effectuées",
+      "validatedRecharges": "Recharges validées",
+      "pendingRecharges": "Recharges en attente",
+      "rejectedRecharges": "Recharges rejetées"
+    },
+    "form": {
+      "title": "Faire une recharge",
+      "totalPrice": "Prix total",
+      "planTitle": "Plan ",
+      "minQuantity": "Quantité min",
+      "maxQuantity": "Quantité max",
+      "unitPrice": "Prix unitaire",
+      "validity": "Validité",
+      "days": "jours",
+      "totalQuantity": "Quantité Totale",
+      "debitPhoneNumberLabel": "Numéro de téléphone",
+      "debitPhoneNumberPlaceholder": "Ex: 237612345678",
+      "debitPhoneNumberInvalid": "Numéro de téléphone invalide",
+      "qteMessageLabel": "Nombre de SMS",
+      "qteMessagePlaceholder": "Entrez le nombre de SMS",
+      "qteMessageMin": "Le nombre de SMS doit être supérieur à 0",
+      "qteMessageInvalid": "La quantité doit être dans une fourchette de plan disponible",
+      "paymentMethodLabel": "Méthode de paiement",
+      "paymentMethodPlaceholder": "Sélectionnez une méthode",
+      "paymentMethodSearchPlaceholder": "Rechercher une méthode",
+      "paymentMethodRequired": "Sélectionnez une méthode de paiement",
+      "next": "Suivant",
+      "initiateTransaction": "Cliquez sur Initier la transaction et valider sur votre mobile money",
+      "completeTransaction": "Terminer la Transaction",
+      "processing": "Traitement...",
+      "back": "Retour",
+      "success": "Recharge initiée avec succès",
+      "error": "Échec de l’initiation de la recharge",
+      "paymentOptions": {
+        "cash": "Espèces",
+        "momo": "MTN Mobile Money",
+        "om": "Orange Money",
+        "bank": "Compte bancaire"
+      }
     }
   },
   "payments": {
@@ -345,9 +440,9 @@
       "columnsDropdown": "Colonnes",
       "columnsLabel": "Afficher/Cacher les colonnes",
       "rowsPerPage": "Lignes par page :",
-      "showRows": "{{size}}",
-      "of": "de",
-      "page": "Page {{current}} sur {{total}}"
+      "showRows": "Montrer ",
+      "of": " de ",
+      "page": "Page "
     }
   }, 
   "dashboard": {

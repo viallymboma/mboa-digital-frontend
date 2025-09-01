@@ -17,9 +17,8 @@ interface AddContactsToGroupFormProps {
     onClose?: () => void;
 }
 
-const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group, onClose }) => {
+const AddContactsToGroupForm: React.FC<AddContactsToGroupFormProps> = ({ group }) => {
     const t = useTranslations('group');
-    console.log('Group in AddContactsToGroupForm:', onClose);
     const { addContactsToGroup } = useGroups();
     
     const { selectedContactsData, toggleModal } = useContactStore();

@@ -75,7 +75,7 @@ const GenericTable = <TData extends { id?: string }>({
   if (!table) {
     return (
       <div className="p-4 flex items-center justify-center border-primaryAppearance border rounded-[12px]">
-        <span>{t('loading')}</span>
+        <span>{t('general.loading')}</span>
       </div>
     );
   }
@@ -219,7 +219,7 @@ const GenericTable = <TData extends { id?: string }>({
           >
             {[5, 7, 10, 20].map((size) => (
               <option key={size} value={size}>
-                {t('table.showRows', { size })}
+                {t('table.showRows')} { size }
               </option>
             ))}
           </select>
@@ -242,7 +242,7 @@ const GenericTable = <TData extends { id?: string }>({
           </button>
         </div>
         <span className="text-sm">
-          {t('table.page', { current: table?.getState().pagination.pageIndex + 1, total: table?.getPageCount() })}
+          {t('table.page')} { table?.getState().pagination.pageIndex + 1 } { t('table.of') } { table?.getPageCount() }
         </span>
       </div>
     </div>

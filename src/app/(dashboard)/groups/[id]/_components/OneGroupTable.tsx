@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import {
   contactColumns,
   TransformedContactType,
@@ -10,6 +12,7 @@ import {
 import GenericTable from '@/app/_components/tables/GenericTable';
 
 const OneGroupTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
+  const t = useTranslations('group.table');
 
   const transformedData = React.useMemo(() => 
     contacts?.map((contact) => ({
@@ -22,18 +25,17 @@ const OneGroupTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
       city: contact.city,
       enterprise: contact.enterprise,
       createdAt: new Date(contact.createdAt).toLocaleDateString(),
-      status: contact.archived ? 'Inactive' : 'Active', 
+      status: contact.archived ? t('inactive') : t('active'), 
       smsSenderId: contact.smsSenderId || '', 
       activityDomain: contact.activityDomain || '', 
       villeEntreprise: contact.villeEntreprise || '', 
-      user: contact.user || null, // Pass the full user object or null
+      user: contact.user || null,
       pays: contact?.pays || '',
-      archived: contact.archived // Add archived property to match TransformedContactType
+      archived: contact.archived
     })), [contacts]
   );
 
   const [data, setData] = React.useState(transformedData || []);
-
 
   // Update data when contacts prop changes
   React.useEffect(() => {
@@ -48,44 +50,12 @@ const OneGroupTable: React.FC <ContactTableModuleProps> = ({ contacts }) => {
     <GenericTable
       data={data}
       columns={contactColumns as TransformedContactType []}
-      title="Listes des Contacts"
-      description="Liste de toutes les catégories disponibles"
+      title={t('title')}
+      description={t('description')}
       defaultPageSize={7}
-      // onEdit={(row) => console.log('Edit:', row)}
-      // onDelete={(row) => console.log('Delete:', row)}
-      onReorder={handleReorder} // Pass the reorder handler
+      onReorder={handleReorder}
     />
   );
-
-  // const [data, setData] = React.useState(dummyDataReal);
-
-  // const handleReorder = (reorderedData: typeof dummyDataReal) => {
-  //   setData(reorderedData); // Update the data state
-  // };
-
-  // return (
-  //   <GenericTable
-  //     data={data}
-  //     columns={contactColumns}
-  //     title="Listes des Contacts"
-  //     description="Liste de toutes les catégories disponibles"
-  //     defaultPageSize={7}
-  //     onEdit={(row) => console.log('Edit:', row)}
-  //     onDelete={(row) => console.log('Delete:', row)}
-  //     onReorder={handleReorder} // Pass the reorder handler
-  //   />
-  // );
-  // return (
-  //   <GenericTable
-  //     data={dummyDataReal}
-  //     columns={contactColumns}
-  //     title="Listes des Contacts"
-  //     description="Liste de toutes les catégories disponibles"
-  //     defaultPageSize={7}
-  //     onEdit={(row) => console.log('Edit:', row)}
-  //     onDelete={(row) => console.log('Delete:', row)}
-  //   />
-  // );
 };
 
 export default OneGroupTable;

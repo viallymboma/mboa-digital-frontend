@@ -1,21 +1,23 @@
 "use client";
 import React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import GenericPageHeader from '../../_components/_global/GenericPageHeader';
 
 const HistoriesPageHeader = () => {
+    const t = useTranslations('histories');
 
     const breadcrumbLinks = [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Historiques' },
+        { label: t('header.breadcrumb.dashboard'), href: '/dashboard' },
+        { label: t('header.breadcrumb.histories') },
     ];
 
     return (
         <>
-            <GenericPageHeader title='Historiques' breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader title={t('header.title')} breadcrumbLinks={breadcrumbLinks} />
         </>
     )
-
 }
 
 export default HistoriesPageHeader

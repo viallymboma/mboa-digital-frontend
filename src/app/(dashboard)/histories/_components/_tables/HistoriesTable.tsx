@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import GenericTable from '@/app/_components/tables/GenericTable';
 import { useHistories } from '@/hooks/useHistories';
@@ -8,6 +9,7 @@ import { useHistories } from '@/hooks/useHistories';
 import { historiesColumns } from './HistoriesTableElements';
 
 const HistoriesTable = () => {
+  const t = useTranslations('histories');
   const { histories, isLoading, error } = useHistories();
 
   if (isLoading) {
@@ -19,15 +21,15 @@ const HistoriesTable = () => {
   }
 
   if (error) {
-    return <div className="text-center text-red-600">Erreur lors du chargement de l’historique</div>;
+    return <div className="text-center text-red-600">{t('table.error')}</div>;
   }
 
   return (
     <GenericTable
       data={histories}
       columns={historiesColumns}
-      title="Listes des Historiques"
-      description="Liste de toutes les catégories disponibles"
+      title={t('table.title')}
+      description={t('table.description')}
       defaultPageSize={7}
       onReorder={(reorderedData) => reorderedData}
     />

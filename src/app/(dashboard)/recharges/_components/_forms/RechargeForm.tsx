@@ -4,8 +4,11 @@ import React from 'react';
 import {
   ArrowRight,
   CheckCircle,
+  Hash,
   Loader2,
+  Phone,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Controller,
   useForm,
@@ -27,26 +30,27 @@ import { useRecharges } from '@/hooks/useRecharges';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-  debitPhoneNumber: z.string().min(9, { message: "Numéro de téléphone invalide" }),
+  debitPhoneNumber: z.string().min(9, { message: "recharges.form.debitPhoneNumberInvalid" }),
   qteMessage: z.string().transform(Number).pipe(
-    z.number().min(1, { message: "Le nombre de SMS doit être supérieur à 0" })
+    z.number().min(1, { message: "recharges.form.qteMessageMin" })
   ),
-  paymentMethod: z.string().min(2, { message: "Sélectionnez une méthode de paiement" }),
+  paymentMethod: z.string().min(2, { message: "recharges.form.paymentMethodRequired" }),
   couponCode: z.string().optional()
 });
 
 type FormData = z.infer<typeof schema>;
 
 const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
+  const t = useTranslations('recharges');
   const [step, setStep] = React.useState(1);
   const { createRecharge, isLoading } = useRecharges();
   const { isLoading: isLoadingPlans, calculatePrice, getApplicablePlan } = usePricingPlan();
 
   const paymentOptions = [
-    { value: 'CASH', label: 'Cash' },
-    { value: 'MOMO', label: 'MTN Mobile Money' },
-    { value: 'OM', label: 'Orange Money' },
-    { value: 'BANK', label: 'Bank account' },
+    { value: 'CASH', label: t('form.paymentOptions.cash') },
+    { value: 'MOMO', label: t('form.paymentOptions.momo') },
+    { value: 'OM', label: t('form.paymentOptions.om') },
+    { value: 'BANK', label: t('form.paymentOptions.bank') },
   ];
 
   const {
@@ -82,7 +86,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
     if (!planInfo) {
       setError('qteMessage', {
         type: 'manual',
-        message: 'La quantité doit être dans une fourchette de plan disponible'
+        message: t('form.qteMessageInvalid')
       });
       setSelectedPlanInfo(undefined);
       return;
@@ -98,7 +102,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
       if (!plan) {
         setError('qteMessage', {
           type: 'manual',
-          message: 'La quantité doit être dans une fourchette de plan disponible'
+          message: t('form.qteMessageInvalid')
         });
         return;
       }
@@ -115,27 +119,26 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
         couponCode: data.couponCode || undefined,
         debitBankAccountNumber: ''
       });
-      notify.success('Recharge initiée avec succès');
+      notify.success(t('form.success'));
       onClose?.();
     } catch (error: unknown) {
       console.error('Failed to create recharge:', error);
-            let message = 'Failed to fetch recharges';
-            if (
-                error &&
-                typeof error === 'object' &&
-                'response' in error &&
-                (error as { response?: unknown }).response &&
-                typeof (error as { response?: unknown }).response === 'object' &&
-                'data' in (error as { response: { data?: unknown } }).response &&
-                (error as { response: { data?: unknown } }).response.data &&
-                typeof (error as { response: { data?: unknown } }).response.data === 'object' &&
-                'message' in (error as { response: { data: { message?: string } } }).response.data
-            ) {
-                // @ts-expect-error: dynamic error shape
-                message = error.response.data.message || message;
-            }
-            notify.error(message);
-            setStep(1);
+      let message = t('form.error');
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        (error as { response?: unknown }).response &&
+        typeof (error as { response?: unknown }).response === 'object' &&
+        'data' in (error as { response: { data?: unknown } }).response &&
+        (error as { response: { data?: unknown } }).response.data &&
+        typeof (error as { response: { data: { message?: string } } }).response.data === 'object' &&
+        'message' in (error as { response: { data: { message?: string } } }).response.data
+      ) {
+        message = (error as { response: { data: { message?: string } } }).response.data.message || message;
+      }
+      notify.error(message);
+      setStep(1);
     }
   };
 
@@ -149,7 +152,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <div className="max-h-[500px] overflow-y-auto p-2">
-      <h2 className="text-xl font-bold mb-4">Faire une recharge</h2>
+      <h2 className="text-xl font-bold mb-4">{t('form.title')}</h2>
 
       <div className="flex flex-row gap-3 items-center">
         <Progress value={step === 1 ? 100 : 0} className="bg-gray-200 [&>div]:bg-primaryAppearance mt-3 mb-5" />
@@ -160,39 +163,39 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
         <div className="text-3xl font-bold text-purple-700 text-center">
           {price.toLocaleString()} FCFA
         </div>
-        <p className="text-gray-500 text-center mb-4">Prix total</p>
+        <p className="text-gray-500 text-center mb-4">{t('form.totalPrice')}</p>
 
         {selectedPlanInfo && (
           <div className="bg-gray-50 rounded-lg p-4 space-y-2">
             <h3 className="font-semibold text-lg text-purple-700">
-              Plan {selectedPlanInfo.name}
+              {t('form.planTitle')} { selectedPlanInfo.name }
             </h3>
             <p className="text-sm text-gray-600">
               {selectedPlanInfo.description}
             </p>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="font-medium">Quantité min:</span>{' '}
+                <span className="font-medium">{t('form.minQuantity')}:</span>{' '}
                 {selectedPlanInfo.minSMS.toLocaleString()} SMS
               </div>
               <div>
-                <span className="font-medium">Quantité max:</span>{' '}
+                <span className="font-medium">{t('form.maxQuantity')}:</span>{' '}
                 {selectedPlanInfo.maxSMS.toLocaleString()} SMS
               </div>
               <div>
-                <span className="font-medium">Prix unitaire:</span>{' '}
+                <span className="font-medium">{t('form.unitPrice')}:</span>{' '}
                 {selectedPlanInfo.unitPrice} FCFA
               </div>
               <div>
-                <span className="font-medium">Validité:</span>{' '}
-                {selectedPlanInfo.validity} jours
+                <span className="font-medium">{t('form.validity')}:</span>{' '}
+                {selectedPlanInfo.validity} {t('days')}
               </div>
               <div>
-                <span className="font-medium">Quantité Totale:</span>{' '}
+                <span className="font-medium">{t('form.totalQuantity')}:</span>{' '}
                 {qteMessage.toLocaleString()} SMS
               </div>
               <div>
-                <span className="font-medium">Prix Totale:</span>{' '}
+                <span className="font-medium">{t('form.totalPrice')}:</span>{' '}
                 {price.toLocaleString()} FCFA
               </div>
             </div>
@@ -208,10 +211,11 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                 <FormInput 
                   {...field}
                   className="border-primaryAppearance"
-                  label='Phone number'
+                  label={t('form.debitPhoneNumberLabel')}
                   type="tel"
-                  placeholder="Ex: 237612345678"
+                  placeholder={t('form.debitPhoneNumberPlaceholder')}
                   error={errors.debitPhoneNumber?.message}
+                  icon={<Phone className="h-4 w-4 text-gray-400" />}
                 />
               )}
             />
@@ -225,9 +229,10 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
                   className="border-primaryAppearance"
                   type="number"
                   min="1"
-                  label='Number of sms'
-                  placeholder="Entrez le nombre de SMS"
+                  label={t('form.qteMessageLabel')}
+                  placeholder={t('form.qteMessagePlaceholder')}
                   error={errors.qteMessage?.message}
+                  icon={<Hash className="h-4 w-4 text-gray-400" />}
                   onChange={(e) => {
                     field.onChange(e);
                     handleQuantityChange(e.target.value);
@@ -242,12 +247,13 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
               render={({ field }) => (
                 <CountrySelect
                   {...field}
-                  label='Payment Method'
-                  placeHolder='Selectionnez une methode'
-                  placeHolderSearch='Rechercher une methode'
+                  label={t('form.paymentMethodLabel')}
+                  placeHolder={t('form.paymentMethodPlaceholder')}
+                  placeHolderSearch={t('form.paymentMethodSearchPlaceholder')}
                   className="border-primaryAppearance"
                   options={paymentOptions}
                   error={errors.paymentMethod?.message}
+                  // icon={<CreditCard />}
                 />
               )}
             />
@@ -258,13 +264,13 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
               className="w-full bg-purple-700 text-white"
               disabled={isLoading}
             >
-              Suivant <ArrowRight className="ml-2" />
+              {t('form.next')} <ArrowRight className="ml-2" />
             </Button>
           </>
         ) : (
           <>
             <p className="text-center text-black font-medium mb-4">
-              Cliquez sur Initier la transaction et valider sur votre mobile money
+              {t('form.initiateTransaction')}
             </p>
 
             <Button 
@@ -276,11 +282,11 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
               {isLoading ? (
                 <span className="flex items-center">
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Traitement...
+                  {t('form.processing')}
                 </span>
               ) : (
                 <>
-                  Terminer la Transaction <CheckCircle className="ml-2" />
+                  {t('form.completeTransaction')} <CheckCircle className="ml-2" />
                 </>
               )}
             </Button>
@@ -292,7 +298,7 @@ const RechargeForm = ({ onClose }: { onClose?: () => void }) => {
               onClick={() => setStep(1)}
               disabled={isLoading}
             >
-              Retour
+              {t('form.back')}
             </Button>
           </>
         )}

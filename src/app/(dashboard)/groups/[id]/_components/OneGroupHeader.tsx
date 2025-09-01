@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
 
-// import { useParams, usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+
 import GenericPageHeader
   from '@/app/(dashboard)/_components/_global/GenericPageHeader';
 import MessageComponent
@@ -17,16 +18,17 @@ import AddContactsToGroupForm
   from '../../_components/forms/AddContactsToGroupForm';
 
 type OneGroupHeaderType = {
-    currentGroup?: GroupType; // Define the type of currentGroup if known
+    currentGroup?: GroupType;
 };
 
 const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
+    const t = useTranslations('group');
     const [isAddContactsModalOpen, setIsAddContactsModalOpen] = React.useState(false);
-    const { toggleModal } = useContactStore ();
+    const { toggleModal } = useContactStore();
     console.log('Current Group in isAddContactsModalOpen:', isAddContactsModalOpen);
     const buttons = [
         {
-            label: 'group.groupMessage',
+            label: t('groupMessage'),
             icon: AddMessageSvgIcon, 
             dialoContentStyle: "sm:max-w-[500px]", 
             buttonBg: "bg-primaryAppearance", 
@@ -35,11 +37,10 @@ const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
             </>,
         },
         {
-            label: '',
+            label: t('module.addContactsButton'),
             icon: AddNewContactSvgIcon, 
             dialoContentStyle: "sm:max-w-[425px]", 
             buttonBg: "bg-black", 
-            // dialogContent: <CreateGroupForm />,
             dialogContent: <AddContactsToGroupForm
                 group={currentGroup as GroupType} 
                 onClose={() => setIsAddContactsModalOpen(false)} 
@@ -49,15 +50,21 @@ const OneGroupHeader: React.FC <OneGroupHeaderType> = ({ currentGroup }) => {
     ];
 
     const breadcrumbLinks = [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Groups', href: '/groups' },
-        { label: 'Contact' },
+        { label: t('header.breadcrumb.dashboard'), href: '/dashboard' },
+        { label: t('headerGroupOne.breadcrumb.groups'), href: '/groups' },
+        { label: t('headerGroupOne.breadcrumb.contact') },
     ];
 
     return (
         <>
-            {/* <GenericPageHeader buttons={buttons} title={`Group - ${ pathName?.split("/")[pathName?.split("/").length - 1] }`} breadcrumbLinks={breadcrumbLinks} /> */}
-            <GenericPageHeader data={currentGroup?.enterpriseContacts} buttons={buttons} title={`Group - ${ currentGroup?.name }`} breadcrumbLinks={breadcrumbLinks} />
+            <GenericPageHeader 
+                data={currentGroup?.enterpriseContacts} 
+                buttons={buttons} 
+                title={t('headerGroupOne.title') + (currentGroup?.name || '')} 
+                // title={t('headerGroupOne.title', { name: currentGroup?.name || '' })} 
+                // title={`Group - ${ currentGroup?.name }`}
+                breadcrumbLinks={breadcrumbLinks} 
+            />
         </>
     )
 }
